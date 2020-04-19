@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace DSG.WinUI
+namespace DSG.WinUI.ManagementScreens
 {
     /// <summary>
-    /// Interaction logic for ManageSets.xaml
+    /// Interaction logic for ManageCards.xaml
     /// </summary>
-    public partial class ManageSets : Page
+    public partial class ManageCards : Page
     {
-        public ManageSets()
+        public ManageCards()
         {
             InitializeComponent();
         }

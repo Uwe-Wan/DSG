@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DSG.WinUI"
         mc:Ignorable="d"
         Loaded="OnLoaded"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="750" Width="1333">
     <Grid>
         <Frame x:Name="Frame"/>
     </Grid>

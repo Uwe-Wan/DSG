@@ -6,6 +6,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
+using DSG.WinUI.ManagementScreens;
 
 namespace DSG.WinUI.Services
 {
