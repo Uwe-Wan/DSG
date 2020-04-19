@@ -82,7 +82,6 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractDaoTestSetup.cs" />
     <Compile Include="Expansions\DominionExpansionDaoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

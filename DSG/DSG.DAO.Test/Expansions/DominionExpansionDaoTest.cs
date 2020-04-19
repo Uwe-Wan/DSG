@@ -18,7 +18,7 @@ namespace DSG.DAO.Test.Expansions
     /// Testing the DAO methods. For help on mocking the context see here: https://docs.microsoft.com/de-de/ef/ef6/fundamentals/testing/mocking
     /// </summary>
     [TestFixture]
-    public class DominionExpansionDaoTest : AbstractDaoTestSetup
+    public class DominionExpansionDaoTest
     {
         private DominionExpansionDao _testee;
         private Mock<CardManagementDbContext> _ctxMock;
