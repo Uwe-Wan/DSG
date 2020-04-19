@@ -19,6 +19,8 @@ namespace DSG.Presentation.ViewModel
             set { _dominionExpansionBc = value; }
         }
 
+        public DominionExpansion SelectedExpansion { get; set; }
+
         public ObservableCollection<DominionExpansion> DominionExpansions { get; set; }
 
         public string UserInput { get; set; }
@@ -26,6 +28,7 @@ namespace DSG.Presentation.ViewModel
         public ManageSetsViewModel()
         {
             InsertCommand = new RelayCommand(p => InsertExpansion());
+            DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
         public ICommand InsertCommand { get; set; }

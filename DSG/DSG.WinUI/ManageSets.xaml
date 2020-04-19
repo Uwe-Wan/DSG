@@ -32,9 +32,9 @@
         </TextBlock>
 
         <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding DominionExpansions}"
-                  CanUserAddRows="False" IsReadOnly="True">
+                  CanUserAddRows="False" IsReadOnly="True" SelectedItem="{Binding SelectedExpansion, Mode=TwoWay}">
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" FontSize="20">
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="Dominion Sets"/>
                     </DataGridTextColumn.Header>
@@ -42,8 +42,8 @@
             </DataGrid.Columns>
         </DataGrid>       
         
-        <DataGrid Grid.Column="5" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding DominionExpansions.ContainedCards}"
-                  CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid Grid.Column="5" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding SelectedExpansion.ContainedCards}"
+                  CanUserAddRows="False" IsReadOnly="True" GridLinesVisibility="None">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20">
                     <DataGridTextColumn.Header>
