@@ -31,6 +31,7 @@ namespace DSG.DAO.Expansions
         {
             return Ctx.DominionExpansion
                 .Include("ContainedCards")
+                .Include("Cost")
                 .SingleOrDefault(expansion => expansion.Name == expansionName);
         }
 

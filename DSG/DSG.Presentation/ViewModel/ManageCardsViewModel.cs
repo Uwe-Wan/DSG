@@ -13,8 +13,17 @@ namespace DSG.Presentation.ViewModel
     public class ManageCardsViewModel : Notifier, IViewModel
     {
         private Card _selectedCard;
+        private DominionExpansion _selectedExpansion;
 
-        public DominionExpansion SelectedExpansion { get; set; }
+        public DominionExpansion SelectedExpansion
+        {
+            get { return _selectedExpansion; }
+            set
+            {
+                _selectedExpansion = value;
+                OnPropertyChanged(nameof(SelectedExpansion));
+            }
+        }
 
         public Card SelectedCard
         {
