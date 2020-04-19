@@ -32,14 +32,6 @@ namespace DSG.DAO.Expansions
             return Ctx.DominionExpansion
                 .Include("ContainedCards")
                 .SingleOrDefault(expansion => expansion.Name == expansionName);
-
-            //string sqlCmd = "SELECT * FROM DominionExpansion WHERE Name = {0}";
-
-            //DataLoadOptions dlo = new DataLoadOptions();
-            //dlo.LoadWith<DominionExpansion>(expansion => expansion.ContainedCards);
-            //DataContext ctx = new DataContext(ConfigurationManager.AppSettings["DSGConnectionString"]);
-            //ctx.LoadOptions = dlo;
-            //return ctx.ExecuteQuery<DominionExpansion>(sqlCmd, expansionName).SingleOrDefault();
         }
 
         public void InsertExpansion(string expansionName)
