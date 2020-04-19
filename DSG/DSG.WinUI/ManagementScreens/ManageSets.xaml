@@ -60,6 +60,12 @@
                 Add Set
             </TextBlock>
         </Button>
+        
+        <Button Grid.Row="3" Grid.Column="5" Height="32" Command="{Binding AddCardsCommand}">
+            <TextBlock>
+                Add Card
+            </TextBlock>
+        </Button>
 
     </Grid>
 </Page>

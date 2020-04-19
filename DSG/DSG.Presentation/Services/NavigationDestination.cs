@@ -4,6 +4,7 @@
     {
         ManageSets = 1,
         GenerateGame = 2,
-        WelcomeScreen = 3
+        WelcomeScreen = 3,
+        ManageCards = 4
     }
 }

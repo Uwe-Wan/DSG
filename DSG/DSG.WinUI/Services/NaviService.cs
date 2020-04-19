@@ -62,6 +62,14 @@ namespace DSG.WinUI.Services
                         break;
                     }
 
+                case NavigationDestination.ManageCards:
+                    {
+                        ManageCardsViewModel viewModel = Context.GetObject<ManageCardsViewModel>("manageCardsViewModel");
+                        ManageCards view = new ManageCards();
+                        await NavigateToDestination(view, viewModel, NavigationDestination.ManageCards, data);
+                        break;
+                    }
+
                 default:
                     throw new ArgumentOutOfRangeException(nameof(destination));
             }

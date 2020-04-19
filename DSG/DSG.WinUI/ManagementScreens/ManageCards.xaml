@@ -62,7 +62,7 @@
         <StackPanel Grid.Row="2" Grid.Column="5">
             <Label>Potion</Label>
 
-            <CheckBox Binding="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <CheckBox IsChecked="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <Button Grid.Row="3" Grid.Column="4" Height="32">
