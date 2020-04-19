@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSG.BusinessEntities
 {
@@ -12,10 +8,13 @@ namespace DSG.BusinessEntities
     {
         public int Id { get; set; }
 
-        public int? Money { get; set; }
+        [DefaultValue(0)]
+        public int Money { get; set; }
+        
+        [DefaultValue(false)]
+        public bool Potion { get; set; }
 
-        public int? Potion { get; set; }
-
-        public int? Dept { get; set; }
+        [DefaultValue(0)]
+        public int Dept { get; set; }
     }
 }
