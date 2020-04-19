@@ -12,34 +12,40 @@ namespace DSG.DAO.Expansions
 {
     public class DominionExpansionDao : IDominionExpansionDao
     {
+        private CardManagementDbContext _ctx;
+
+        public CardManagementDbContext Ctx
+        {
+            get { return _ctx; }
+            set { _ctx = value; }
+        }
+
         public List<DominionExpansion> GetExpansions()
         {
-            string sqlCmd = "SELECT * FROM DominionExpansion";
-
-            DataLoadOptions dlo = new DataLoadOptions();
-            dlo.LoadWith<DominionExpansion>(expansion => expansion.ContainedCards);
-            DataContext ctx = new DataContext(ConfigurationManager.AppSettings["DSGConnectionString"]);
-            ctx.LoadOptions = dlo;
-            return ctx.ExecuteQuery<DominionExpansion>(sqlCmd).ToList();
+            return Ctx.DominionExpansion
+                .Include("ContainedCards")
+                .ToList();
         }
 
         public DominionExpansion GetExpansionByName(string expansionName)
         {
-            string sqlCmd = "SELECT * FROM DominionExpansion WHERE Name = {0}";
+            return Ctx.DominionExpansion
+                .Include("ContainedCards")
+                .SingleOrDefault(expansion => expansion.Name == expansionName);
 
-            DataLoadOptions dlo = new DataLoadOptions();
-            dlo.LoadWith<DominionExpansion>(expansion => expansion.ContainedCards);
-            DataContext ctx = new DataContext(ConfigurationManager.AppSettings["DSGConnectionString"]);
-            ctx.LoadOptions = dlo;
-            return ctx.ExecuteQuery<DominionExpansion>(sqlCmd, expansionName).SingleOrDefault();
+            //string sqlCmd = "SELECT * FROM DominionExpansion WHERE Name = {0}";
+
+            //DataLoadOptions dlo = new DataLoadOptions();
+            //dlo.LoadWith<DominionExpansion>(expansion => expansion.ContainedCards);
+            //DataContext ctx = new DataContext(ConfigurationManager.AppSettings["DSGConnectionString"]);
+            //ctx.LoadOptions = dlo;
+            //return ctx.ExecuteQuery<DominionExpansion>(sqlCmd, expansionName).SingleOrDefault();
         }
 
         public void InsertExpansion(string expansionName)
         {
-            string sqlCmd = "INSERT INTO dbo.DominionExpansion (Name) VALUES ({0})";
-
-            DataContext ctx = new DataContext(ConfigurationManager.AppSettings["DSGConnectionString"]);
-            ctx.ExecuteCommand(sqlCmd, expansionName);
+            Ctx.DominionExpansion.Add(new DominionExpansion { Name = expansionName });
+            Ctx.SaveChanges();
         }
     }
 }
