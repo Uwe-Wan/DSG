@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.DAO.Test", "DSG.DAO.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.Presentation.Test", "DSG.Presentation.Test\DSG.Presentation.Test.csproj", "{9518F9E4-A7E1-41C1-8B3B-1A2E446F364B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.Common", "DSG.Common\DSG.Common.csproj", "{B87025A1-336D-41AC-B6E9-A1C0A20DD244}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{9518F9E4-A7E1-41C1-8B3B-1A2E446F364B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9518F9E4-A7E1-41C1-8B3B-1A2E446F364B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9518F9E4-A7E1-41C1-8B3B-1A2E446F364B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87025A1-336D-41AC-B6E9-A1C0A20DD244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87025A1-336D-41AC-B6E9-A1C0A20DD244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87025A1-336D-41AC-B6E9-A1C0A20DD244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87025A1-336D-41AC-B6E9-A1C0A20DD244}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
