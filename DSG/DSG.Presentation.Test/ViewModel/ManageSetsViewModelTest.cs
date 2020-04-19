@@ -7,6 +7,7 @@ using NUnit.Framework;
 using FluentAssertions;
 using DSG.Presentation.Services;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace DSG.Presentation.Test.ViewModel
 {
@@ -24,7 +25,7 @@ namespace DSG.Presentation.Test.ViewModel
             _dominionExpansionBcMock = new Mock<IDominionExpansionBc>();
             _testee.DominionExpansionBc = _dominionExpansionBcMock.Object;
 
-            _testee.DominionExpansions = new List<DominionExpansion>();
+            _testee.DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
         [Test]

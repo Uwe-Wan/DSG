@@ -81,6 +81,10 @@
       <Project>{24030f44-638d-4a9a-8cce-8316ff0886ad}</Project>
       <Name>DSG.BusinessEntities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DSG.Common\DSG.Common.csproj">
+      <Project>{b87025a1-336d-41ac-b6e9-a1c0a20dd244}</Project>
+      <Name>DSG.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DSG.DAO\DSG.DAO.csproj">
       <Project>{0da01c86-7e30-4c4d-ab75-c246894d451f}</Project>
       <Name>DSG.DAO</Name>

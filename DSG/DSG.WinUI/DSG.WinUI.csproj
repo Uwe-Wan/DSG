@@ -163,6 +163,10 @@
       <Project>{24030f44-638d-4a9a-8cce-8316ff0886ad}</Project>
       <Name>DSG.BusinessEntities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DSG.Common\DSG.Common.csproj">
+      <Project>{b87025a1-336d-41ac-b6e9-a1c0a20dd244}</Project>
+      <Name>DSG.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DSG.Presentation\DSG.Presentation.csproj">
       <Project>{f6964e51-6b40-44a1-aa3d-1278d5210d47}</Project>
       <Name>DSG.Presentation</Name>

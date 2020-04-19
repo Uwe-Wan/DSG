@@ -1,9 +1,11 @@
 ﻿using DSG.BusinessComponents.Expansions;
 using DSG.BusinessEntities;
 using DSG.Presentation.Services;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using DSG.Common.Extensions;
 
 namespace DSG.Presentation.ViewModel
 {
@@ -17,7 +19,7 @@ namespace DSG.Presentation.ViewModel
             set { _dominionExpansionBc = value; }
         }
 
-        public List<DominionExpansion> DominionExpansions { get; set; }
+        public ObservableCollection<DominionExpansion> DominionExpansions { get; set; }
 
         public string UserInput { get; set; }
 
@@ -30,7 +32,9 @@ namespace DSG.Presentation.ViewModel
 
         public async Task OnPageLoadedAsync(NavigationDestination navigationDestination, params object[] data)
         {
-            DominionExpansions = DominionExpansionBc.GetExpansions();
+            List<DominionExpansion> expansions = DominionExpansionBc.GetExpansions();
+            DominionExpansions.Clear();
+            DominionExpansions.AddRange(expansions);
         }
 
         public void InsertExpansion()
