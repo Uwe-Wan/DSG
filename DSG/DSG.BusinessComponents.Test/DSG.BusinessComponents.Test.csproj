@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cards\CardBcTest.cs" />
+    <Compile Include="Costs\CostBcTest.cs" />
     <Compile Include="Expansions\DominionExpansionBcTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -74,6 +74,8 @@
   <ItemGroup>
     <Compile Include="Cards\CardBc.cs" />
     <Compile Include="Cards\ICardBc.cs" />
+    <Compile Include="Costs\CostBc.cs" />
+    <Compile Include="Costs\ICostBc.cs" />
     <Compile Include="Expansions\DominionExpansionBc.cs" />
     <Compile Include="Expansions\IDominionExpansionBc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
