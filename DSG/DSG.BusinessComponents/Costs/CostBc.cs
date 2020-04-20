@@ -17,5 +17,10 @@ namespace DSG.BusinessComponents.Costs
         {
             return CostDao.GetCosts();
         }
+
+        public void InsertCost(Cost cost)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

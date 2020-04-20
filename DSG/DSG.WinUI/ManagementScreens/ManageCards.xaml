@@ -56,7 +56,7 @@
         <StackPanel Grid.Row="2" Grid.Column="4">
             <Label>Dept</Label>
 
-            <TextBox  Height="32" Width="50" Text="{Binding NewCardsCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox  Height="32" Width="50" Text="{Binding NewCardsDept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="5">

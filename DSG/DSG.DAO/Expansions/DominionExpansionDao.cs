@@ -24,6 +24,7 @@ namespace DSG.DAO.Expansions
         {
             return Ctx.DominionExpansion
                 .Include("ContainedCards")
+                .Include("ContainedCards.Cost")
                 .ToList();
         }
 

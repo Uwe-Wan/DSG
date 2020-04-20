@@ -60,7 +60,7 @@ namespace DSG.Presentation.ViewModel
 
         public void AddCards()
         {
-            NaviService.NavigateToAsync(NavigationDestination.ManageCards, SelectedExpansion);
+            NaviService.NavigateToAsync(NavigationDestination.ManageCards, SelectedExpansion, DominionExpansions);
         }
     }
 }

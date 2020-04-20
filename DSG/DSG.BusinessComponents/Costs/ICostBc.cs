@@ -7,6 +7,6 @@ namespace DSG.BusinessComponents.Costs
     {
         List<Cost> GetCosts();
 
-        void InsertCost();
+        void InsertCost(Cost cost);
     }
 }
