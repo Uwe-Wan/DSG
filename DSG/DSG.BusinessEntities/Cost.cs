@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSG.BusinessEntities
@@ -16,5 +17,26 @@ namespace DSG.BusinessEntities
 
         [DefaultValue(0)]
         public int Dept { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            Cost cost = (Cost)obj;
+            if(cost.Money == this.Money && cost.Dept == this.Dept && cost.Potion == this.Potion)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return (base.GetHashCode() << 2) ^ Money;
+        }
     }
 }
