@@ -36,7 +36,7 @@ namespace DSG.DAO.Test.Expansions
             expansionMockSet.As<IQueryable<DominionExpansion>>().Setup(set => set.GetEnumerator()).Returns(expansions.GetEnumerator());
 
             _ctxMock = new Mock<CardManagementDbContext>();
-            _ctxMock.Setup(ctx => ctx.DominionExpansion.Include("ContainedCards")).Returns(expansionMockSet.Object);
+            _ctxMock.Setup(ctx => ctx.DominionExpansion.Include("ContainedCards").Include("ContainedCards.Cost")).Returns(expansionMockSet.Object);
 
             _testee.Ctx = _ctxMock.Object;
         }
