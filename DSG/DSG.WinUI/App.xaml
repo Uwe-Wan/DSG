@@ -2,13 +2,13 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:DSG.WinUI"
-             xmlns:manageScreens="clr-namespace:DSG.WinUI.ManagementScreens"
+             xmlns:manageScreens="clr-namespace:DSG.WinUI.ManagementScreens" xmlns:converter="clr-namespace:DSG.Presentation.Converter;assembly=DSG.Presentation"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <Style TargetType="Page">
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Color="LightSeaGreen" />
+                    <ImageBrush ImageSource="/Images/WhatAWorld.jpg" Opacity="0.5" Stretch="UniformToFill"/>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -23,5 +23,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <converter:ObjectSelectedToBooleanConverter x:Key="ObjectSelectedToBooleanConvert"/>
+        
+        <Image x:Key="WhatAWorld">
+            <Image.Source>
+                <BitmapImage  UriSource="/Images/WhatAWorld.jpg" />
+            </Image.Source>
+        </Image>
     </Application.Resources>
 </Application>
