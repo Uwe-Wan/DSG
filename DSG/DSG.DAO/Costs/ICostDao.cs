@@ -10,5 +10,7 @@ namespace DSG.DAO.Costs
     public interface ICostDao
     {
         List<Cost> GetCosts();
+
+        void InsertCost(Cost cost);
     }
 }

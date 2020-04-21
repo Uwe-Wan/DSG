@@ -21,5 +21,11 @@ namespace DSG.DAO.Costs
         {
             return Ctx.Cost.ToList();
         }
+
+        public void InsertCost(Cost cost)
+        {
+            Ctx.Cost.Add(cost);
+            Ctx.SaveChanges();
+        }
     }
 }

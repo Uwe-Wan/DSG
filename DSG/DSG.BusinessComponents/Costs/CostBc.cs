@@ -20,7 +20,7 @@ namespace DSG.BusinessComponents.Costs
 
         public void InsertCost(Cost cost)
         {
-            throw new System.NotImplementedException();
+            CostDao.InsertCost(cost);
         }
     }
 }
