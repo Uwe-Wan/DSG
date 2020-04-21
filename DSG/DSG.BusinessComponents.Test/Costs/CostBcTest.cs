@@ -15,17 +15,22 @@ namespace DSG.BusinessComponentsTest.Costs
         private CostBc _testee;
         private Mock<ICostDao> _costDaoMock;
 
+        [SetUp]
+        public void Setup()
+        {
+            _testee = new CostBc();
+
+            _costDaoMock = new Mock<ICostDao>();
+            _testee.CostDao = _costDaoMock.Object;
+        }
+
         [Test]
         public void GetCosts_DaoInvoked()
         {
             //Arrange
-            _testee = new CostBc();
-
             Cost two = new Cost { Money = 2 };
             List<Cost> costs = new List<Cost> { two };
 
-            _costDaoMock = new Mock<ICostDao>();
-            _testee.CostDao = _costDaoMock.Object;
             _costDaoMock.Setup(dao => dao.GetCosts()).Returns(costs);
 
             //Act
@@ -34,6 +39,19 @@ namespace DSG.BusinessComponentsTest.Costs
             //Assert
             result.Should().HaveCount(1);
             result.Single().Money.Should().Be(2);
+        }
+
+        [Test]
+        public void InsertCost_DaoInvoked()
+        {
+            //Arrange
+            Cost cost = new Cost();
+
+            //Act
+            _testee.InsertCost(cost);
+
+            //Assert
+            _costDaoMock.Verify(dao => dao.InsertCost(cost), Times.Once);
         }
     }
 }
