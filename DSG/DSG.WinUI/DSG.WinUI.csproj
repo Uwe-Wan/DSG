@@ -182,6 +182,9 @@
   <ItemGroup>
     <Resource Include="Images\WhatAWorld.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Navigator.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
