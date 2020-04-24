@@ -7,8 +7,10 @@ namespace DSG.BusinessComponents.Generation
 {
     public class SetGeneratorBc : ISetGeneratorBc
     {
-        public List<Card> GenerateSet(List<Card> availableCards)
+        public List<Card> GenerateSet(List<DominionExpansion> dominionExpansions)
         {
+            List<Card> availableCards = dominionExpansions.SelectMany(expansion => expansion.ContainedCards).ToList();
+
             if(availableCards.Count < 10)
             {
                 return null;

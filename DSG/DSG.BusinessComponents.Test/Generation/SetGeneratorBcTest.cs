@@ -24,8 +24,11 @@ namespace DSG.BusinessComponentsTest.Generation
             Card oneCard = new Card();
             List<Card> cards = new List<Card> { oneCard };
 
+            DominionExpansion expansion = new DominionExpansion { ContainedCards = cards };
+            List<DominionExpansion> expansions = new List<DominionExpansion> { expansion };
+
             //Act
-            List<Card> result = _testee.GenerateSet(cards);
+            List<Card> result = _testee.GenerateSet(expansions);
 
             //Assert
             result.Should().BeNull();
@@ -35,14 +38,20 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_15AvailableCards_SetOf10Returned()
         {
             //Arrange
-            List<Card> availableCards = new List<Card>();
-            for (int i= 0; i< 15; i++)
+            List<DominionExpansion> expansions = new List<DominionExpansion>();
+            for (int j = 0; j < 3; j++)
             {
-                availableCards.Add(new Card());
+                DominionExpansion expansion = new DominionExpansion();
+                for (int i = 0; i < 5; i++)
+                {
+                    expansion.ContainedCards.Add(new Card());
+                }
+
+                expansions.Add(expansion);
             }
 
             //Act
-            List<Card> result = _testee.GenerateSet(availableCards);
+            List<Card> result = _testee.GenerateSet(expansions);
 
             //Assert
             result.Should().HaveCount(10);

@@ -5,6 +5,6 @@ namespace DSG.BusinessComponents.Generation
 {
     public interface ISetGeneratorBc
     {
-        List<Card> GenerateSet(List<Card> availableCards);
+        List<Card> GenerateSet(List<DominionExpansion> dominionExpansions);
     }
 }
