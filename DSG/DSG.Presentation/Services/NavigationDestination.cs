@@ -5,6 +5,7 @@
         ManageSets = 1,
         GenerateGame = 2,
         WelcomeScreen = 3,
-        ManageCards = 4
+        ManageCards = 4,
+        GeneratedSet = 5
     }
 }

@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Navigation;
 using DSG.WinUI.ManagementScreens;
+using DSG.Presentation.ViewModel.Generation;
+using DSG.WinUI.GenerationScreens;
 
 namespace DSG.WinUI.Services
 {
@@ -67,6 +69,14 @@ namespace DSG.WinUI.Services
                         ManageCardsViewModel viewModel = Context.GetObject<ManageCardsViewModel>("manageCardsViewModel");
                         ManageCards view = new ManageCards();
                         await NavigateToDestination(view, viewModel, NavigationDestination.ManageCards, data);
+                        break;
+                    }
+
+                case NavigationDestination.GeneratedSet:
+                    {
+                        GeneratedSetViewModel viewModel = Context.GetObject<GeneratedSetViewModel>("generatedSetViewModel");
+                        GeneratedSet view = new GeneratedSet();
+                        await NavigateToDestination(view, viewModel, NavigationDestination.GeneratedSet, data);
                         break;
                     }
 
