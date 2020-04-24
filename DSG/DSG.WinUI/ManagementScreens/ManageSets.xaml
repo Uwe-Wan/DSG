@@ -63,7 +63,7 @@
 
         <Button Grid.Row="3" Grid.Column="5" Height="32" Command="{Binding AddCardsCommand}" IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}" Style="{StaticResource PinkButton}">
             <TextBlock>
-                Add Card
+                Add Cards
             </TextBlock>
         </Button>
 

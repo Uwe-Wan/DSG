@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ManageCardsViewModelTest.cs" />
     <Compile Include="ViewModel\ManageSetsViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>

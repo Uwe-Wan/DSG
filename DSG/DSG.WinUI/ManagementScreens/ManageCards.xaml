@@ -30,7 +30,7 @@
         <TextBlock Grid.Row="0" VerticalAlignment="Center" Grid.ColumnSpan="7" HorizontalAlignment="Center" FontSize="20" Text="{Binding ManageCardsScreenTitle}">
         </TextBlock>
 
-        <DataGrid Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" AutoGenerateColumns="False" ItemsSource="{Binding SelectedExpansion.ContainedCards}"
+        <DataGrid Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" AutoGenerateColumns="False" ItemsSource="{Binding SelectedExpansionViewEntity.ContainedCards}"
                   CanUserAddRows="False" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
@@ -65,7 +65,7 @@
             <CheckBox IsChecked="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
-        <Button Grid.Row="3" Grid.Column="4" Height="32">
+        <Button Grid.Row="3" Grid.Column="4" Height="32" Command="{Binding AddCardCommand}" Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Card
             </TextBlock>
