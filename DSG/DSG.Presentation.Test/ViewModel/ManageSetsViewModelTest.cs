@@ -16,6 +16,7 @@ namespace DSG.Presentation.Test.ViewModel
     {
         private ManageSetsViewModel _testee;
         private Mock<IDominionExpansionBc> _dominionExpansionBcMock;
+        private Mock<INaviService> _naviServiceMock;
 
         [SetUp]
         public void Setup()
@@ -24,6 +25,9 @@ namespace DSG.Presentation.Test.ViewModel
 
             _dominionExpansionBcMock = new Mock<IDominionExpansionBc>();
             _testee.DominionExpansionBc = _dominionExpansionBcMock.Object;
+
+            _naviServiceMock = new Mock<INaviService>();
+            _testee.NaviService = _naviServiceMock.Object;
 
             _testee.DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
@@ -63,6 +67,23 @@ namespace DSG.Presentation.Test.ViewModel
             //Assert
             _dominionExpansionBcMock.Verify(bc => bc.GetExpansions(), Times.Once);
             _testee.DominionExpansions.Should().HaveCount(1);
+        }
+
+        [Test]
+        public void AddCards_NaviServiceInvoked()
+        {
+            //Arrange
+            DominionExpansion selectedExpansion = new DominionExpansion();
+            _testee.SelectedExpansion = selectedExpansion;
+
+            ObservableCollection<DominionExpansion> expansions = new ObservableCollection<DominionExpansion> { selectedExpansion };
+            _testee.DominionExpansions = expansions;
+
+            //Act
+            _testee.AddCards();
+
+            //Assert
+            _naviServiceMock.Verify(mock => mock.NavigateToAsync(NavigationDestination.ManageCards, selectedExpansion, expansions));
         }
     }
 }
