@@ -16,5 +16,10 @@ namespace DSG.BusinessEntities
         public string Name { get; set; }
 
         public List<Card> ContainedCards { get; set; }
+
+        public DominionExpansion()
+        {
+            ContainedCards = new List<Card>();
+        }
     }
 }
