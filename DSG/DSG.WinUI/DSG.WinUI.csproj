@@ -102,6 +102,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GenerationScreens\GeneratedSet.xaml.cs">
+      <DependentUpon>GeneratedSet.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagementScreens\ManageCards.xaml.cs">
       <DependentUpon>ManageCards.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>
+    <Page Include="GenerationScreens\GeneratedSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
