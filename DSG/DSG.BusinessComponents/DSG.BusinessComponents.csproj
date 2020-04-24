@@ -78,6 +78,8 @@
     <Compile Include="Costs\ICostBc.cs" />
     <Compile Include="Expansions\DominionExpansionBc.cs" />
     <Compile Include="Expansions\IDominionExpansionBc.cs" />
+    <Compile Include="Generation\ISetGeneratorBc.cs" />
+    <Compile Include="Generation\SetGeneratorBc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
