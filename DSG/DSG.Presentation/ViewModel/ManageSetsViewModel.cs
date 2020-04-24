@@ -44,8 +44,10 @@ namespace DSG.Presentation.ViewModel
 
         public async Task OnPageLoadedAsync(NavigationDestination navigationDestination, params object[] data)
         {
-            List<DominionExpansion> expansions = DominionExpansionBc.GetExpansions();
             DominionExpansions.Clear();
+
+            IEnumerable<DominionExpansion> expansions = data[0] as IEnumerable<DominionExpansion>;
+
             DominionExpansions.AddRange(expansions);
         }
 

@@ -59,13 +59,11 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.DominionExpansions = new ObservableCollection<DominionExpansion>();
 
             List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
-            _dominionExpansionBcMock.Setup(bc => bc.GetExpansions()).Returns(expansions);
 
             //Act
-            await _testee.OnPageLoadedAsync(NavigationDestination.ManageSets);
+            await _testee.OnPageLoadedAsync(NavigationDestination.ManageSets, expansions);
 
             //Assert
-            _dominionExpansionBcMock.Verify(bc => bc.GetExpansions(), Times.Once);
             _testee.DominionExpansions.Should().HaveCount(1);
         }
 

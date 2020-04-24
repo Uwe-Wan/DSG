@@ -28,7 +28,7 @@ namespace DSG.BusinessComponentsTest.Costs
         public void GetCosts_DaoInvoked()
         {
             //Arrange
-            Cost two = new Cost { Money = 2 };
+            Cost two = new Cost(2);
             List<Cost> costs = new List<Cost> { two };
 
             _costDaoMock.Setup(dao => dao.GetCosts()).Returns(costs);
