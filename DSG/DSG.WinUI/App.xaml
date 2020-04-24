@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:DSG.WinUI"
              xmlns:manageScreens="clr-namespace:DSG.WinUI.ManagementScreens" 
+             xmlns:generation="clr-namespace:DSG.WinUI.GenerationScreens" 
              xmlns:converter="clr-namespace:DSG.Presentation.Converter;assembly=DSG.Presentation"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -16,7 +17,7 @@
         <Style TargetType="local:WelcomeScreen" BasedOn="{StaticResource {x:Type Page}}"/>
         <Style TargetType="manageScreens:ManageSets" BasedOn="{StaticResource {x:Type Page}}"/>
         <Style TargetType="manageScreens:ManageCards" BasedOn="{StaticResource {x:Type Page}}"/>
-        <Style TargetType="GeneratedSet" BasedOn="{StaticResource {x:Type Page}}"/>
+        <Style TargetType="generation:GeneratedSet" BasedOn="{StaticResource {x:Type Page}}"/>
 
         <Style TargetType="Button" x:Key="PinkButton">
             <Setter Property="Background">
