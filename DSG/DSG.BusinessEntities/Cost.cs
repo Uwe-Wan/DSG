@@ -21,6 +21,17 @@ namespace DSG.BusinessEntities
         [Index("UQX_Cost_Money_Dept_Potion", 3, IsUnique = true)]
         public int Dept { get; set; }
 
+        public Cost()
+        {
+        }
+
+        public Cost(int money = 0, int dept = 0, bool potion = false)
+        {
+            Money = money;
+            Dept = dept;
+            Potion = potion;
+        }
+
         public override bool Equals(object obj)
         {
             if (obj == null)
