@@ -46,7 +46,7 @@ namespace DSG.Presentation.Test.ViewModel
             List<DominionExpansion> expansions = new List<DominionExpansion> { world, seaside, intrigue };
 
             //Act
-            await _testee.OnPageLoadedAsync(NavigationDestination.ManageCards, world, expansions) ;
+            await _testee.OnPageLoadedAsync(world, expansions) ;
 
             //Assert
             _testee.SelectedExpansionViewEntity.DominionExpansion.Should().Be(world);

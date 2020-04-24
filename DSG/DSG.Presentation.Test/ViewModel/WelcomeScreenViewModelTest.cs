@@ -42,7 +42,7 @@ namespace DSG.Presentation.Test.ViewModel
             _dominionExpansionBcMock.Setup(bc => bc.GetExpansions()).Returns(expansions);
 
             //Act
-            await _testee.OnPageLoadedAsync(NavigationDestination.ManageSets);
+            await _testee.OnPageLoadedAsync();
 
             //Assert
             _dominionExpansionBcMock.Verify(bc => bc.GetExpansions(), Times.Once);

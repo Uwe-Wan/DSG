@@ -42,7 +42,7 @@ namespace DSG.Presentation.ViewModel
         public ICommand InsertCommand { get; set; }
         public ICommand AddCardsCommand { get; set; }
 
-        public async Task OnPageLoadedAsync(NavigationDestination navigationDestination, params object[] data)
+        public async Task OnPageLoadedAsync(params object[] data)
         {
             DominionExpansions.Clear();
 

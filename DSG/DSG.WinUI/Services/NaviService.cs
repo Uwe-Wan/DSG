@@ -77,7 +77,7 @@ namespace DSG.WinUI.Services
 
         private async Task NavigateToDestination(FrameworkElement view, IViewModel viewModel, NavigationDestination navigationDestination, params object[] data)
         {
-            await viewModel.OnPageLoadedAsync(navigationDestination, data);
+            await viewModel.OnPageLoadedAsync(data);
             view.DataContext = viewModel;
             NavigationService.Navigate(view);
         }

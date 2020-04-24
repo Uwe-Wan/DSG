@@ -98,7 +98,7 @@ namespace DSG.Presentation.ViewModel
 
         public ICommand AddCardCommand { get; set; }
 
-        public async Task OnPageLoadedAsync(NavigationDestination navigationDestination, params object[] data)
+        public async Task OnPageLoadedAsync(params object[] data)
         {
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
 

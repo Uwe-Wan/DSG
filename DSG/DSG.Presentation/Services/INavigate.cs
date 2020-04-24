@@ -8,6 +8,6 @@ namespace DSG.Presentation.Services
 {
     public interface INavigate
     {
-        Task OnPageLoadedAsync(NavigationDestination navigationDestination, params object[] data);
+        Task OnPageLoadedAsync(params object[] data);
     }
 }

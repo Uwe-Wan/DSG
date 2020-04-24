@@ -61,7 +61,7 @@ namespace DSG.Presentation.Test.ViewModel
             List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
 
             //Act
-            await _testee.OnPageLoadedAsync(NavigationDestination.ManageSets, expansions);
+            await _testee.OnPageLoadedAsync(expansions);
 
             //Assert
             _testee.DominionExpansions.Should().HaveCount(1);
