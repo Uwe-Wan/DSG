@@ -86,6 +86,8 @@ namespace DSG.Presentation.ViewModel
             }
         }
 
+        public string ManageCardsScreenTitle { get; set; }
+
         public SelectedExpansionViewEntity SelectedExpansionViewEntity { get; set; }
 
         public ManageCardsViewModel()
@@ -109,6 +111,8 @@ namespace DSG.Presentation.ViewModel
                     .ToList()
                     );
             }
+
+            ManageCardsScreenTitle = string.Join(" ", "Manage Cards of Expansion", SelectedExpansionViewEntity.ExpansionName);
         }
 
         public void AddCard()

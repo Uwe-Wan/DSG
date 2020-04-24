@@ -53,6 +53,8 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.SelectedExpansionViewEntity.ExpansionName.Should().Be(world.Name);
             _testee.SelectedExpansionViewEntity.ContainedCards.Should().HaveCount(1);
 
+            _testee.ManageCardsScreenTitle.Should().Be("Manage Cards of Expansion World");
+
             _testee.AvailableCosts.Should().HaveCount(1);
             _testee.AvailableCosts.First().Money.Should().Be(2);
         }
