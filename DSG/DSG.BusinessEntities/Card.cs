@@ -28,5 +28,7 @@ namespace DSG.BusinessEntities
         public int DominionExpansionId { get; set; }
         [Required]
         public DominionExpansion DominionExpansion { get; set; }
+
+        public List<CardType> CardTypes { get; set; }
     }
 }

@@ -75,6 +75,8 @@
   <ItemGroup>
     <Compile Include="Card.cs" />
     <Compile Include="CardManagementDbContext.cs" />
+    <Compile Include="CardType.cs" />
+    <Compile Include="CardTypeEnum.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="DominionExpansion.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.cs" />
@@ -101,6 +103,10 @@
     <Compile Include="Migrations\202004231532134_CreateDatabase.designer.cs">
       <DependentUpon>202004231532134_CreateDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004261653520_CreateDSGDatabase5.cs" />
+    <Compile Include="Migrations\202004261653520_CreateDSGDatabase5.designer.cs">
+      <DependentUpon>202004261653520_CreateDSGDatabase5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -113,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004231532134_CreateDatabase.resx">
       <DependentUpon>202004231532134_CreateDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004261653520_CreateDSGDatabase5.resx">
+      <DependentUpon>202004261653520_CreateDSGDatabase5.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />

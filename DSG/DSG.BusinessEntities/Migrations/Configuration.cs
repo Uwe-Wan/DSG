@@ -18,6 +18,13 @@
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method
             //  to avoid creating duplicate seed data.
+
+            context.CardType.AddOrUpdate(
+                x => x.Id,
+                Enum.GetValues(typeof(CardTypeEnum))
+                    .OfType<CardTypeEnum>()
+                    .Select(x => new CardType() { Id = x, Name = x.ToString() })
+                    .ToArray());
         }
     }
 }

@@ -17,5 +17,7 @@ namespace DSG.BusinessEntities
 
         public virtual DbSet<DominionExpansion> DominionExpansion { get; set; }
 
+        public virtual DbSet<CardType> CardType { get; set; }
+
     }
 }
