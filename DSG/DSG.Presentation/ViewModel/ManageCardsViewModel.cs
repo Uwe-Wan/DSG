@@ -103,11 +103,13 @@ namespace DSG.Presentation.ViewModel
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
 
             IEnumerable<DominionExpansion> enumData = data[1] as IEnumerable<DominionExpansion>;
+            AvailableCosts.Clear();
             foreach (DominionExpansion expansion in enumData)
             {
                 AvailableCosts.AddRange(expansion
                     .ContainedCards
                     .Select(card => card.Cost)
+                    .Distinct()
                     .ToList()
                     );
             }
@@ -123,6 +125,7 @@ namespace DSG.Presentation.ViewModel
             if (matchingCost == null)
             {
                 CostBc.InsertCost(newCost);
+                AvailableCosts.Add(newCost);
                 InsertCard(newCost);
             }
             else

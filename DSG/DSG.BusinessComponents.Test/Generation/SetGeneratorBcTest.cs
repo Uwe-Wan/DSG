@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
 using FluentAssertions;
@@ -27,11 +28,10 @@ namespace DSG.BusinessComponentsTest.Generation
             DominionExpansion expansion = new DominionExpansion { ContainedCards = cards };
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion };
 
-            //Act
-            List<Card> result = _testee.GenerateSet(expansions);
+            Action act = () => _testee.GenerateSet(expansions);
 
-            //Assert
-            result.Should().BeNull();
+            //Act
+            act.Should().Throw<Exception>().WithMessage("Not enough Cards available.");
         }
 
         [Test]

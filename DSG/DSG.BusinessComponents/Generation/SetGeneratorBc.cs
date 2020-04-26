@@ -13,7 +13,7 @@ namespace DSG.BusinessComponents.Generation
 
             if(availableCards.Count < 10)
             {
-                return null;
+                throw new Exception("Not enough Cards available.");
             }
 
             Random random = new Random();

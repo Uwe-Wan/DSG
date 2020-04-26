@@ -5,6 +5,7 @@ using DSG.Presentation.Services;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -14,6 +15,7 @@ namespace DSG.Presentation.ViewModel
     {
         private IDominionExpansionBc _dominionExpansionBc;
         private INaviService _naviService;
+        private IUiService _uiService;
 
         public IDominionExpansionBc DominionExpansionBc
         {
@@ -27,12 +29,18 @@ namespace DSG.Presentation.ViewModel
             set { _naviService = value; }
         }
 
+        public IUiService UiService
+        {
+            get { return _uiService; }
+            set { _uiService = value; }
+        }
+
         public ObservableCollection<DominionExpansion> DominionExpansions { get; set; }
 
         public WelcomeScreenViewModel()
         {
             NavigateToManageSetsScreenCommand = new RelayCommand(p => NavigateTo(NavigationDestination.ManageSets));
-            GenerateSetCommand = new RelayCommand(p => NavigateTo(NavigationDestination.GeneratedSet));
+            GenerateSetCommand = new RelayCommand(p => GenerateSet());
             DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
@@ -44,6 +52,21 @@ namespace DSG.Presentation.ViewModel
             List<DominionExpansion> expansions = DominionExpansionBc.GetExpansions();
             DominionExpansions.Clear();
             DominionExpansions.AddRange(expansions);
+        }
+
+        private void GenerateSet()
+        {
+            int availableCards = DominionExpansions.SelectMany(expansions => expansions.ContainedCards).Count();
+            
+            if(availableCards < 10)
+            {
+                string message = string.Join(" ", "There are only", availableCards, "cards available. A minimum of 10 is needed to generate a set.");
+                string caption = "Not enough Cards!";
+                UiService.ShowErrorMessage(message, caption);
+                return;
+            }
+
+            NavigateTo(NavigationDestination.GeneratedSet);
         }
 
         private void NavigateTo(NavigationDestination destination)
