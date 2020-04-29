@@ -10,13 +10,15 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.4*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -65,7 +67,19 @@
             <CheckBox IsChecked="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
-        <Button Grid.Row="3" Grid.Column="4" Height="32" Command="{Binding AddCardCommand}" Style="{StaticResource PinkButton}">
+        <DataGrid Grid.Column="7" Grid.Row="1" Grid.RowSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding SelectedCardTypes}"
+                  CanUserAddRows="False" GridLinesVisibility="None">
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn Binding="{Binding IsSelected}" IsReadOnly="False"/>
+                <DataGridTextColumn Binding="{Binding CardType, Converter={StaticResource CardTypeEnumToStringConverter}}" FontSize="20" Width="*" IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Card Types"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="3" Grid.Column="5" Height="32" Command="{Binding AddCardCommand}" Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Card
             </TextBlock>

@@ -77,8 +77,10 @@
     <Compile Include="CardManagementDbContext.cs" />
     <Compile Include="CardType.cs" />
     <Compile Include="CardTypeEnum.cs" />
+    <Compile Include="CardTypeToCard.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="DominionExpansion.cs" />
+    <Compile Include="IsCardTypeSelectedDto.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.designer.cs">
       <DependentUpon>202004151555341_CreateDSGDatabase.cs</DependentUpon>
@@ -107,6 +109,18 @@
     <Compile Include="Migrations\202004261653520_CreateDSGDatabase5.designer.cs">
       <DependentUpon>202004261653520_CreateDSGDatabase5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004282048033_CreateDSGDatabase6.cs" />
+    <Compile Include="Migrations\202004282048033_CreateDSGDatabase6.designer.cs">
+      <DependentUpon>202004282048033_CreateDSGDatabase6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004291619168_CreateDSGDatabase7.cs" />
+    <Compile Include="Migrations\202004291619168_CreateDSGDatabase7.designer.cs">
+      <DependentUpon>202004291619168_CreateDSGDatabase7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202004291754436_CreateDSGDatabase8.cs" />
+    <Compile Include="Migrations\202004291754436_CreateDSGDatabase8.designer.cs">
+      <DependentUpon>202004291754436_CreateDSGDatabase8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -122,6 +136,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202004261653520_CreateDSGDatabase5.resx">
       <DependentUpon>202004261653520_CreateDSGDatabase5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004282048033_CreateDSGDatabase6.resx">
+      <DependentUpon>202004282048033_CreateDSGDatabase6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004291619168_CreateDSGDatabase7.resx">
+      <DependentUpon>202004291619168_CreateDSGDatabase7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004291754436_CreateDSGDatabase8.resx">
+      <DependentUpon>202004291754436_CreateDSGDatabase8.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />

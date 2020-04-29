@@ -57,6 +57,22 @@ namespace DSG.Presentation.Test.ViewModel
 
             _testee.AvailableCosts.Should().HaveCount(1);
             _testee.AvailableCosts.First().Money.Should().Be(2);
+
+            CheckCardTypeList();
+        }
+
+        private void CheckCardTypeList()
+        {
+            _testee.SelectedCardTypes.Values.Should().NotContain(true);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Action);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Victory);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Treasure);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Night);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Event);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Landmark);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Project);
+            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Way);
+            _testee.SelectedCardTypes.Keys.Should().HaveCount(8);
         }
 
         [Test]

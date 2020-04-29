@@ -28,6 +28,7 @@
         </Style>
 
         <converter:ObjectSelectedToBooleanConverter x:Key="ObjectSelectedToBooleanConvert"/>
+        <converter:CardTypeEnumToStringConverter x:Key="CardTypeEnumToStringConverter"/>
         
         <Image x:Key="WhatAWorld">
             <Image.Source>

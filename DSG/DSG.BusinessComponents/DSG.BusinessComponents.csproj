@@ -80,6 +80,7 @@
     <Compile Include="Expansions\IDominionExpansionBc.cs" />
     <Compile Include="Generation\ISetGeneratorBc.cs" />
     <Compile Include="Generation\SetGeneratorBc.cs" />
+    <Compile Include="LookupBc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

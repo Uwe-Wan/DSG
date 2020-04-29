@@ -19,5 +19,7 @@ namespace DSG.BusinessEntities
 
         public virtual DbSet<CardType> CardType { get; set; }
 
+        public virtual DbSet<CardTypeToCard> CardTypeToCard { get; set; }
+
     }
 }

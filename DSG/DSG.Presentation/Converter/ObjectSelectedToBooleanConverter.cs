@@ -20,6 +20,5 @@ namespace DSG.Presentation.Converter
         {
             return "This is not needed";
         }
-
     }
 }

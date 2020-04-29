@@ -20,6 +20,7 @@ namespace DSG.DAO.Cards
         public void InsertCard(Card card)
         {
             Ctx.Card.Add(card);
+
             Ctx.SaveChanges();
         }
     }

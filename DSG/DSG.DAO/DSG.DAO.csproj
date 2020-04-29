@@ -79,6 +79,7 @@
     <Compile Include="Costs\ICostDao.cs" />
     <Compile Include="Expansions\DominionExpansionDao.cs" />
     <Compile Include="Expansions\IDominionExpansionDao.cs" />
+    <Compile Include="LookupDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

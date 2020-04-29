@@ -29,6 +29,6 @@ namespace DSG.BusinessEntities
         [Required]
         public DominionExpansion DominionExpansion { get; set; }
 
-        public List<CardType> CardTypes { get; set; }
+        public List<CardTypeToCard> CardTypeToCards { get; set; }
     }
 }

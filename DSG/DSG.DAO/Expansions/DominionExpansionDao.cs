@@ -25,6 +25,8 @@ namespace DSG.DAO.Expansions
             return Ctx.DominionExpansion
                 .Include("ContainedCards")
                 .Include("ContainedCards.Cost")
+                .Include("ContainedCards.CardTypeToCards")
+                .Include("ContainedCards.CardTypeToCards.CardType")
                 .ToList();
         }
 
@@ -33,6 +35,8 @@ namespace DSG.DAO.Expansions
             return Ctx.DominionExpansion
                 .Include("ContainedCards")
                 .Include("ContainedCards.Cost")
+                //.Include("ContainedCards.CardTypeToCard")
+                //.Include("ContainedCards.CardTypeToCard.CardType")
                 .SingleOrDefault(expansion => expansion.Name == expansionName);
         }
 

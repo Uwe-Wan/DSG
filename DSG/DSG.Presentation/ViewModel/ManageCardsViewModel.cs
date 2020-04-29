@@ -8,19 +8,21 @@ using DSG.BusinessComponents.Cards;
 using System.Windows.Input;
 using System.Linq;
 using DSG.Presentation.ViewEntity;
+using System;
+using DSG.BusinessComponents;
 
 namespace DSG.Presentation.ViewModel
 {
     public class ManageCardsViewModel : Notifier, IViewModel
     {
         private Card _selectedCard;
-        private DominionExpansion _selectedExpansion;
         private ICostBc _costBc;
         private ICardBc _cardBc;
         private string _newCardsName;
         private int? _newCardsCost;
         private int? _newCardsDept;
         private bool _newCardCostsPotion;
+        private LookupBc<CardType> _lookupBc;
 
         public Card SelectedCard
         {
@@ -86,9 +88,17 @@ namespace DSG.Presentation.ViewModel
             }
         }
 
+        public LookupBc<CardType> LookupBc
+        {
+            get { return _lookupBc ?? new LookupBc<CardType>(); }
+            set { _lookupBc = value; }
+        }
+
         public string ManageCardsScreenTitle { get; set; }
 
         public SelectedExpansionViewEntity SelectedExpansionViewEntity { get; set; }
+
+        public List<IsCardTypeSelectedDto> SelectedCardTypes { get; set; }
 
         public ManageCardsViewModel()
         {
@@ -104,17 +114,17 @@ namespace DSG.Presentation.ViewModel
 
             IEnumerable<DominionExpansion> enumData = data[1] as IEnumerable<DominionExpansion>;
             AvailableCosts.Clear();
-            foreach (DominionExpansion expansion in enumData)
-            {
-                AvailableCosts.AddRange(expansion
-                    .ContainedCards
-                    .Select(card => card.Cost)
-                    .Distinct()
-                    .ToList()
-                    );
-            }
+            AvailableCosts.AddRange(
+                enumData
+                .SelectMany(expansion => expansion.ContainedCards)
+                .Select(card => card.Cost)
+                .Distinct()
+                .ToList());
 
             ManageCardsScreenTitle = string.Join(" ", "Manage Cards of Expansion", SelectedExpansionViewEntity.ExpansionName);
+
+            IEnumerable<CardTypeEnum> enums = Enum.GetValues(typeof(CardTypeEnum)) as IEnumerable<CardTypeEnum>;
+            SelectedCardTypes = enums.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
         }
 
         public void AddCard()
@@ -124,7 +134,6 @@ namespace DSG.Presentation.ViewModel
 
             if (matchingCost == null)
             {
-                CostBc.InsertCost(newCost);
                 AvailableCosts.Add(newCost);
                 InsertCard(newCost);
             }
@@ -136,13 +145,23 @@ namespace DSG.Presentation.ViewModel
 
         private void InsertCard(Cost cost)
         {
+            List<CardType> cardTypes = LookupBc.GetLookup();
+
+            List<CardTypeToCard> cardTypeToCards = SelectedCardTypes
+                .Where(type => type.IsSelected == true)
+                .Select(type => type.CardType)
+                .Select(type => new CardTypeToCard { CardTypeId = type })
+                .ToList();
+
             Card card = new Card
             {
                 Cost = cost,
                 Name = NewCardsName,
                 DominionExpansion = SelectedExpansionViewEntity.DominionExpansion,
                 CostId = cost.Id,
-                DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id
+                DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id,
+                CardTypeToCards = cardTypeToCards
+                //CardTypeToCards = cardTypes.Where(types => types.Id == CardTypeEnum.Action).Select(type => new CardTypeToCard {CardTypeId = type.Id }).ToList()
             };
             CardBc.InsertCard(card);
 
