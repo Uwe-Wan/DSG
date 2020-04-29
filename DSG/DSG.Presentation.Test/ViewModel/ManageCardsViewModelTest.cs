@@ -63,16 +63,16 @@ namespace DSG.Presentation.Test.ViewModel
 
         private void CheckCardTypeList()
         {
-            _testee.SelectedCardTypes.Values.Should().NotContain(true);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Action);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Victory);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Treasure);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Night);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Event);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Landmark);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Project);
-            _testee.SelectedCardTypes.Keys.Should().Contain(CardTypeEnum.Way);
-            _testee.SelectedCardTypes.Keys.Should().HaveCount(8);
+            _testee.SelectedCardTypes.Select(type => type.IsSelected).Should().NotContain(true);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Action);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Victory);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Treasure);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Night);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Event);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Landmark);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Project);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().Contain(CardTypeEnum.Way);
+            _testee.SelectedCardTypes.Select(type => type.CardType).Should().HaveCount(8);
         }
 
         [Test]
@@ -85,14 +85,16 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.NewCardsDept = 0;
 
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { ContainedCards = new List<Card>()});
+            
+            _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
 
             //Act
             _testee.AddCard();
 
             //Assert
-            _costBcMock.Verify(bc => bc.InsertCost(It.IsAny<Cost>()), Times.Never);
             _cardBcMock.Verify(bc => bc.InsertCard(It.Is<Card>(card => card.Cost.Money == 2 && card.Cost.Dept == 0 && card.Cost.Potion == false)), Times.Once);
             _cardBcMock.VerifyNoOtherCalls();
+            _testee.AvailableCosts.Should().HaveCount(1);
         }
 
         [Test]
@@ -103,17 +105,20 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.NewCardCostsPotion = false;
             _testee.NewCardsCost = 3;
             _testee.NewCardsDept = 0;
+            _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
 
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { ContainedCards = new List<Card>()});
+
+            _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
 
             //Act
             _testee.AddCard();
 
             //Assert
-            _costBcMock.Verify(bc => bc.InsertCost(It.Is<Cost>(cost => cost.Money == 3)), Times.Once);
             _costBcMock.VerifyNoOtherCalls();
             _cardBcMock.Verify(bc => bc.InsertCard(It.Is<Card>(card => card.Cost.Money == 3 && card.Cost.Dept == 0 && card.Cost.Potion == false)), Times.Once);
             _cardBcMock.VerifyNoOtherCalls();
+            _testee.AvailableCosts.Should().HaveCount(2);
         }
     }
 }

@@ -145,8 +145,6 @@ namespace DSG.Presentation.ViewModel
 
         private void InsertCard(Cost cost)
         {
-            List<CardType> cardTypes = LookupBc.GetLookup();
-
             List<CardTypeToCard> cardTypeToCards = SelectedCardTypes
                 .Where(type => type.IsSelected == true)
                 .Select(type => type.CardType)
@@ -161,7 +159,6 @@ namespace DSG.Presentation.ViewModel
                 CostId = cost.Id,
                 DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id,
                 CardTypeToCards = cardTypeToCards
-                //CardTypeToCards = cardTypes.Where(types => types.Id == CardTypeEnum.Action).Select(type => new CardTypeToCard {CardTypeId = type.Id }).ToList()
             };
             CardBc.InsertCard(card);
 
