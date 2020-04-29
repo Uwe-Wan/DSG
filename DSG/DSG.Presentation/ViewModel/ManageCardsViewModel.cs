@@ -9,7 +9,6 @@ using System.Windows.Input;
 using System.Linq;
 using DSG.Presentation.ViewEntity;
 using System;
-using DSG.BusinessComponents;
 
 namespace DSG.Presentation.ViewModel
 {
@@ -22,7 +21,6 @@ namespace DSG.Presentation.ViewModel
         private int? _newCardsCost;
         private int? _newCardsDept;
         private bool _newCardCostsPotion;
-        private LookupBc<CardType> _lookupBc;
 
         public Card SelectedCard
         {
@@ -86,12 +84,6 @@ namespace DSG.Presentation.ViewModel
                 _newCardCostsPotion = value;
                 OnPropertyChanged(nameof(NewCardCostsPotion));
             }
-        }
-
-        public LookupBc<CardType> LookupBc
-        {
-            get { return _lookupBc ?? new LookupBc<CardType>(); }
-            set { _lookupBc = value; }
         }
 
         public string ManageCardsScreenTitle { get; set; }
