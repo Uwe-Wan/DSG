@@ -2,10 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using DSG.BusinessComponents.Cards;
-using DSG.BusinessComponents.Costs;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardTypes;
-using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel;
 using FluentAssertions;
@@ -19,7 +17,6 @@ namespace DSG.Presentation.Test.ViewModel
     {
         private ManageCardsViewModel _testee;
         private Mock<ICardBc> _cardBcMock;
-        private Mock<ICostBc> _costBcMock;
 
         [SetUp]
         public void Setup()
@@ -28,9 +25,6 @@ namespace DSG.Presentation.Test.ViewModel
 
             _cardBcMock = new Mock<ICardBc>();
             _testee.CardBc = _cardBcMock.Object;
-
-            _costBcMock = new Mock<ICostBc>();
-            _testee.CostBc = _costBcMock.Object;
         }
 
         [Test]
@@ -116,7 +110,6 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.AddCard();
 
             //Assert
-            _costBcMock.VerifyNoOtherCalls();
             _cardBcMock.Verify(bc => bc.InsertCard(It.Is<Card>(card => card.Cost.Money == 3 && card.Cost.Dept == 0 && card.Cost.Potion == false)), Times.Once);
             _cardBcMock.VerifyNoOtherCalls();
             _testee.AvailableCosts.Should().HaveCount(2);

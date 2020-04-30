@@ -3,7 +3,6 @@ using DSG.Presentation.Services;
 using System.Threading.Tasks;
 using DSG.Common;
 using System.Collections.Generic;
-using DSG.BusinessComponents.Costs;
 using DSG.BusinessComponents.Cards;
 using System.Windows.Input;
 using System.Linq;
@@ -17,7 +16,6 @@ namespace DSG.Presentation.ViewModel
     public class ManageCardsViewModel : Notifier, IViewModel
     {
         private Card _selectedCard;
-        private ICostBc _costBc;
         private ICardBc _cardBc;
         private string _newCardsName;
         private int? _newCardsCost;
@@ -32,12 +30,6 @@ namespace DSG.Presentation.ViewModel
                 _selectedCard = value;
                 OnPropertyChanged(nameof(SelectedCard));
             }
-        }
-
-        public ICostBc CostBc
-        {
-            get { return _costBc; }
-            set { _costBc = value; }
         }
 
         public ICardBc CardBc
