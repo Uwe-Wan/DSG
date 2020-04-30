@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DSG.BusinessEntities
+namespace DSG.BusinessEntities.CardTypes
 {
     [Table("CardType")]
     public class CardType
@@ -13,6 +13,6 @@ namespace DSG.BusinessEntities
         public string Name { get; set; }
 
         [Required]
-        public bool IsKingdomCard { get; set; }
+        public bool IsSupplyType { get; set; }
     }
 }

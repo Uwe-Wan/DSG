@@ -1,4 +1,5 @@
 ﻿using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardTypes;
 using DSG.BusinessEntities.GetEnums;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace DSG.BusinessComponents.Generation
 
             List<Card> availableKingdomCards = availableCards.Where(
                 card => card.CardTypeToCards
-                    .Select(x => x.CardType.IsKingdomCard)
+                    .Select(x => x.CardType.IsSupplyType)
                     .Any(x => x == true))
                 .ToList();
 

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using DSG.BusinessComponents.Cards;
 using DSG.BusinessComponents.Costs;
 using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardTypes;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel;

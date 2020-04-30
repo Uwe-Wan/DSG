@@ -1,4 +1,4 @@
-﻿namespace DSG.BusinessEntities
+﻿namespace DSG.BusinessEntities.CardTypes
 {
     public enum CardTypeEnum
     {

@@ -1,10 +1,11 @@
-﻿namespace DSG.BusinessEntities.Migrations
-{
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+﻿using DSG.BusinessEntities.CardSubTypes;
+using DSG.BusinessEntities.CardTypes;
+using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
 
+namespace DSG.BusinessEntities.Migrations
+{
     internal sealed class Configuration : DbMigrationsConfiguration<DSG.BusinessEntities.CardManagementDbContext>
     {
         public Configuration()
@@ -26,7 +27,16 @@
                     .Select(x => new CardType() { 
                         Id = x, 
                         Name = x.ToString(), 
-                        IsKingdomCard = (x == CardTypeEnum.Action || x == CardTypeEnum.Treasure || x == CardTypeEnum.Victory || x == CardTypeEnum.Night) })
+                        IsSupplyType = (x == CardTypeEnum.Action || x == CardTypeEnum.Treasure || x == CardTypeEnum.Victory || x == CardTypeEnum.Night) })
+                    .ToArray());
+
+            context.CardSubType.AddOrUpdate(
+                x => x.Id,
+                Enum.GetValues(typeof(CardSubTypeEnum))
+                    .OfType<CardSubTypeEnum>()
+                    .Select(x => new CardSubType() { 
+                        Id = x, 
+                        Name = x.ToString() })
                     .ToArray());
         }
     }

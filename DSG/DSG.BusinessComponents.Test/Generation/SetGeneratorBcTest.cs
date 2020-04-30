@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardTypes;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -38,8 +39,8 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_12CardButOnly6Kingdom_ReturnNull()
         {
             //Arrange
-            List<CardTypeToCard> kingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsKingdomCard = true } } };
-            List<CardTypeToCard> nonKingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsKingdomCard = false } } };
+            List<CardTypeToCard> kingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
+            List<CardTypeToCard> nonKingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } };
 
             DominionExpansion firstExpansion = new DominionExpansion();
             for (int i = 0; i < 5; i++)
@@ -70,7 +71,7 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_15AvailableCards_SetOf10Returned()
         {
             //Arrange
-            List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsKingdomCard = true } } };
+            List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
 
             List<DominionExpansion> expansions = new List<DominionExpansion>();
             for (int j = 0; j < 3; j++)

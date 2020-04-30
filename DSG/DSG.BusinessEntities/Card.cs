@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DSG.BusinessEntities.CardSubTypes;
+using DSG.BusinessEntities.CardTypes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -30,5 +32,7 @@ namespace DSG.BusinessEntities
         public DominionExpansion DominionExpansion { get; set; }
 
         public List<CardTypeToCard> CardTypeToCards { get; set; }
+
+        public List<CardSubTypeToCard> CardSubTypeToCards { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using System.Linq;
 using DSG.Presentation.ViewEntity;
 using System;
 using DSG.BusinessEntities.GetEnums;
+using DSG.BusinessEntities.CardTypes;
 
 namespace DSG.Presentation.ViewModel
 {

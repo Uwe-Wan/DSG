@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DSG.BusinessEntities.CardSubTypes;
+using DSG.BusinessEntities.CardTypes;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,6 +22,10 @@ namespace DSG.BusinessEntities
         public virtual DbSet<CardType> CardType { get; set; }
 
         public virtual DbSet<CardTypeToCard> CardTypeToCard { get; set; }
+
+        public virtual DbSet<CardSubType> CardSubType { get; set; }
+
+        public virtual DbSet<CardSubTypeToCard> CardSubTypeToCard { get; set; }
 
     }
 }
