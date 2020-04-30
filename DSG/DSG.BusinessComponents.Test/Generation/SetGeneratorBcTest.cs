@@ -22,7 +22,7 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_LessThan10AvailableCards_ReturnNull()
         {
             //Arrange
-            Card oneCard = new Card();
+            Card oneCard = new Card { CardTypeToCards = new List<CardTypeToCard> { } };
             List<Card> cards = new List<Card> { oneCard };
 
             DominionExpansion expansion = new DominionExpansion { ContainedCards = cards };
@@ -35,16 +35,50 @@ namespace DSG.BusinessComponentsTest.Generation
         }
 
         [Test]
+        public void GenerateSet_12CardButOnly6Kingdom_ReturnNull()
+        {
+            //Arrange
+            List<CardTypeToCard> kingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsKingdomCard = true } } };
+            List<CardTypeToCard> nonKingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsKingdomCard = false } } };
+
+            DominionExpansion firstExpansion = new DominionExpansion();
+            for (int i = 0; i < 5; i++)
+            {
+                firstExpansion.ContainedCards.Add(new Card() { CardTypeToCards = kingdomTypes });
+            }
+
+            DominionExpansion secondExpansion = new DominionExpansion();
+            for (int i = 0; i < 5; i++)
+            {
+                secondExpansion.ContainedCards.Add(new Card() { CardTypeToCards = nonKingdomTypes });
+            }
+
+            List<DominionExpansion> expansions = new List<DominionExpansion> { firstExpansion, secondExpansion };
+
+
+            Card oneCard = new Card { CardTypeToCards = new List<CardTypeToCard> { } };
+            List<Card> cards = new List<Card> { oneCard };
+
+
+            Action act = () => _testee.GenerateSet(expansions);
+
+            //Act
+            act.Should().Throw<Exception>().WithMessage("Not enough Cards available.");
+        }
+
+        [Test]
         public void GenerateSet_15AvailableCards_SetOf10Returned()
         {
             //Arrange
+            List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsKingdomCard = true } } };
+
             List<DominionExpansion> expansions = new List<DominionExpansion>();
             for (int j = 0; j < 3; j++)
             {
                 DominionExpansion expansion = new DominionExpansion();
                 for (int i = 0; i < 5; i++)
                 {
-                    expansion.ContainedCards.Add(new Card());
+                    expansion.ContainedCards.Add(new Card() { CardTypeToCards = cardTypeToCards });
                 }
 
                 expansions.Add(expansion);

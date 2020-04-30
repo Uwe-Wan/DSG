@@ -11,5 +11,8 @@ namespace DSG.BusinessEntities
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
+
+        [Required]
+        public bool IsKingdomCard { get; set; }
     }
 }

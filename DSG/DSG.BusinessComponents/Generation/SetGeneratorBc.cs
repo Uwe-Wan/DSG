@@ -1,4 +1,5 @@
 ﻿using DSG.BusinessEntities;
+using DSG.BusinessEntities.GetEnums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +12,21 @@ namespace DSG.BusinessComponents.Generation
         {
             List<Card> availableCards = dominionExpansions.SelectMany(expansion => expansion.ContainedCards).ToList();
 
-            if(availableCards.Count < 10)
+            List<CardTypeEnum> cardTypes = CardTypeGetter.GetEnum();
+
+            List<Card> availableKingdomCards = availableCards.Where(
+                card => card.CardTypeToCards
+                    .Select(x => x.CardType.IsKingdomCard)
+                    .Any(x => x == true))
+                .ToList();
+
+            if(availableKingdomCards.Count < 10)
             {
                 throw new Exception("Not enough Cards available.");
             }
 
             Random random = new Random();
-            return availableCards.OrderBy(x => random.Next()).Take(10).ToList();
+            return availableKingdomCards.OrderBy(x => random.Next()).Take(10).ToList();
         }
     }
 }

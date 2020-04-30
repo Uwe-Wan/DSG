@@ -23,7 +23,10 @@
                 x => x.Id,
                 Enum.GetValues(typeof(CardTypeEnum))
                     .OfType<CardTypeEnum>()
-                    .Select(x => new CardType() { Id = x, Name = x.ToString() })
+                    .Select(x => new CardType() { 
+                        Id = x, 
+                        Name = x.ToString(), 
+                        IsKingdomCard = (x == CardTypeEnum.Action || x == CardTypeEnum.Treasure || x == CardTypeEnum.Victory || x == CardTypeEnum.Night) })
                     .ToArray());
         }
     }

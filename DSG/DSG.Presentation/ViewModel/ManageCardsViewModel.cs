@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Linq;
 using DSG.Presentation.ViewEntity;
 using System;
+using DSG.BusinessEntities.GetEnums;
 
 namespace DSG.Presentation.ViewModel
 {
@@ -115,8 +116,8 @@ namespace DSG.Presentation.ViewModel
 
             ManageCardsScreenTitle = string.Join(" ", "Manage Cards of Expansion", SelectedExpansionViewEntity.ExpansionName);
 
-            IEnumerable<CardTypeEnum> enums = Enum.GetValues(typeof(CardTypeEnum)) as IEnumerable<CardTypeEnum>;
-            SelectedCardTypes = enums.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
+            List<CardTypeEnum> cardTypes = CardTypeGetter.GetEnum();
+            SelectedCardTypes = cardTypes.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
         }
 
         public void AddCard()
