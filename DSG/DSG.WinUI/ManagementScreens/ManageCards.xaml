@@ -10,76 +10,153 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.2*"/>
+            <ColumnDefinition Width="0.3*"/>
             <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.35*"/>
-            <ColumnDefinition Width="0.35*"/>
+            <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.7*"/>
             <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="0.75*"/>
+            <RowDefinition Height="0.55*"/>
+            <RowDefinition Height="0.7*"/>
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" VerticalAlignment="Center" Grid.ColumnSpan="7" HorizontalAlignment="Center" FontSize="20" Text="{Binding ManageCardsScreenTitle}">
+        <TextBlock 
+            Grid.Row="0"  
+            Grid.ColumnSpan="11"  
+            Style="{StaticResource pageTitleDefaultStyle}"
+            Text="{Binding ManageCardsScreenTitle}">
         </TextBlock>
 
-        <DataGrid Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" AutoGenerateColumns="False" ItemsSource="{Binding SelectedExpansionViewEntity.ContainedCards}"
-                  CanUserAddRows="False" IsReadOnly="True">
+        <DataGrid 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            Grid.RowSpan="4"  
+            ItemsSource="{Binding SelectedExpansionViewEntity.ContainedCards}"
+            IsReadOnly="True" 
+            Style="{StaticResource dataGridDefaultStyle}">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="Cornsilk" />
+                            <Setter Property="Foreground" Value="HotPink" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
                     <DataGridTextColumn.Header>
-                        <TextBlock Text="Cards in Set"/>
+                        <TextBlock Style="{StaticResource dataGridTitleDefaultStyle}" Text="Cards in Set"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3">
-            <Label>Name</Label>
+            <Label FontSize="17">Name</Label>
 
-            <TextBox  Height="32" Text="{Binding NewCardsName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox  Style="{StaticResource nameBox}" Text="{Binding NewCardsName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="3">
-            <Label>Money</Label>
+            <Label FontSize="17">Money</Label>
 
-            <TextBox  Height="32" Width="50" Text="{Binding NewCardsCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewCardsCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="4">
-            <Label>Dept</Label>
+            <Label FontSize="17">Dept</Label>
 
-            <TextBox  Height="32" Width="50" Text="{Binding NewCardsDept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewCardsDept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="5">
-            <Label>Potion</Label>
+            <Label FontSize="17">Potion</Label>
 
-            <CheckBox IsChecked="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <CheckBox Background="Wheat" IsChecked="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
-        <DataGrid Grid.Column="7" Grid.Row="1" Grid.RowSpan="2" AutoGenerateColumns="False" ItemsSource="{Binding SelectedCardTypes}"
-                  CanUserAddRows="False" GridLinesVisibility="None">
+        <DataGrid 
+            Grid.Column="7" 
+            Grid.Row="1" 
+            Grid.RowSpan="2" 
+            ItemsSource="{Binding SelectedCardTypes}"                 
+            Style="{StaticResource dataGridDefaultStyle}"
+            Width="Auto">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="Cornsilk" />
+                            <Setter Property="Foreground" Value="HotPink" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding IsSelected}" IsReadOnly="False"/>
-                <DataGridTextColumn Binding="{Binding CardType, Converter={StaticResource CardTypeEnumToStringConverter}}" FontSize="20" Width="*" IsReadOnly="True">
+                <DataGridCheckBoxColumn 
+                    ElementStyle="{StaticResource checkboxStyle}" 
+                    Binding="{Binding IsSelected}" 
+                    IsReadOnly="False"/>
+                <DataGridTextColumn 
+                    Binding="{Binding CardType, Converter={StaticResource CardTypeEnumToStringConverter}}" 
+                    FontSize="20" 
+                    Width="*" 
+                    IsReadOnly="True">
                     <DataGridTextColumn.Header>
-                        <TextBlock Text="Card Types"/>
+                        <TextBlock Style="{StaticResource dataGridTitleDefaultStyle}" FontSize="18" Text="Card Types"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="3" Grid.Column="5" Height="32" Command="{Binding AddCardCommand}" Style="{StaticResource PinkButton}">
+        <DataGrid 
+            Grid.Column="9" 
+            Grid.Row="1" 
+            Grid.RowSpan="3" 
+            ItemsSource="{Binding SelectedCardSubTypes}"             
+            Style="{StaticResource dataGridDefaultStyle}"            
+            Width="Auto">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="Cornsilk" />
+                            <Setter Property="Foreground" Value="HotPink" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn 
+                    ElementStyle="{StaticResource checkboxStyle}" 
+                    Binding="{Binding IsSelected}" 
+                    IsReadOnly="False"/>
+                <DataGridTextColumn 
+                    Binding="{Binding CardSubType, Converter={StaticResource CardSubTypeEnumToStringConverter}}"
+                    FontSize="20" 
+                    IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Style="{StaticResource dataGridTitleDefaultStyle}" FontSize="16" Text="Card Sub Types"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="4" Grid.Column="4" Grid.ColumnSpan="3" Height="32" Command="{Binding AddCardCommand}" Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Card
             </TextBlock>

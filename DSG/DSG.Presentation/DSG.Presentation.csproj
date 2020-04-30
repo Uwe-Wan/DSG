@@ -46,6 +46,7 @@
     <EmbeddedResource Include="Presentation.spring.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converter\CardSubTypeEnumToStringConverter.cs" />
     <Compile Include="Converter\CardTypeEnumToStringConverter.cs" />
     <Compile Include="Converter\ObjectSelectedToBooleanConverter.cs" />
     <Compile Include="RelayCommand.cs" />

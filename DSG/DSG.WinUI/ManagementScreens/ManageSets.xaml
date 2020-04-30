@@ -27,12 +27,30 @@
             <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" VerticalAlignment="Center" Grid.ColumnSpan="7" HorizontalAlignment="Center" FontSize="20">
+        <TextBlock 
+            Grid.Row="0" 
+            Grid.ColumnSpan="7" 
+            Style="{StaticResource pageTitleDefaultStyle}">
             Manage Sets
         </TextBlock>
 
-        <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding DominionExpansions}"
-                  CanUserAddRows="False" IsReadOnly="True" SelectedItem="{Binding SelectedExpansion, Mode=TwoWay}">
+        <DataGrid 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            ItemsSource="{Binding DominionExpansions}"
+            Style="{StaticResource dataGridDefaultStyle}"           
+            IsReadOnly="True" 
+            SelectedItem="{Binding SelectedExpansion, Mode=TwoWay}">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="Cornsilk" />
+                            <Setter Property="Foreground" Value="HotPink" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
                     <DataGridTextColumn.Header>
@@ -42,10 +60,24 @@
             </DataGrid.Columns>
         </DataGrid>       
         
-        <DataGrid Grid.Column="5" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding SelectedExpansion.ContainedCards}"
-                  CanUserAddRows="False" IsReadOnly="True" GridLinesVisibility="None">
+        <DataGrid 
+            Grid.Column="5" 
+            Grid.Row="1"  
+            ItemsSource="{Binding SelectedExpansion.ContainedCards}"
+            Style="{StaticResource dataGridDefaultStyle}"                  
+            IsReadOnly="True">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <Trigger Property="DataGridCell.IsSelected" Value="True">
+                            <Setter Property="Background" Value="Cornsilk" />
+                            <Setter Property="Foreground" Value="HotPink" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" FontSize="20">
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="Cards in Set" FontWeight="Bold"/>
                     </DataGridTextColumn.Header>
@@ -53,15 +85,28 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <TextBox Grid.Row="3" Grid.Column="1" Height="32" Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        <TextBox 
+            Grid.Row="3" 
+            Grid.Column="1" Height="32" 
+            Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+            Style="{StaticResource nameBox}"/>
 
-        <Button Grid.Row="3" Grid.Column="3" Height="32" Command="{Binding InsertCommand}" Style="{StaticResource PinkButton}">
+        <Button 
+            Grid.Row="3" 
+            Grid.Column="3" 
+            Command="{Binding InsertCommand}" 
+            Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Set
             </TextBlock>
         </Button>
 
-        <Button Grid.Row="3" Grid.Column="5" Height="32" Command="{Binding AddCardsCommand}" IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}" Style="{StaticResource PinkButton}">
+        <Button 
+            Grid.Row="3" 
+            Grid.Column="5" 
+            Command="{Binding AddCardsCommand}" 
+            IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}"
+            Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Cards
             </TextBlock>

@@ -1,6 +1,4 @@
-﻿using DSG.BusinessEntities.CardTypes;
-
-namespace DSG.BusinessEntities
+﻿namespace DSG.BusinessEntities.CardTypes
 {
     public class IsCardTypeSelectedDto
     {

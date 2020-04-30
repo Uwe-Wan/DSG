@@ -13,7 +13,7 @@ namespace DSG.BusinessComponents.Generation
         {
             List<Card> availableCards = dominionExpansions.SelectMany(expansion => expansion.ContainedCards).ToList();
 
-            List<CardTypeEnum> cardTypes = CardTypeGetter.GetEnum();
+            List<CardTypeEnum> cardTypes = GetEnum.CardType();
 
             List<Card> availableKingdomCards = availableCards.Where(
                 card => card.CardTypeToCards

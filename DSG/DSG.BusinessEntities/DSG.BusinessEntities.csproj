@@ -78,13 +78,14 @@
     <Compile Include="CardSubTypes\CardSubType.cs" />
     <Compile Include="CardSubTypes\CardSubTypeEnum.cs" />
     <Compile Include="CardSubTypes\CardSubTypeToCard.cs" />
+    <Compile Include="CardSubTypes\IsCardSubTypeSelectedDto.cs" />
     <Compile Include="CardTypes\CardType.cs" />
     <Compile Include="CardTypes\CardTypeEnum.cs" />
     <Compile Include="CardTypes\CardTypeToCard.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="DominionExpansion.cs" />
-    <Compile Include="GetEnums\CardTypeGetter.cs" />
-    <Compile Include="IsCardTypeSelectedDto.cs" />
+    <Compile Include="GetEnums\GetEnum.cs" />
+    <Compile Include="CardTypes\IsCardTypeSelectedDto.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.designer.cs">
       <DependentUpon>202004151555341_CreateDSGDatabase.cs</DependentUpon>

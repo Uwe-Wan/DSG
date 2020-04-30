@@ -25,7 +25,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5" VerticalAlignment="Center" FontSize="50" HorizontalAlignment="Center">
+        <TextBlock 
+            Grid.Row="0" 
+            Grid.Column="0" 
+            Grid.ColumnSpan="5" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Center"
+            FontSize="80" 
+            FontWeight="Bold">
             Niiki
         </TextBlock>
 

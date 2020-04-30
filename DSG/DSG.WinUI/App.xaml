@@ -22,13 +22,67 @@
         <Style TargetType="Button" x:Key="PinkButton">
             <Setter Property="Background">
                 <Setter.Value>
-                    <SolidColorBrush Color="#FF83FA"/>
+                    <SolidColorBrush Color="HotPink"/>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Button.Height" Value="32"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="CostBox" >
+            <Setter Property="TextBox.Height" Value="32"/>
+            <Setter Property="TextBox.Width" Value="36"/>
+            <Setter Property="TextBox.FontSize" Value="20"/>
+            <Setter Property="TextBox.HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="TextBox.VerticalContentAlignment" Value="Center"/>
+            <Setter Property="TextBox.Background" Value="Wheat"/>
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="nameBox" >
+            <Setter Property="TextBox.Height" Value="32"/>
+            <Setter Property="TextBox.FontSize" Value="20"/>
+            <Setter Property="TextBox.HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="TextBox.VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="TextBox.Background" Value="Wheat"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="dataGridTitleDefaultStyle" >
+            <Setter Property="TextBlock.FontSize" Value="20"/>
+            <Setter Property="TextBlock.FontWeight" Value="DemiBold"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="pageTitleDefaultStyle" >
+            <Setter Property="TextBlock.FontSize" Value="30"/>
+            <Setter Property="TextBlock.FontWeight" Value="Bold"/>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="DataGrid" x:Key="dataGridDefaultStyle" >
+            <Setter Property="DataGrid.Background" Value="Wheat"/>
+            <Setter Property="DataGrid.AlternatingRowBackground" Value="Wheat"/>
+            <Setter Property="DataGrid.RowBackground" Value="Beige"/>
+            <Setter Property="DataGrid.GridLinesVisibility" Value="None"/>
+            <Setter Property="DataGrid.CanUserAddRows" Value="False"/>
+            <Setter Property="DataGrid.AutoGenerateColumns" Value="False"/>
+            <Setter Property="DataGrid.Height" Value="Auto"/>
+        </Style>
+
+        <Style TargetType="DataGridCell" x:Key="selectedCellDefaultStyle">
+            <Style.Triggers>
+                <Trigger Property="DataGridCell.IsSelected" Value="True">
+                    <Setter Property="Background" Value="Cornsilk" />
+                    <Setter Property="Foreground" Value="HotPink" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="CheckBox" x:Key="checkboxStyle" >
+            <Setter Property="CheckBox.Background" Value="SeaShell"/>
         </Style>
 
         <converter:ObjectSelectedToBooleanConverter x:Key="ObjectSelectedToBooleanConvert"/>
         <converter:CardTypeEnumToStringConverter x:Key="CardTypeEnumToStringConverter"/>
+        <converter:CardSubTypeEnumToStringConverter x:Key="CardSubTypeEnumToStringConverter"/>
         
         <Image x:Key="WhatAWorld">
             <Image.Source>

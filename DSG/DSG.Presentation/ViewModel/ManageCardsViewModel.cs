@@ -10,6 +10,7 @@ using DSG.Presentation.ViewEntity;
 using System;
 using DSG.BusinessEntities.GetEnums;
 using DSG.BusinessEntities.CardTypes;
+using DSG.BusinessEntities.CardSubTypes;
 
 namespace DSG.Presentation.ViewModel
 {
@@ -86,6 +87,8 @@ namespace DSG.Presentation.ViewModel
 
         public List<IsCardTypeSelectedDto> SelectedCardTypes { get; set; }
 
+        public List<IsCardSubTypeSelectedDto> SelectedCardSubTypes { get; set; }
+
         public ManageCardsViewModel()
         {
             AvailableCosts = new List<Cost>();
@@ -109,8 +112,11 @@ namespace DSG.Presentation.ViewModel
 
             ManageCardsScreenTitle = string.Join(" ", "Manage Cards of Expansion", SelectedExpansionViewEntity.ExpansionName);
 
-            List<CardTypeEnum> cardTypes = CardTypeGetter.GetEnum();
+            List<CardTypeEnum> cardTypes = GetEnum.CardType();
             SelectedCardTypes = cardTypes.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
+
+            List<CardSubTypeEnum> cardSubTypes = GetEnum.CardSubType();
+            SelectedCardSubTypes = cardSubTypes.Select(subType => new IsCardSubTypeSelectedDto { CardSubType = subType, IsSelected = false }).ToList();
         }
 
         public void AddCard()
