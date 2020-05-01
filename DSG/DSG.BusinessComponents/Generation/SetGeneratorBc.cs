@@ -1,5 +1,6 @@
 ﻿using DSG.BusinessComponents.Probabilities;
 using DSG.BusinessEntities;
+using DSG.Common.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +41,7 @@ namespace DSG.BusinessComponents.Generation
 
             if (availableSupplyCards.Count < 10)
             {
-                throw new Exception("Not enough Cards available.");
+                throw new NotEnoughCardsAvailableException("Not enough Cards available.");
             }
 
             return ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(availableSupplyCards, 10);

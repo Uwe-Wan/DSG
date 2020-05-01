@@ -52,6 +52,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\NotEnoughCardsAvailableException.cs" />
     <Compile Include="Exceptions\ProbabilitiesTooHighException.cs" />
     <Compile Include="Extensions\ObservableCollectionExtension.cs" />
     <Compile Include="Notifier.cs" />

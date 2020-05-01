@@ -6,6 +6,7 @@ using DSG.BusinessComponents.Generation;
 using DSG.BusinessComponents.Probabilities;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardTypes;
+using DSG.Common.Exceptions;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -44,7 +45,7 @@ namespace DSG.BusinessComponentsTest.Generation
             Action act = () => _testee.GenerateSet(expansions);
 
             //Act
-            act.Should().Throw<Exception>().WithMessage("Not enough Cards available.");
+            act.Should().Throw<NotEnoughCardsAvailableException>().WithMessage("Not enough Cards available.");
         }
 
         [Test]
@@ -76,7 +77,7 @@ namespace DSG.BusinessComponentsTest.Generation
             Action act = () => _testee.GenerateSet(expansions);
 
             //Act
-            act.Should().Throw<Exception>().WithMessage("Not enough Cards available.");
+            act.Should().Throw<NotEnoughCardsAvailableException>().WithMessage("Not enough Cards available.");
         }
 
         [Test]
