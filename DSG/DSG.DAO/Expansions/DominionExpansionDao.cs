@@ -27,6 +27,8 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.Cost")
                 .Include("ContainedCards.CardTypeToCards")
                 .Include("ContainedCards.CardTypeToCards.CardType")
+                .Include("ContainedCards.CardSubTypeToCards")
+                .Include("ContainedCards.CardSubTypeToCards.CardSubType")
                 .ToList();
         }
 
