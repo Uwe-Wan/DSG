@@ -79,6 +79,10 @@
     <Compile Include="Generation\ISetGeneratorBc.cs" />
     <Compile Include="Generation\SetGeneratorBc.cs" />
     <Compile Include="LookupBc.cs" />
+    <Compile Include="Probabilities\GetIntByProbabilityBc.cs" />
+    <Compile Include="Probabilities\IGetIntByProbabilityBc.cs" />
+    <Compile Include="Probabilities\IShuffleListBc.cs" />
+    <Compile Include="Probabilities\ShuffleListBc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
