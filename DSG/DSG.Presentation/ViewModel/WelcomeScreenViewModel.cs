@@ -2,12 +2,14 @@
 using DSG.BusinessEntities;
 using DSG.Common.Extensions;
 using DSG.Presentation.Services;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
+
+[assembly: InternalsVisibleTo("DSG.Presentation.Test")]
 
 namespace DSG.Presentation.ViewModel
 {
@@ -40,7 +42,7 @@ namespace DSG.Presentation.ViewModel
         public WelcomeScreenViewModel()
         {
             NavigateToManageSetsScreenCommand = new RelayCommand(p => NavigateTo(NavigationDestination.ManageSets));
-            GenerateSetCommand = new RelayCommand(p => GenerateSet());
+            GenerateSetCommand = new RelayCommand(c => GoToGenerationOptions());
             DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
@@ -54,7 +56,7 @@ namespace DSG.Presentation.ViewModel
             DominionExpansions.AddRange(expansions);
         }
 
-        private void GenerateSet()
+        internal void GoToGenerationOptions()
         {
             int availableCards = DominionExpansions.SelectMany(expansions => expansions.ContainedCards).Count();
             
