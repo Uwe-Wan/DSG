@@ -24,7 +24,6 @@ namespace DSG.Presentation.ViewModel.Generation
         public async Task OnPageLoadedAsync(params object[] data)
         {
             IEnumerable<DominionExpansion> expansionData = data[0] as IEnumerable<DominionExpansion>;
-
             List<DominionExpansion> expansions = expansionData.ToList();
 
             GeneratedSet = SetGeneratorBc.GenerateSet(expansions);

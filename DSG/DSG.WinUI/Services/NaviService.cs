@@ -72,6 +72,15 @@ namespace DSG.WinUI.Services
                         break;
                     }
 
+                case NavigationDestination.GenerationOptions:
+                    {
+                        GenerationOptionsViewModel viewModel = Context.GetObject<GenerationOptionsViewModel>("generationOptionsViewModel");
+                        //todo: include this after GenerationOptions View was created
+                        //GeneratedSet view = new GeneratedSet();
+                        //await NavigateToDestination(view, viewModel, NavigationDestination.GenerationOptions, data);
+                        break;
+                    }
+
                 case NavigationDestination.GeneratedSet:
                     {
                         GeneratedSetViewModel viewModel = Context.GetObject<GeneratedSetViewModel>("generatedSetViewModel");

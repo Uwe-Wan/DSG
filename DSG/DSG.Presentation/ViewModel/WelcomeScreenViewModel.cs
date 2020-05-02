@@ -66,7 +66,7 @@ namespace DSG.Presentation.ViewModel
                 return;
             }
 
-            NavigateTo(NavigationDestination.GeneratedSet);
+            NavigateTo(NavigationDestination.GenerationOptions);
         }
 
         private void NavigateTo(NavigationDestination destination)

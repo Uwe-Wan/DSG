@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using DSG.BusinessComponents.Expansions;
@@ -7,7 +6,6 @@ using DSG.BusinessEntities;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewModel;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
 

@@ -86,6 +86,7 @@
     <Compile Include="DominionExpansion.cs" />
     <Compile Include="GetEnums\GetEnum.cs" />
     <Compile Include="CardTypes\IsCardTypeSelectedDto.cs" />
+    <Compile Include="IsDominionExpansionSelectedDto.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.cs" />
     <Compile Include="Migrations\202004151555341_CreateDSGDatabase.designer.cs">
       <DependentUpon>202004151555341_CreateDSGDatabase.cs</DependentUpon>

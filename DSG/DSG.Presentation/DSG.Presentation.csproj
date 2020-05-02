@@ -58,6 +58,7 @@
     <Compile Include="Services\UiService.cs" />
     <Compile Include="ViewEntity\SelectedExpansionViewEntity.cs" />
     <Compile Include="ViewModel\Generation\GeneratedSetViewModel.cs" />
+    <Compile Include="ViewModel\Generation\GenerationOptionsViewModel.cs" />
     <Compile Include="ViewModel\ManageCardsViewModel.cs" />
     <Compile Include="ViewModel\ManageSetsViewModel.cs" />
     <Compile Include="ViewModel\WelcomeScreenViewModel.cs" />
