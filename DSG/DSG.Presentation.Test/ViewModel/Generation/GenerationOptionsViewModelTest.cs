@@ -1,4 +1,5 @@
 ﻿using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardTypes;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewModel.Generation;
 using FluentAssertions;
@@ -47,7 +48,15 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _naviServiceMock = new Mock<INaviService>();
             _testee.NaviService = _naviServiceMock.Object;
 
-            DominionExpansion expansion = new DominionExpansion { ContainedCards = new List<Card> { new Card() } };
+            CardTypeToCard supplyType = new CardTypeToCard { CardType = new CardType { IsSupplyType = true } };
+
+            DominionExpansion expansion = new DominionExpansion
+            {
+                ContainedCards = new List<Card> 
+                {
+                    new Card { CardTypeToCards = new List<CardTypeToCard> { supplyType } }
+                }
+            };
 
             _testee.IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };
 
@@ -73,10 +82,12 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.NaviService = _naviServiceMock.Object;
 
             DominionExpansion expansion = new DominionExpansion { ContainedCards = new List<Card>() };
+            CardTypeToCard supplyType = new CardTypeToCard { CardType = new CardType { IsSupplyType = true } };
 
-            for(int i = 0; i < 15; i++)
+            for (int i = 0; i < 15; i++)
             {
-                expansion.ContainedCards.Add(new Card());
+                expansion.ContainedCards.Add(
+                    new Card { CardTypeToCards = new List<CardTypeToCard> { supplyType } });
             }
 
             _testee.IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };

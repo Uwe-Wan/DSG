@@ -1,7 +1,7 @@
 ﻿using DSG.BusinessComponents.Probabilities;
+using DSG.BusinessComponents.StaticMethods;
 using DSG.BusinessEntities;
 using DSG.Common.Exceptions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -37,7 +37,7 @@ namespace DSG.BusinessComponents.Generation
 
         private List<Card> ChooseSupplyCards(List<Card> availableCards)
         {
-            List<Card> availableSupplyCards = RetrieveEitherSupplyCardsOrOthers(availableCards, true);
+            List<Card> availableSupplyCards = RetrieveCards.SupplyOrOthers(availableCards, true);
 
             if (availableSupplyCards.Count < 10)
             {
@@ -49,9 +49,14 @@ namespace DSG.BusinessComponents.Generation
 
         private List<Card> ChooseNonSupplyCards(List<Card> availableCards)
         {
-            List<Card> availableNonSupplyCards = RetrieveEitherSupplyCardsOrOthers(availableCards, false);
+            List<Card> availableNonSupplyCards = RetrieveCards.SupplyOrOthers(availableCards, false);
 
             int numberOfNonSupplyCards = GetIntByProbabilityBc.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7);
+
+            if(numberOfNonSupplyCards > availableNonSupplyCards.Count)
+            {
+                return availableNonSupplyCards;
+            }
 
             return ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(availableNonSupplyCards, numberOfNonSupplyCards);
         }

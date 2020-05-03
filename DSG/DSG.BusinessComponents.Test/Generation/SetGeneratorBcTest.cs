@@ -86,7 +86,7 @@ namespace DSG.BusinessComponentsTest.Generation
             //Arrange
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(1);
 
-            List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
+            List<CardTypeToCard> supplyTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
 
             List<DominionExpansion> expansions = new List<DominionExpansion>();
             for (int j = 0; j < 3; j++)
@@ -94,7 +94,7 @@ namespace DSG.BusinessComponentsTest.Generation
                 DominionExpansion expansion = new DominionExpansion();
                 for (int i = 0; i < 5; i++)
                 {
-                    expansion.ContainedCards.Add(new Card() { CardTypeToCards = cardTypeToCards });
+                    expansion.ContainedCards.Add(new Card() { CardTypeToCards = supplyTypes });
                 }
 
                 expansions.Add(expansion);
@@ -126,6 +126,45 @@ namespace DSG.BusinessComponentsTest.Generation
             {
                 result.Should().Contain(card);
             }
+        }
+
+        [Test]
+        public void GenerateSet_1NonSupplyCardBut2Chosen_DoNotThrowReturnOnlyOne()
+        {
+            //Arrange
+            _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(2);
+
+            List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
+
+            List<DominionExpansion> expansions = new List<DominionExpansion>();
+            for (int j = 0; j < 3; j++)
+            {
+                DominionExpansion expansion = new DominionExpansion();
+                for (int i = 0; i < 5; i++)
+                {
+                    expansion.ContainedCards.Add(new Card() { CardTypeToCards = cardTypeToCards });
+                }
+
+                expansions.Add(expansion);
+            }
+
+            List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
+            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
+
+            List<Card> nonSupplyCards = new List<Card>
+            {
+                new Card{ CardTypeToCards = new List<CardTypeToCard>{ new CardTypeToCard { CardType = new CardType {IsSupplyType = false}}} }
+            };
+            expansions[2].ContainedCards.AddRange(nonSupplyCards);
+
+            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
+
+            //Act
+            List<Card> result = _testee.GenerateSet(expansions);
+
+            //Assert
+            result.Should().HaveCount(11);
+            result.Should().Contain(nonSupplyCards.Single());
         }
     }
 }

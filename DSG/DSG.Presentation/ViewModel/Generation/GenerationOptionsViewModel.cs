@@ -1,8 +1,7 @@
-﻿using DSG.BusinessEntities;
-using DSG.Common.Extensions;
+﻿using DSG.BusinessComponents.StaticMethods;
+using DSG.BusinessEntities;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -50,7 +49,8 @@ namespace DSG.Presentation.ViewModel.Generation
 
         internal void GenerateSet()
         {
-            int availableSupplyCards = IsDominionExpansionSelectedDtos.SelectMany(dto => dto.DominionExpansion.ContainedCards).Count();
+            List<Card> availableCards = IsDominionExpansionSelectedDtos.SelectMany(dto => dto.DominionExpansion.ContainedCards).ToList();
+            int availableSupplyCards = RetrieveCards.SupplyOrOthers(availableCards, true).Count;
 
             if (availableSupplyCards < 10)
             {

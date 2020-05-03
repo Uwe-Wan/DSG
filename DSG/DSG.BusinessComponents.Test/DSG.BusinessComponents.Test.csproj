@@ -87,6 +87,7 @@
     <Compile Include="Probabilities\GetIntByProbabilityBcTest.cs" />
     <Compile Include="Probabilities\ShuffleListBcTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StaticMethods\RetrieveCardsTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
