@@ -24,13 +24,14 @@
         <DataGrid 
             Grid.Column="1" 
             Grid.Row="1" 
-            AutoGenerateColumns="False" 
-            ItemsSource="{Binding GeneratedSet}"                  
-            CanUserAddRows="False" 
+            ItemsSource="{Binding GeneratedSet}" 
             IsReadOnly="True" 
-            GridLinesVisibility="None">
+            Style="{StaticResource dataGridDefaultStyle}">
+            <DataGrid.Resources>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
+            </DataGrid.Resources>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" FontSize="20">
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="Created Set" FontWeight="Bold"/>
                     </DataGridTextColumn.Header>
