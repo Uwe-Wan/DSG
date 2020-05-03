@@ -42,12 +42,12 @@ namespace DSG.Presentation.ViewModel
         public WelcomeScreenViewModel()
         {
             NavigateToManageSetsScreenCommand = new RelayCommand(p => NavigateTo(NavigationDestination.ManageSets));
-            GenerateSetCommand = new RelayCommand(c => GoToGenerationOptions());
+            GenerationOptionsCommand = new RelayCommand(c => GoToGenerationOptions());
             DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
         public ICommand NavigateToManageSetsScreenCommand { get; private set; }
-        public ICommand GenerateSetCommand { get; private set; }
+        public ICommand GenerationOptionsCommand { get; private set; }
 
         public async Task OnPageLoadedAsync(params object[] data)
         {

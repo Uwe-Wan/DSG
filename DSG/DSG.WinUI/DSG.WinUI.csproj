@@ -105,6 +105,9 @@
     <Compile Include="GenerationScreens\GeneratedSet.xaml.cs">
       <DependentUpon>GeneratedSet.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GenerationScreens\GenerationOptions.xaml.cs">
+      <DependentUpon>GenerationOptions.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagementScreens\ManageCards.xaml.cs">
       <DependentUpon>ManageCards.xaml</DependentUpon>
     </Compile>
@@ -115,7 +118,15 @@
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>
+    <Page Include="ResourceDictionaries\NotSelectableCellDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GenerationScreens\GeneratedSet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GenerationScreens\GenerationOptions.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -136,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ManagementScreens\ManageSets.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionaries\SelectableCellDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

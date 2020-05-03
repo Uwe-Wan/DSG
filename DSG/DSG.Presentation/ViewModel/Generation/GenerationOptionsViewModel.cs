@@ -1,6 +1,8 @@
 ﻿using DSG.BusinessEntities;
+using DSG.Common.Extensions;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ using System.Windows.Input;
 
 namespace DSG.Presentation.ViewModel.Generation
 {
-    public class GenerationOptionsViewModel
+    public class GenerationOptionsViewModel : IViewModel
     {
         private IUiService _uiService;
         private INaviService _naviService;
@@ -32,6 +34,8 @@ namespace DSG.Presentation.ViewModel.Generation
         public GenerationOptionsViewModel()
         {
             GenerateSetCommand = new RelayCommand(c => GenerateSet());
+
+            IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto>();
         }
 
         public ICommand GenerateSetCommand { get; private set; }
@@ -46,11 +50,11 @@ namespace DSG.Presentation.ViewModel.Generation
 
         internal void GenerateSet()
         {
-            int availableCards = IsDominionExpansionSelectedDtos.SelectMany(dto => dto.DominionExpansion.ContainedCards).Count();
+            int availableSupplyCards = IsDominionExpansionSelectedDtos.SelectMany(dto => dto.DominionExpansion.ContainedCards).Count();
 
-            if (availableCards < 10)
+            if (availableSupplyCards < 10)
             {
-                string message = string.Join(" ", "There are only", availableCards, "cards available in the selected Sets. " +
+                string message = string.Join(" ", "There are only", availableSupplyCards, "cards available in the selected Sets. " +
                     "A minimum of 10 is needed to generate a set.");
                 string caption = "Not enough Cards!";
                 UiService.ShowErrorMessage(message, caption);
