@@ -47,14 +47,7 @@
             IsReadOnly="True" 
             Style="{StaticResource dataGridDefaultStyle}">
             <DataGrid.Resources>
-                <Style TargetType="DataGridCell">
-                    <Style.Triggers>
-                        <Trigger Property="DataGridCell.IsSelected" Value="True">
-                            <Setter Property="Background" Value="Cornsilk" />
-                            <Setter Property="Foreground" Value="HotPink" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+                <ResourceDictionary Source="/ResourceDictionaries/SelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
@@ -97,14 +90,7 @@
             Style="{StaticResource dataGridDefaultStyle}"
             Width="Auto">
             <DataGrid.Resources>
-                <Style TargetType="DataGridCell">
-                    <Style.Triggers>
-                        <Trigger Property="DataGridCell.IsSelected" Value="True">
-                            <Setter Property="Background" Value="Cornsilk" />
-                            <Setter Property="Foreground" Value="HotPink" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn 
@@ -131,14 +117,7 @@
             Style="{StaticResource dataGridDefaultStyle}"            
             Width="Auto">
             <DataGrid.Resources>
-                <Style TargetType="DataGridCell">
-                    <Style.Triggers>
-                        <Trigger Property="DataGridCell.IsSelected" Value="True">
-                            <Setter Property="Background" Value="Cornsilk" />
-                            <Setter Property="Foreground" Value="HotPink" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn 

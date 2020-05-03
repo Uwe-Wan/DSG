@@ -21,8 +21,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding GeneratedSet}"
-                  CanUserAddRows="False" IsReadOnly="True" GridLinesVisibility="None">
+        <DataGrid 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            AutoGenerateColumns="False" 
+            ItemsSource="{Binding GeneratedSet}"                  
+            CanUserAddRows="False" 
+            IsReadOnly="True" 
+            GridLinesVisibility="None">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20">
                     <DataGridTextColumn.Header>
