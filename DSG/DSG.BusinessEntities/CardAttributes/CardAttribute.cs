@@ -14,7 +14,7 @@ namespace DSG.BusinessEntities.CardAttributes
         public string Name { get; set; }
 
         [ForeignKey("DominionExpansion")]
-        [Index("UQX_Card_Name_DominionExpansionId", 2, IsUnique = true)]
+        [Index("UQX_CardAttribute_Name_DominionExpansionId", 2, IsUnique = true)]
         public int? DominionExpansionId { get; set; }
         public DominionExpansion DominionExpansion { get; set; }
 
