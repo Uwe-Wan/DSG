@@ -7,6 +7,7 @@
         WelcomeScreen = 3,
         ManageCards = 4,
         GeneratedSet = 5,
-        GenerationOptions = 6
+        GenerationOptions = 6,
+        ManageCardArtifacts = 7
     }
 }

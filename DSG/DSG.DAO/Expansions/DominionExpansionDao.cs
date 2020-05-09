@@ -29,7 +29,7 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.CardTypeToCards.CardType")
                 .Include("ContainedCards.CardSubTypeToCards")
                 .Include("ContainedCards.CardSubTypeToCards.CardSubType")
-                .Include("ContainedCards.CardAttributes")
+                //.Include("ContainedCards.CardAttributes")
                 .ToList();
         }
 

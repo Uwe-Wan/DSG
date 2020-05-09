@@ -34,13 +34,15 @@ namespace DSG.Presentation.ViewModel
 
         public ManageSetsViewModel()
         {
-            InsertCommand = new RelayCommand(p => InsertExpansion());
-            AddCardsCommand = new RelayCommand(p => AddCards());
+            InsertCommand = new RelayCommand(c => InsertExpansion());
+            AddCardsCommand = new RelayCommand(c => AddCards());
+            AddCardArtifactsCommand = new RelayCommand(c => AddCardArtifacts());
             DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
-        public ICommand InsertCommand { get; set; }
-        public ICommand AddCardsCommand { get; set; }
+        public ICommand InsertCommand { get; private set; }
+        public ICommand AddCardsCommand { get; private set; }        
+        public ICommand AddCardArtifactsCommand { get; private set; }
 
         public async Task OnPageLoadedAsync(params object[] data)
         {
@@ -63,6 +65,11 @@ namespace DSG.Presentation.ViewModel
         public void AddCards()
         {
             NaviService.NavigateToAsync(NavigationDestination.ManageCards, SelectedExpansion, DominionExpansions);
+        }
+
+        public void AddCardArtifacts()
+        {
+            NaviService.NavigateToAsync(NavigationDestination.ManageCardArtifacts, DominionExpansions);
         }
     }
 }
