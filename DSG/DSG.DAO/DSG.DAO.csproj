@@ -73,8 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\CardAttributeDao.cs" />
-    <Compile Include="Attributes\ICardAttributeDao.cs" />
+    <Compile Include="CardAttributes\CardAttributeDao.cs" />
+    <Compile Include="CardAttributes\ICardAttributeDao.cs" />
     <Compile Include="Cards\CardDao.cs" />
     <Compile Include="Cards\ICardDao.cs" />
     <Compile Include="Expansions\DominionExpansionDao.cs" />

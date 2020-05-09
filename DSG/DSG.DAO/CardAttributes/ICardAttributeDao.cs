@@ -1,6 +1,6 @@
 ﻿using DSG.BusinessEntities.CardAttributes;
 
-namespace DSG.DAO.Attributes
+namespace DSG.DAO.CardAttributes
 {
     public interface ICardAttributeDao
     {
