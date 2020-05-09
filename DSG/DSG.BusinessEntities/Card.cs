@@ -1,10 +1,9 @@
-﻿using DSG.BusinessEntities.CardSubTypes;
+﻿using DSG.BusinessEntities.CardAttributes;
+using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace DSG.BusinessEntities
 {
@@ -34,5 +33,7 @@ namespace DSG.BusinessEntities
         public List<CardTypeToCard> CardTypeToCards { get; set; }
 
         public List<CardSubTypeToCard> CardSubTypeToCards { get; set; }
+
+        public List<CardAttribute> CardAttributes { get; set; }
     }
 }

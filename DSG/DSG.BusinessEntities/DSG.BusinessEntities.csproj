@@ -74,6 +74,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Card.cs" />
+    <Compile Include="CardAttributes\AdditionalCard.cs" />
+    <Compile Include="CardAttributes\CardAttribute.cs" />
     <Compile Include="CardManagementDbContext.cs" />
     <Compile Include="CardSubTypes\CardSubType.cs" />
     <Compile Include="CardSubTypes\CardSubTypeEnum.cs" />
@@ -135,6 +137,10 @@
     <Compile Include="Migrations\202004301358281_CreateDSGDatabase10.designer.cs">
       <DependentUpon>202004301358281_CreateDSGDatabase10.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202005091104448_CreateDSGDatabase11.cs" />
+    <Compile Include="Migrations\202005091104448_CreateDSGDatabase11.designer.cs">
+      <DependentUpon>202005091104448_CreateDSGDatabase11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -166,6 +172,9 @@
     <EmbeddedResource Include="Migrations\202004301358281_CreateDSGDatabase10.resx">
       <DependentUpon>202004301358281_CreateDSGDatabase10.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202005091104448_CreateDSGDatabase11.resx">
+      <DependentUpon>202005091104448_CreateDSGDatabase11.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />
     <None Include="packages.config" />
@@ -181,6 +190,7 @@
       <DependentUpon>202004161954404_CreateDSGDatabase2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
