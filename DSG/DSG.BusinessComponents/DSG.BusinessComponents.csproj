@@ -72,6 +72,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CardAttributes\CardAttributeBc.cs" />
+    <Compile Include="CardAttributes\ICardAttributeBc.cs" />
     <Compile Include="Cards\CardBc.cs" />
     <Compile Include="Cards\ICardBc.cs" />
     <Compile Include="Expansions\DominionExpansionBc.cs" />
