@@ -5,10 +5,8 @@ using DSG.Presentation.ViewModel.Generation;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DSG.Presentation.Test.ViewModel
@@ -41,7 +39,7 @@ namespace DSG.Presentation.Test.ViewModel
         }
 
         [Test]
-        public async Task OnPageLoadedAsync()
+        public async Task OnPageLoadedAsync_NewArtifactAddedOldRemoved()
         {
             //Arrange
             _testee = new ManageCardArtifactViewModel();
@@ -51,10 +49,10 @@ namespace DSG.Presentation.Test.ViewModel
 
             CardAttribute cardArtifactToAdd = new CardAttribute();
             List<CardAttribute> newArtifacts = new List<CardAttribute> { cardArtifactToAdd };
-            List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardAttributes = newArtifacts } } } };
+            List<DominionExpansion> expansionsWithNewArtifacts = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardAttributes = newArtifacts } } } };
 
             //Act
-            await _testee.OnPageLoadedAsync(expansions);
+            await _testee.OnPageLoadedAsync(expansionsWithNewArtifacts);
 
             //Assert
             _testee.CardArtifacts.Should().HaveCount(1);
