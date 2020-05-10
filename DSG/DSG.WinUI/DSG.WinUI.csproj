@@ -108,6 +108,9 @@
     <Compile Include="GenerationScreens\GenerationOptions.xaml.cs">
       <DependentUpon>GenerationOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagementScreens\ManageCardArtifacts.xaml.cs">
+      <DependentUpon>ManageCardArtifacts.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagementScreens\ManageCards.xaml.cs">
       <DependentUpon>ManageCards.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>
+    <Page Include="ManagementScreens\ManageCardArtifacts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ResourceDictionaries\NotSelectableCellDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

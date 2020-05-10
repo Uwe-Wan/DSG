@@ -101,10 +101,10 @@ namespace DSG.Presentation.ViewModel
         {
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
 
-            IEnumerable<DominionExpansion> enumData = data[1] as IEnumerable<DominionExpansion>;
+            IEnumerable<DominionExpansion> expansions = data[1] as IEnumerable<DominionExpansion>;
             AvailableCosts.Clear();
             AvailableCosts.AddRange(
-                enumData
+                expansions
                 .SelectMany(expansion => expansion.ContainedCards)
                 .Select(card => card.Cost)
                 .Distinct()

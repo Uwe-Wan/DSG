@@ -91,8 +91,8 @@ namespace DSG.WinUI.Services
                 case NavigationDestination.ManageCardArtifacts:
                     {
                         ManageCardArtifactViewModel viewModel = Context.GetObject<ManageCardArtifactViewModel>("manageCardArtifactViewModel");
-                        //ManageCardArtifact view = new ManageCardArtifact();
-                        //await NavigateToDestination(view, viewModel, NavigationDestination.ManageCardArtifacts, data);
+                        ManageCardArtifacts view = new ManageCardArtifacts();
+                        await NavigateToDestination(view, viewModel, NavigationDestination.ManageCardArtifacts, data);
                         break;
                     }
 

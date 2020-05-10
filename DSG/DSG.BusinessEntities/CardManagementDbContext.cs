@@ -1,12 +1,7 @@
 ﻿using DSG.BusinessEntities.CardAttributes;
 using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSG.BusinessEntities
 {

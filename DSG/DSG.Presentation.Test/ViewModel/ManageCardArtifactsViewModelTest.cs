@@ -1,7 +1,7 @@
 ﻿using DSG.BusinessComponents.CardAttributes;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardAttributes;
-using DSG.Presentation.ViewModel.Generation;
+using DSG.Presentation.ViewModel;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -24,7 +24,7 @@ namespace DSG.Presentation.Test.ViewModel
             _testee = new ManageCardArtifactViewModel();
 
             _cardArtifactBcMock = new Mock<ICardAttributeBc>();
-            _testee.CardAttributeBc = _cardArtifactBcMock.Object;
+            _testee.CardArtifactBc = _cardArtifactBcMock.Object;
 
             CardAttribute artifact = new CardAttribute();
             _testee.CardArtifactToInsert = artifact;
@@ -47,9 +47,13 @@ namespace DSG.Presentation.Test.ViewModel
             CardAttribute cardArtifactToRemove = new CardAttribute();
             _testee.CardArtifacts.Add(cardArtifactToRemove);
 
-            CardAttribute cardArtifactToAdd = new CardAttribute();
+            AdditionalCard additionalCardToRemove = new AdditionalCard();
+            _testee.AdditionalCards.Add(additionalCardToRemove);
+
+            AdditionalCard additionalCardToAdd = new AdditionalCard();
+            CardAttribute cardArtifactToAdd = new CardAttribute { AdditionalCard = additionalCardToAdd };
             List<CardAttribute> newArtifacts = new List<CardAttribute> { cardArtifactToAdd };
-            List<DominionExpansion> expansionsWithNewArtifacts = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardAttributes = newArtifacts } } } };
+            List<DominionExpansion> expansionsWithNewArtifacts = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardArtifacts = newArtifacts } } } };
 
             //Act
             await _testee.OnPageLoadedAsync(expansionsWithNewArtifacts);
@@ -58,6 +62,10 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.CardArtifacts.Should().HaveCount(1);
             _testee.CardArtifacts.Should().NotContain(cardArtifactToRemove);
             _testee.CardArtifacts.Should().Contain(cardArtifactToAdd);
+
+            _testee.AdditionalCards.Should().HaveCount(1);
+            _testee.AdditionalCards.Should().NotContain(additionalCardToRemove);
+            _testee.AdditionalCards.Should().Contain(additionalCardToAdd);
         }
     }
 }

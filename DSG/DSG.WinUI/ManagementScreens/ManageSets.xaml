@@ -10,18 +10,19 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.7*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="0.2*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="0.5*"/>
@@ -54,7 +55,7 @@
         </DataGrid>       
         
         <DataGrid 
-            Grid.Column="5" 
+            Grid.Column="3" 
             Grid.Row="1"  
             ItemsSource="{Binding SelectedExpansion.ContainedCards}"
             Style="{StaticResource dataGridDefaultStyle}"                  
@@ -71,6 +72,24 @@
             </DataGrid.Columns>
         </DataGrid>
 
+        <DataGrid 
+            Grid.Column="5" 
+            Grid.Row="1"  
+            ItemsSource="{Binding SelectedExpansion.ContainedCards.CardArtifacts}"
+            Style="{StaticResource dataGridDefaultStyle}"                  
+            IsReadOnly="True">
+            <DataGrid.Resources>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Artifacts in Set" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
         <TextBox 
             Grid.Row="3" 
             Grid.Column="1" Height="32" 
@@ -78,8 +97,8 @@
             Style="{StaticResource nameBox}"/>
 
         <Button 
-            Grid.Row="3" 
-            Grid.Column="3" 
+            Grid.Row="4" 
+            Grid.Column="1" 
             Command="{Binding InsertCommand}" 
             Style="{StaticResource PinkButton}">
             <TextBlock>
@@ -88,13 +107,24 @@
         </Button>
 
         <Button 
-            Grid.Row="3" 
-            Grid.Column="5" 
+            Grid.Row="4" 
+            Grid.Column="3" 
             Command="{Binding AddCardsCommand}" 
             IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}"
             Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Cards
+            </TextBlock>
+        </Button>
+
+        <Button 
+            Grid.Row="4" 
+            Grid.Column="5" 
+            Command="{Binding AddCardArtifactsCommand}" 
+            IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}"
+            Style="{StaticResource PinkButton}">
+            <TextBlock>
+                Add Artifacts
             </TextBlock>
         </Button>
 

@@ -76,6 +76,7 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardAttributes\AdditionalCard.cs" />
     <Compile Include="CardAttributes\CardAttribute.cs" />
+    <Compile Include="CardAttributes\TypeOfAdditionalCard.cs" />
     <Compile Include="CardManagementDbContext.cs" />
     <Compile Include="CardSubTypes\CardSubType.cs" />
     <Compile Include="CardSubTypes\CardSubTypeEnum.cs" />
