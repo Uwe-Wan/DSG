@@ -1,9 +1,9 @@
 ﻿using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 
-namespace DSG.DAO.CardAttributes
+namespace DSG.DAO.CardArtifacts
 {
-    public class CardAttributeDao : ICardAttributeDao
+    public class CardArtifactDao : ICardArtifactDao
     {
         private CardManagementDbContext _ctx;
 
@@ -13,9 +13,9 @@ namespace DSG.DAO.CardAttributes
             set { _ctx = value; }
         }
 
-        public void InsertAttribute(CardArtifact attribute)
+        public void InsertArtifact(CardArtifact artifact)
         {
-            Ctx.CardArtifacts.Add(attribute);
+            Ctx.CardArtifacts.Add(artifact);
 
             Ctx.SaveChanges();
         }

@@ -1,4 +1,4 @@
-﻿using DSG.BusinessComponents.CardAttributes;
+﻿using DSG.BusinessComponents.CardArtifacts;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common.Extensions;
@@ -14,9 +14,9 @@ namespace DSG.Presentation.ViewModel
 {
     public class ManageCardArtifactViewModel : IViewModel
     {
-        private ICardAttributeBc _cardArtifactBc;
+        private ICardArtifactBc _cardArtifactBc;
 
-        public ICardAttributeBc CardArtifactBc
+        public ICardArtifactBc CardArtifactBc
         {
             get { return _cardArtifactBc; }
             set { _cardArtifactBc = value; }
@@ -59,7 +59,7 @@ namespace DSG.Presentation.ViewModel
 
         internal void AddArtifact()
         {
-            CardArtifactBc.InsertAttribute(CardArtifactToInsert);
+            CardArtifactBc.InsertArtifact(CardArtifactToInsert);
             CardArtifacts.Add(CardArtifactToInsert);
         }
     }

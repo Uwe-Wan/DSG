@@ -1,4 +1,4 @@
-﻿using DSG.BusinessComponents.CardAttributes;
+﻿using DSG.BusinessComponents.CardArtifacts;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.Presentation.ViewModel;
@@ -15,7 +15,7 @@ namespace DSG.Presentation.Test.ViewModel
     public class ManageCardArtifactsViewModelTest
     {
         private ManageCardArtifactViewModel _testee;
-        private Mock<ICardAttributeBc> _cardArtifactBcMock;
+        private Mock<ICardArtifactBc> _cardArtifactBcMock;
 
         [Test]
         public void InsertCard_BcInvokedAndAddedToCollection()
@@ -23,7 +23,7 @@ namespace DSG.Presentation.Test.ViewModel
             //Arrange
             _testee = new ManageCardArtifactViewModel();
 
-            _cardArtifactBcMock = new Mock<ICardAttributeBc>();
+            _cardArtifactBcMock = new Mock<ICardArtifactBc>();
             _testee.CardArtifactBc = _cardArtifactBcMock.Object;
 
             CardArtifact artifact = new CardArtifact();
@@ -33,7 +33,7 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.AddArtifact();
 
             //Assert
-            _cardArtifactBcMock.Verify(x => x.InsertAttribute(artifact), Times.Once);
+            _cardArtifactBcMock.Verify(x => x.InsertArtifact(artifact), Times.Once);
             _testee.CardArtifacts.Should().HaveCount(1);
             _testee.CardArtifacts.First().Should().Be(artifact);
         }
