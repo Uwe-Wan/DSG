@@ -1,4 +1,4 @@
-﻿namespace DSG.BusinessEntities.CardAttributes
+﻿namespace DSG.BusinessEntities.CardArtifacts
 {
     public class AdditionalCard
     {

@@ -1,6 +1,6 @@
 ﻿using DSG.BusinessComponents.CardAttributes;
 using DSG.BusinessEntities;
-using DSG.BusinessEntities.CardAttributes;
+using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common.Extensions;
 using DSG.Presentation.Services;
 using System;
@@ -22,9 +22,9 @@ namespace DSG.Presentation.ViewModel
             set { _cardArtifactBc = value; }
         }
 
-        public ObservableCollection<CardAttribute> CardArtifacts { get; set; }
+        public ObservableCollection<CardArtifact> CardArtifacts { get; set; }
 
-        public CardAttribute CardArtifactToInsert { get; set; }
+        public CardArtifact CardArtifactToInsert { get; set; }
 
         public ObservableCollection<AdditionalCard> AdditionalCards { get; set; }
 
@@ -38,7 +38,7 @@ namespace DSG.Presentation.ViewModel
         public ManageCardArtifactViewModel()
         {
             AddArtifactCommand = new RelayCommand(c => AddArtifact());
-            CardArtifacts = new ObservableCollection<CardAttribute>();
+            CardArtifacts = new ObservableCollection<CardArtifact>();
             AdditionalCards = new ObservableCollection<AdditionalCard>();
         }
 
@@ -50,7 +50,7 @@ namespace DSG.Presentation.ViewModel
             AdditionalCards.Clear();
 
             IEnumerable<DominionExpansion> expansions = data[0] as IEnumerable<DominionExpansion>;
-            List<CardAttribute> artifacts = expansions.SelectMany(expansion => expansion.ContainedCards).SelectMany(card => card.CardArtifacts).ToList();
+            List<CardArtifact> artifacts = expansions.SelectMany(expansion => expansion.ContainedCards).SelectMany(card => card.CardArtifacts).ToList();
             IEnumerable<AdditionalCard> additionalCards = artifacts.Select(artifact => artifact.AdditionalCard);
 
             CardArtifacts.AddRange(artifacts);

@@ -1,4 +1,4 @@
-﻿using DSG.BusinessEntities.CardAttributes;
+﻿using DSG.BusinessEntities.CardArtifacts;
 using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
 using System.Collections.Generic;
@@ -34,6 +34,6 @@ namespace DSG.BusinessEntities
 
         public List<CardSubTypeToCard> CardSubTypeToCards { get; set; }
 
-        public List<CardAttribute> CardArtifacts { get; set; }
+        public List<CardArtifact> CardArtifacts { get; set; }
     }
 }

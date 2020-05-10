@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DSG.BusinessEntities.CardAttributes
+namespace DSG.BusinessEntities.CardArtifacts
 {
-    public class CardAttribute
+    public class CardArtifact
     {
         public int Id { get; set; }
 

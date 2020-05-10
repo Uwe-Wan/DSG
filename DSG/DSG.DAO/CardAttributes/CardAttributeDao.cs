@@ -1,5 +1,5 @@
 ﻿using DSG.BusinessEntities;
-using DSG.BusinessEntities.CardAttributes;
+using DSG.BusinessEntities.CardArtifacts;
 
 namespace DSG.DAO.CardAttributes
 {
@@ -13,9 +13,9 @@ namespace DSG.DAO.CardAttributes
             set { _ctx = value; }
         }
 
-        public void InsertAttribute(CardAttribute attribute)
+        public void InsertAttribute(CardArtifact attribute)
         {
-            Ctx.CardAttribute.Add(attribute);
+            Ctx.CardArtifacts.Add(attribute);
 
             Ctx.SaveChanges();
         }

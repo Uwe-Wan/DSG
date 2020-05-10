@@ -1,9 +1,9 @@
-﻿using DSG.BusinessEntities.CardAttributes;
+﻿using DSG.BusinessEntities.CardArtifacts;
 
 namespace DSG.DAO.CardAttributes
 {
     public interface ICardAttributeDao
     {
-        void InsertAttribute(CardAttribute cardAttribute);
+        void InsertAttribute(CardArtifact cardAttribute);
     }
 }

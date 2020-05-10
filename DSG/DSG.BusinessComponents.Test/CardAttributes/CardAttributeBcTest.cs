@@ -1,6 +1,6 @@
 ﻿using System;
 using DSG.BusinessComponents.CardAttributes;
-using DSG.BusinessEntities.CardAttributes;
+using DSG.BusinessEntities.CardArtifacts;
 using DSG.DAO.CardAttributes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -23,7 +23,7 @@ namespace DSG.BusinessComponentsTest.CardAttributes
             _cardAttributeDaoMock = new Mock<ICardAttributeDao>();
             _testee.CardAttributeDao = _cardAttributeDaoMock.Object;
 
-            CardAttribute cardAttribute = new CardAttribute();
+            CardArtifact cardAttribute = new CardArtifact();
 
             //Act
             _testee.InsertAttribute(cardAttribute);

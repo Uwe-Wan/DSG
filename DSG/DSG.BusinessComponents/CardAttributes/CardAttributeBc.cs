@@ -1,4 +1,4 @@
-﻿using DSG.BusinessEntities.CardAttributes;
+﻿using DSG.BusinessEntities.CardArtifacts;
 using DSG.DAO.CardAttributes;
 using DSG.DAO.Cards;
 
@@ -14,7 +14,7 @@ namespace DSG.BusinessComponents.CardAttributes
             set { _cardAttributeDao = value; }
         }
 
-        public void InsertAttribute(CardAttribute attribute)
+        public void InsertAttribute(CardArtifact attribute)
         {
             CardAttributeDao.InsertAttribute(attribute);
         }
