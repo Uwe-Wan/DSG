@@ -1,12 +1,6 @@
 ﻿using DSG.BusinessEntities;
-using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Data.Linq;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSG.DAO.Expansions
 {
@@ -29,8 +23,19 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.CardTypeToCards.CardType")
                 .Include("ContainedCards.CardSubTypeToCards")
                 .Include("ContainedCards.CardSubTypeToCards.CardSubType")
-                //.Include("ContainedCards.CardAttribute")
+                .Include("ContainedCards.CardArtifacts")
                 .ToList();
+
+            //DbQuery<DominionExpansion> query = Ctx.DominionExpansion
+            //    .Include("ContainedCards")
+            //    .Include("ContainedCards.Cost");
+            //    //.Include("ContainedCards.CardTypeToCards")
+            //    //.Include("ContainedCards.CardTypeToCards.CardType")
+            //    //.Include("ContainedCards.CardSubTypeToCards")
+            //    //.Include("ContainedCards.CardSubTypeToCards.CardSubType");
+            //    //.Include("ContainedCards.CardArtifacts");
+            //    List<DominionExpansion> expansions = query.ToList();
+            //return expansions;
         }
 
         public DominionExpansion GetExpansionByName(string expansionName)

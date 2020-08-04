@@ -90,120 +90,20 @@
     <Compile Include="GetEnums\GetEnum.cs" />
     <Compile Include="CardTypes\IsCardTypeSelectedDto.cs" />
     <Compile Include="IsDominionExpansionSelectedDto.cs" />
-    <Compile Include="Migrations\202004151555341_CreateDSGDatabase.cs" />
-    <Compile Include="Migrations\202004151555341_CreateDSGDatabase.designer.cs">
-      <DependentUpon>202004151555341_CreateDSGDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004161751573_CreateDSGDatabase1.cs" />
-    <Compile Include="Migrations\202004161751573_CreateDSGDatabase1.designer.cs">
-      <DependentUpon>202004161751573_CreateDSGDatabase1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004161954404_CreateDSGDatabase2.cs" />
-    <Compile Include="Migrations\202004161954404_CreateDSGDatabase2.designer.cs">
-      <DependentUpon>202004161954404_CreateDSGDatabase2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004192026368_CreateDSGDatabase3.cs" />
-    <Compile Include="Migrations\202004192026368_CreateDSGDatabase3.designer.cs">
-      <DependentUpon>202004192026368_CreateDSGDatabase3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004192039259_CreateDSGDatabase4.cs" />
-    <Compile Include="Migrations\202004192039259_CreateDSGDatabase4.designer.cs">
-      <DependentUpon>202004192039259_CreateDSGDatabase4.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004231532134_CreateDatabase.cs" />
-    <Compile Include="Migrations\202004231532134_CreateDatabase.designer.cs">
-      <DependentUpon>202004231532134_CreateDatabase.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004261653520_CreateDSGDatabase5.cs" />
-    <Compile Include="Migrations\202004261653520_CreateDSGDatabase5.designer.cs">
-      <DependentUpon>202004261653520_CreateDSGDatabase5.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004282048033_CreateDSGDatabase6.cs" />
-    <Compile Include="Migrations\202004282048033_CreateDSGDatabase6.designer.cs">
-      <DependentUpon>202004282048033_CreateDSGDatabase6.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004291619168_CreateDSGDatabase7.cs" />
-    <Compile Include="Migrations\202004291619168_CreateDSGDatabase7.designer.cs">
-      <DependentUpon>202004291619168_CreateDSGDatabase7.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004291754436_CreateDSGDatabase8.cs" />
-    <Compile Include="Migrations\202004291754436_CreateDSGDatabase8.designer.cs">
-      <DependentUpon>202004291754436_CreateDSGDatabase8.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004292115152_CreateDSGDatabase9.cs" />
-    <Compile Include="Migrations\202004292115152_CreateDSGDatabase9.designer.cs">
-      <DependentUpon>202004292115152_CreateDSGDatabase9.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202004301358281_CreateDSGDatabase10.cs" />
-    <Compile Include="Migrations\202004301358281_CreateDSGDatabase10.designer.cs">
-      <DependentUpon>202004301358281_CreateDSGDatabase10.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005091104448_CreateDSGDatabase11.cs" />
-    <Compile Include="Migrations\202005091104448_CreateDSGDatabase11.designer.cs">
-      <DependentUpon>202005091104448_CreateDSGDatabase11.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005091119249_CreateDSGDatabase12.cs" />
-    <Compile Include="Migrations\202005091119249_CreateDSGDatabase12.designer.cs">
-      <DependentUpon>202005091119249_CreateDSGDatabase12.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202005101302581_CreateDSGDatabase13.cs" />
-    <Compile Include="Migrations\202005101302581_CreateDSGDatabase13.designer.cs">
-      <DependentUpon>202005101302581_CreateDSGDatabase13.cs</DependentUpon>
+    <Compile Include="Migrations\202008041851338_CreateDSGDatabase.cs" />
+    <Compile Include="Migrations\202008041851338_CreateDSGDatabase.designer.cs">
+      <DependentUpon>202008041851338_CreateDSGDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004192026368_CreateDSGDatabase3.resx">
-      <DependentUpon>202004192026368_CreateDSGDatabase3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004192039259_CreateDSGDatabase4.resx">
-      <DependentUpon>202004192039259_CreateDSGDatabase4.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004231532134_CreateDatabase.resx">
-      <DependentUpon>202004231532134_CreateDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004261653520_CreateDSGDatabase5.resx">
-      <DependentUpon>202004261653520_CreateDSGDatabase5.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004282048033_CreateDSGDatabase6.resx">
-      <DependentUpon>202004282048033_CreateDSGDatabase6.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004291619168_CreateDSGDatabase7.resx">
-      <DependentUpon>202004291619168_CreateDSGDatabase7.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004291754436_CreateDSGDatabase8.resx">
-      <DependentUpon>202004291754436_CreateDSGDatabase8.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004292115152_CreateDSGDatabase9.resx">
-      <DependentUpon>202004292115152_CreateDSGDatabase9.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004301358281_CreateDSGDatabase10.resx">
-      <DependentUpon>202004301358281_CreateDSGDatabase10.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005091104448_CreateDSGDatabase11.resx">
-      <DependentUpon>202005091104448_CreateDSGDatabase11.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005091119249_CreateDSGDatabase12.resx">
-      <DependentUpon>202005091119249_CreateDSGDatabase12.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202005101302581_CreateDSGDatabase13.resx">
-      <DependentUpon>202005101302581_CreateDSGDatabase13.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202008041851338_CreateDSGDatabase.resx">
+      <DependentUpon>202008041851338_CreateDSGDatabase.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202004151555341_CreateDSGDatabase.resx">
-      <DependentUpon>202004151555341_CreateDSGDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004161751573_CreateDSGDatabase1.resx">
-      <DependentUpon>202004161751573_CreateDSGDatabase1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202004161954404_CreateDSGDatabase2.resx">
-      <DependentUpon>202004161954404_CreateDSGDatabase2.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

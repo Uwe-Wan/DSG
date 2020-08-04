@@ -7,13 +7,13 @@ namespace DSG.BusinessEntities.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.0")]
-    public sealed partial class CreateDSGDatabase4 : IMigrationMetadata
+    public sealed partial class CreateDSGDatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDSGDatabase4));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateDSGDatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202004192039259_CreateDSGDatabase4"; }
+            get { return "202008041851338_CreateDSGDatabase"; }
         }
         
         string IMigrationMetadata.Source

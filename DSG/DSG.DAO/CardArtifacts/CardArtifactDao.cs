@@ -15,7 +15,7 @@ namespace DSG.DAO.CardArtifacts
 
         public void InsertArtifact(CardArtifact artifact)
         {
-            Ctx.CardArtifacts.Add(artifact);
+            Ctx.CardArtifact.Add(artifact);
 
             Ctx.SaveChanges();
         }
