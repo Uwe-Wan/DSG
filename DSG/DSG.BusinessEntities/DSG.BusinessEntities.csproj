@@ -76,6 +76,8 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardArtifacts\AdditionalCard.cs" />
     <Compile Include="CardArtifacts\CardArtifact.cs" />
+    <Compile Include="CardArtifacts\CardArtifactToExpansion.cs" />
+    <Compile Include="CardArtifacts\IsCardArtifactSelectedDto.cs" />
     <Compile Include="CardArtifacts\TypeOfAdditionalCard.cs" />
     <Compile Include="CardManagementDbContext.cs" />
     <Compile Include="CardSubTypes\CardSubType.cs" />
@@ -98,6 +100,10 @@
     <Compile Include="Migrations\202008091528538_CreateDSGDatabase1.designer.cs">
       <DependentUpon>202008091528538_CreateDSGDatabase1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008091913016_CreateDSGDatabase2.cs" />
+    <Compile Include="Migrations\202008091913016_CreateDSGDatabase2.designer.cs">
+      <DependentUpon>202008091913016_CreateDSGDatabase2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202008091528538_CreateDSGDatabase1.resx">
       <DependentUpon>202008091528538_CreateDSGDatabase1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008091913016_CreateDSGDatabase2.resx">
+      <DependentUpon>202008091913016_CreateDSGDatabase2.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />

@@ -26,5 +26,7 @@ namespace DSG.BusinessEntities
         public virtual DbSet<CardArtifact> CardArtifact {get; set;}
 
         public virtual DbSet<AdditionalCard> AdditionalCard { get; set; }
+
+        public virtual DbSet<CardArtifactToExpansion> CardArtifactToExpansion { get; set; }
     }
 }
