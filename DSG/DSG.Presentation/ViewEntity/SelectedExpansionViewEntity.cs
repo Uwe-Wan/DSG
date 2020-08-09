@@ -1,11 +1,9 @@
 ﻿using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common.Extensions;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSG.Presentation.ViewEntity
 {
@@ -14,9 +12,15 @@ namespace DSG.Presentation.ViewEntity
         public SelectedExpansionViewEntity(DominionExpansion dominionExpansion)
         {
             ExpansionName = dominionExpansion.Name;
+
             ContainedCards = new ObservableCollection<Card>();
             ContainedCards.AddRange(dominionExpansion.ContainedCards);
+
             DominionExpansion = dominionExpansion;
+
+            ContainedArtifacts = new ObservableCollection<CardArtifact>();
+            ContainedArtifacts.AddRange(
+                dominionExpansion.ContainedArtifactsToExpansion.Select(x => x.CardArtifact));
         }
 
         public string ExpansionName { get; set; }
@@ -24,5 +28,7 @@ namespace DSG.Presentation.ViewEntity
         public ObservableCollection<Card> ContainedCards { get; set; }
 
         public DominionExpansion DominionExpansion { get; set; }
+
+        public ObservableCollection<CardArtifact> ContainedArtifacts { get; set; }
     }
 }

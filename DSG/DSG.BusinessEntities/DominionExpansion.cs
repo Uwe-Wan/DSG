@@ -23,6 +23,7 @@ namespace DSG.BusinessEntities
         public DominionExpansion()
         {
             ContainedCards = new List<Card>();
+            ContainedArtifactsToExpansion = new List<CardArtifactToExpansion>();
         }
     }
 }

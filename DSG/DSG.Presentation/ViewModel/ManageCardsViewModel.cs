@@ -11,6 +11,7 @@ using System;
 using DSG.BusinessEntities.GetEnums;
 using DSG.BusinessEntities.CardTypes;
 using DSG.BusinessEntities.CardSubTypes;
+using DSG.BusinessEntities.CardArtifacts;
 
 namespace DSG.Presentation.ViewModel
 {
@@ -89,6 +90,8 @@ namespace DSG.Presentation.ViewModel
 
         public List<IsCardSubTypeSelectedDto> SelectedCardSubTypes { get; set; }
 
+        public List<IsCardArtifactSelectedDto> SelectedCardArtifacts { get; set; }
+
         public ManageCardsViewModel()
         {
             AvailableCosts = new List<Cost>();
@@ -117,6 +120,11 @@ namespace DSG.Presentation.ViewModel
 
             List<CardSubTypeEnum> cardSubTypes = GetEnum.CardSubType();
             SelectedCardSubTypes = cardSubTypes.Select(subType => new IsCardSubTypeSelectedDto { CardSubType = subType, IsSelected = false }).ToList();
+
+            SelectedCardArtifacts = SelectedExpansionViewEntity
+                .ContainedArtifacts
+                .Select(artifact => new IsCardArtifactSelectedDto { ArtifactName = artifact.Name, IsSelected = false })
+                .ToList();
         }
 
         public void AddCard()

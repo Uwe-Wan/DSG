@@ -19,6 +19,8 @@
             <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.55*"/>
+            <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
@@ -130,6 +132,32 @@
                     IsReadOnly="True">
                     <DataGridTextColumn.Header>
                         <TextBlock Style="{StaticResource dataGridTitleDefaultStyle}" FontSize="16" Text="Card Sub Types"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            Grid.Column="11" 
+            Grid.Row="1" 
+            Grid.RowSpan="3" 
+            ItemsSource="{Binding SelectedCardArtifacts}"             
+            Style="{StaticResource dataGridDefaultStyle}"            
+            Width="Auto">
+            <DataGrid.Resources>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridCheckBoxColumn 
+                    ElementStyle="{StaticResource checkboxStyle}" 
+                    Binding="{Binding IsSelected}" 
+                    IsReadOnly="False"/>
+                <DataGridTextColumn 
+                    Binding="{Binding ArtifactName}"
+                    FontSize="20" 
+                    IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Style="{StaticResource dataGridTitleDefaultStyle}" FontSize="16" Text="Card Artifacts"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>

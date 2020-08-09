@@ -79,7 +79,7 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="3">
-            <Label FontSize="17">Potion</Label>
+            <Label FontSize="17">Additional Cards</Label>
 
             <ComboBox 
                 Background="Wheat" 

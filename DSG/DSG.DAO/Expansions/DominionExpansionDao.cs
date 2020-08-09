@@ -47,6 +47,8 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.CardTypeToCards.CardType")
                 .Include("ContainedCards.CardSubTypeToCards")
                 .Include("ContainedCards.CardSubTypeToCards.CardSubType")
+                .Include("ContainedArtifactsToExpansion")
+                .Include("ContainedArtifactsToExpansion.CardArtifact")
                 .SingleOrDefault(expansion => expansion.Name == expansionName);
         }
 
