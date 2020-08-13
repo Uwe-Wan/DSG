@@ -27,7 +27,7 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.CardArtifactBc = _cardArtifactBcMock.Object;
 
             CardArtifact artifact = new CardArtifact();
-            _testee.CardArtifactToInsert = artifact;
+            //_testee.CardArtifactToInsert = artifact;
 
             //Act
             _testee.AddArtifact();
@@ -52,8 +52,9 @@ namespace DSG.Presentation.Test.ViewModel
 
             AdditionalCard additionalCardToAdd = new AdditionalCard();
             CardArtifact cardArtifactToAdd = new CardArtifact { AdditionalCard = additionalCardToAdd };
-            List<CardArtifact> newArtifacts = new List<CardArtifact> { cardArtifactToAdd };
-            List<DominionExpansion> expansionsWithNewArtifacts = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardArtifacts = newArtifacts } } } };
+            CardArtifactToCard cardArtifactToCard = new CardArtifactToCard { CardArtifact = cardArtifactToAdd };
+            List<CardArtifactToCard> newArtifacts = new List<CardArtifactToCard> { cardArtifactToCard };
+            List<DominionExpansion> expansionsWithNewArtifacts = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardArtifactsToCard = cardArtifactToCard } } } };
 
             //Act
             await _testee.OnPageLoadedAsync(expansionsWithNewArtifacts);

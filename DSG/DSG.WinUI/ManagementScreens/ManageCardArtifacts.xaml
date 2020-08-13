@@ -14,11 +14,10 @@
             <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.4*"/>
             <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.35*"/>
-            <ColumnDefinition Width="0.25*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.1*"/>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="0.25*"/>
@@ -44,7 +43,7 @@
             Grid.Column="1" 
             Grid.Row="1" 
             Grid.RowSpan="4"  
-            ItemsSource="{Binding CardArtifacts}"
+            ItemsSource="{Binding SelectedExpansionViewEntity.ContainedArtifacts}"
             IsReadOnly="True" 
             Style="{StaticResource dataGridDefaultStyle}">
             <DataGrid.Resources>
@@ -63,19 +62,25 @@
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3">
             <Label FontSize="17">Name</Label>
 
-            <TextBox  Style="{StaticResource nameBox}" Text="{Binding CardArtifactToInsert.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox  Style="{StaticResource nameBox}" Text="{Binding NameOfNewArtifact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="4">
-            <Label FontSize="17">Max Cost</Label>
+            <Label FontSize="17">Amount</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding CardArtifactToInsert.AdditionalCard.MaxCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding SelectedAmountOfAdditionalCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="5">
+            <Label FontSize="17">Max Cost</Label>
+
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding MaxCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="6">
             <Label FontSize="17">Min Cost</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding CardArtifactToInsert.AdditionalCard.MaxCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding MinCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="3">
@@ -83,8 +88,14 @@
 
             <ComboBox 
                 Background="Wheat" 
-                ItemsSource="{Binding AvailableTypesOfAdditionalCard, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
-                SelectedItem=""/>
+                ItemsSource="{Binding AvailableTypesOfAdditionalCard}"
+                SelectedItem="{Binding SelectedAdditionalCardType}"/>
         </StackPanel>
+
+        <Button Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Height="32" Command="{Binding AddArtifactCommand}" Style="{StaticResource PinkButton}">
+            <TextBlock>
+                Add Artifact
+            </TextBlock>
+        </Button>
     </Grid>
 </Page>

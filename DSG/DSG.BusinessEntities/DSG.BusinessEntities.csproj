@@ -76,7 +76,7 @@
     <Compile Include="Card.cs" />
     <Compile Include="CardArtifacts\AdditionalCard.cs" />
     <Compile Include="CardArtifacts\CardArtifact.cs" />
-    <Compile Include="CardArtifacts\CardArtifactToExpansion.cs" />
+    <Compile Include="CardArtifacts\CardArtifactToCard.cs" />
     <Compile Include="CardArtifacts\IsCardArtifactSelectedDto.cs" />
     <Compile Include="CardArtifacts\TypeOfAdditionalCard.cs" />
     <Compile Include="CardManagementDbContext.cs" />
@@ -104,6 +104,10 @@
     <Compile Include="Migrations\202008091913016_CreateDSGDatabase2.designer.cs">
       <DependentUpon>202008091913016_CreateDSGDatabase2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202008121817478_CreateDSGDatabase3.cs" />
+    <Compile Include="Migrations\202008121817478_CreateDSGDatabase3.designer.cs">
+      <DependentUpon>202008121817478_CreateDSGDatabase3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,11 +121,19 @@
     <EmbeddedResource Include="Migrations\202008091913016_CreateDSGDatabase2.resx">
       <DependentUpon>202008091913016_CreateDSGDatabase2.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202008121817478_CreateDSGDatabase3.resx">
+      <DependentUpon>202008121817478_CreateDSGDatabase3.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\DSG.Common\DSG.Common.csproj">
+      <Project>{B87025A1-336D-41AC-B6E9-A1C0A20DD244}</Project>
+      <Name>DSG.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

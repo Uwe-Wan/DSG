@@ -19,8 +19,7 @@ namespace DSG.Presentation.ViewEntity
             DominionExpansion = dominionExpansion;
 
             ContainedArtifacts = new ObservableCollection<CardArtifact>();
-            ContainedArtifacts.AddRange(
-                dominionExpansion.ContainedArtifactsToExpansion.Select(x => x.CardArtifact));
+            ContainedArtifacts.AddRange(dominionExpansion.ContainedArtifacts);
         }
 
         public string ExpansionName { get; set; }

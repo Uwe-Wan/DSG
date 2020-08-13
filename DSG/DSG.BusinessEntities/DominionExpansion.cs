@@ -18,12 +18,12 @@ namespace DSG.BusinessEntities
 
         public List<Card> ContainedCards { get; set; }
 
-        public List<CardArtifactToExpansion> ContainedArtifactsToExpansion { get; set; }
+        public List<CardArtifact> ContainedArtifacts { get; set; }
 
         public DominionExpansion()
         {
             ContainedCards = new List<Card>();
-            ContainedArtifactsToExpansion = new List<CardArtifactToExpansion>();
+            ContainedArtifacts = new List<CardArtifact>();
         }
     }
 }

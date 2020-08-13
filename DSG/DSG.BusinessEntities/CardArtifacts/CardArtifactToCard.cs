@@ -3,13 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSG.BusinessEntities.CardArtifacts
 {
-    public class CardArtifactToExpansion
+    public class CardArtifactToCard
     {
         [Key, Column(Order = 1)]
-        [ForeignKey("DominionExpansion")]
-        public int DominionExpansionId { get; set; }
+        [ForeignKey("Card")]
+        public int CardId { get; set; }
 
-        public DominionExpansion DominionExpansion { get; set; }
+        public Card Card { get; set; }
 
         [Key, Column(Order = 2)]
         [ForeignKey("CardArtifact")]

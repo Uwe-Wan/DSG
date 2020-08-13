@@ -23,19 +23,10 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.CardTypeToCards.CardType")
                 .Include("ContainedCards.CardSubTypeToCards")
                 .Include("ContainedCards.CardSubTypeToCards.CardSubType")
-                .Include("ContainedCards.CardArtifacts")
+                .Include("ContainedCards.CardArtifactsToCard")
+                .Include("ContainedCards.CardArtifactsToCard.CardArtifact")
+                .Include("ContainedArtifacts")
                 .ToList();
-
-            //DbQuery<DominionExpansion> query = Ctx.DominionExpansion
-            //    .Include("ContainedCards")
-            //    .Include("ContainedCards.Cost");
-            //    //.Include("ContainedCards.CardTypeToCards")
-            //    //.Include("ContainedCards.CardTypeToCards.CardType")
-            //    //.Include("ContainedCards.CardSubTypeToCards")
-            //    //.Include("ContainedCards.CardSubTypeToCards.CardSubType");
-            //    //.Include("ContainedCards.CardArtifacts");
-            //    List<DominionExpansion> expansions = query.ToList();
-            //return expansions;
         }
 
         public DominionExpansion GetExpansionByName(string expansionName)
@@ -47,8 +38,9 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.CardTypeToCards.CardType")
                 .Include("ContainedCards.CardSubTypeToCards")
                 .Include("ContainedCards.CardSubTypeToCards.CardSubType")
-                .Include("ContainedArtifactsToExpansion")
-                .Include("ContainedArtifactsToExpansion.CardArtifact")
+                .Include("ContainedCards.CardArtifactsToCard")
+                .Include("ContainedCards.CardArtifactsToCard.CardArtifact")
+                .Include("ContainedArtifacts")
                 .SingleOrDefault(expansion => expansion.Name == expansionName);
         }
 

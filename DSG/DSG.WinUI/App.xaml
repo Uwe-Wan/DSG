@@ -19,6 +19,7 @@
         <Style TargetType="manageScreens:ManageCards" BasedOn="{StaticResource {x:Type Page}}"/>
         <Style TargetType="generation:GeneratedSet" BasedOn="{StaticResource {x:Type Page}}"/>
         <Style TargetType="generation:GenerationOptions" BasedOn="{StaticResource {x:Type Page}}"/>
+        <Style TargetType="manageScreens:ManageCardArtifacts" BasedOn="{StaticResource {x:Type Page}}"/>
 
         <Style TargetType="Button" x:Key="PinkButton">
             <Setter Property="Background">

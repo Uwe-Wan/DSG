@@ -34,6 +34,6 @@ namespace DSG.BusinessEntities
 
         public List<CardSubTypeToCard> CardSubTypeToCards { get; set; }
 
-        public List<CardArtifact> CardArtifacts { get; set; }
+        public List<CardArtifactToCard> CardArtifactsToCard { get; set; }
     }
 }

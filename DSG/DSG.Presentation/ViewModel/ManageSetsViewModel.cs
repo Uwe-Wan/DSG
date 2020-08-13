@@ -69,7 +69,7 @@ namespace DSG.Presentation.ViewModel
 
         public void AddCardArtifacts()
         {
-            NaviService.NavigateToAsync(NavigationDestination.ManageCardArtifacts, DominionExpansions);
+            NaviService.NavigateToAsync(NavigationDestination.ManageCardArtifacts, SelectedExpansion, DominionExpansions);
         }
     }
 }
