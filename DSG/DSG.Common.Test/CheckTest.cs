@@ -1,6 +1,8 @@
 ﻿using System;
 using DSG.Common.Exceptions;
 using FluentAssertions;
+using log4net;
+using Moq;
 using NUnit.Framework;
 
 namespace DSG.Common.Test
@@ -62,6 +64,48 @@ namespace DSG.Common.Test
 
             //Assert
             act.Should().NotThrow<TechnicalException>();
+        }
+
+        [Test]
+        public void RequireNotNullNotEmpty_Null_ThrowsException()
+        {
+            //Arrange
+            string objectToTest = null;
+            string parent = "Parent";
+
+            //Act
+            Action act = () => Check.RequireNotNullNotEmpty(objectToTest, nameof(objectToTest), parent);
+
+            //Assert
+            act.Should().Throw<TechnicalException>().WithMessage("The objectToTest in Parent is null but must not be.");
+        }
+
+        [Test]
+        public void RequireNotNullNotEmpty_NotNull_NoException()
+        {
+            //Arrange
+            string objectToTest = "NotNull";
+            string parent = "Parent";
+
+            //Act
+            Action act = () => Check.RequireNotNullNotEmpty(objectToTest, nameof(objectToTest), parent);
+
+            //Assert
+            act.Should().NotThrow<TechnicalException>();
+        }
+
+        [Test]
+        public void RequireNotNullNotEmpty_Empty_ThrowsException()
+        {
+            //Arrange
+            string objectToTest = string.Empty;
+            string parent = "Parent";
+
+            //Act
+            Action act = () => Check.RequireNotNullNotEmpty(objectToTest, nameof(objectToTest), parent);
+
+            //Assert
+            act.Should().Throw<TechnicalException>().WithMessage("The objectToTest in Parent is empty but must not be.");
         }
     }
 }
