@@ -52,7 +52,7 @@ namespace DSG.WinUI.Services
                         ManageSetsViewModel viewModel = Context.GetObject<ManageSetsViewModel>("manageSetsViewModel");
                         ManageSets view = new ManageSets();
                         view.Title = Properties.Resources.ManageSets;
-                        await NavigateToDestination(view, viewModel, NavigationDestination.ManageSets, data);
+                        await NavigateToDestination(view, viewModel, data);
                         break;
                     }
 
@@ -68,7 +68,7 @@ namespace DSG.WinUI.Services
                     {
                         ManageCardsViewModel viewModel = Context.GetObject<ManageCardsViewModel>("manageCardsViewModel");
                         ManageCards view = new ManageCards();
-                        await NavigateToDestination(view, viewModel, NavigationDestination.ManageCards, data);
+                        await NavigateToDestination(view, viewModel, data);
                         break;
                     }
 
@@ -76,7 +76,7 @@ namespace DSG.WinUI.Services
                     {
                         GenerationOptionsViewModel viewModel = Context.GetObject<GenerationOptionsViewModel>("generationOptionsViewModel");
                         GenerationOptions view = new GenerationOptions();
-                        await NavigateToDestination(view, viewModel, NavigationDestination.GenerationOptions, data);
+                        await NavigateToDestination(view, viewModel, data);
                         break;
                     }
 
@@ -84,7 +84,7 @@ namespace DSG.WinUI.Services
                     {
                         GeneratedSetViewModel viewModel = Context.GetObject<GeneratedSetViewModel>("generatedSetViewModel");
                         GeneratedSet view = new GeneratedSet();
-                        await NavigateToDestination(view, viewModel, NavigationDestination.GeneratedSet, data);
+                        await NavigateToDestination(view, viewModel, data);
                         break;
                     }
 
@@ -92,7 +92,7 @@ namespace DSG.WinUI.Services
                     {
                         ManageCardArtifactViewModel viewModel = Context.GetObject<ManageCardArtifactViewModel>("manageCardArtifactViewModel");
                         ManageCardArtifacts view = new ManageCardArtifacts();
-                        await NavigateToDestination(view, viewModel, NavigationDestination.ManageCardArtifacts, data);
+                        await NavigateToDestination(view, viewModel, data);
                         break;
                     }
 
@@ -101,7 +101,7 @@ namespace DSG.WinUI.Services
             }
         }
 
-        private async Task NavigateToDestination(FrameworkElement view, IViewModel viewModel, NavigationDestination navigationDestination, params object[] data)
+        private async Task NavigateToDestination(FrameworkElement view, IViewModel viewModel, params object[] data)
         {
             await viewModel.OnPageLoadedAsync(data);
             view.DataContext = viewModel;

@@ -31,8 +31,6 @@ namespace DSG.Presentation.ViewModel
 
         public SelectedExpansionViewEntity SelectedExpansionViewEntity { get; set; }
 
-        //public ObservableCollection<CardArtifact> CardArtifacts { get; set; }
-
         public ObservableCollection<AdditionalCard> AdditionalCards { get; set; }
 
         public List<TypeOfAdditionalCard> AvailableTypesOfAdditionalCard { get; set; }
@@ -96,12 +94,15 @@ namespace DSG.Presentation.ViewModel
                 .Select(artifact => artifact.AdditionalCard);
             AdditionalCards.AddRange(additionalCards);
 
+            //todo: add logging if expansion was not set
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
             ManageCardArtifactsScreenTitle = string.Join(" ", "Manage Artifacts of Expansion", SelectedExpansionViewEntity.ExpansionName);
         }
 
         internal void AddArtifact()
         {
+            //todo: add logging that checks that selected expansion is set (maybe that other types need to be set as well?
+
             if (SelectedAdditionalCardType == TypeOfAdditionalCard.None)
             {
                 InsertArtifact(null);

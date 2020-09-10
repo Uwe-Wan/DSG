@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using DSG.BusinessComponents.Cards;
 using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardArtifacts;
+using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
 using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel;
@@ -82,6 +84,8 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { ContainedCards = new List<Card>()});
             
             _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
+            _testee.SelectedCardSubTypes = new List<IsCardSubTypeSelectedDto>();
+            _testee.SelectedCardArtifacts = new List<IsCardArtifactSelectedDto>();
 
             //Act
             _testee.AddCard();
@@ -105,6 +109,8 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { ContainedCards = new List<Card>()});
 
             _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
+            _testee.SelectedCardSubTypes = new List<IsCardSubTypeSelectedDto>();
+            _testee.SelectedCardArtifacts = new List<IsCardArtifactSelectedDto>();
 
             //Act
             _testee.AddCard();

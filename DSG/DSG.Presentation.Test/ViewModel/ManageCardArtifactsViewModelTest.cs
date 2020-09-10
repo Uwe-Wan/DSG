@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessComponents.CardArtifacts;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
+using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel;
 using FluentAssertions;
 using Moq;
@@ -26,43 +27,51 @@ namespace DSG.Presentation.Test.ViewModel
             _cardArtifactBcMock = new Mock<ICardArtifactBc>();
             _testee.CardArtifactBc = _cardArtifactBcMock.Object;
 
-            CardArtifact artifact = new CardArtifact();
-            //_testee.CardArtifactToInsert = artifact;
+            _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
+
+            _testee.NameOfNewArtifact = "TestArtifact";
 
             //Act
             _testee.AddArtifact();
 
             //Assert
-            _cardArtifactBcMock.Verify(x => x.InsertArtifact(artifact), Times.Once);
-            _testee.CardArtifacts.Should().HaveCount(1);
-            _testee.CardArtifacts.First().Should().Be(artifact);
+            _cardArtifactBcMock.Verify(x => x.InsertArtifact(It.Is<CardArtifact>(artifact => artifact.Name == "TestArtifact")), Times.Once);
+            _testee.SelectedExpansionViewEntity.ContainedArtifacts.Should().HaveCount(1);
+            _testee.SelectedExpansionViewEntity.ContainedArtifacts.First().Name.Should().Be("TestArtifact");
         }
 
         [Test]
-        public async Task OnPageLoadedAsync_NewArtifactAddedOldRemoved()
+        public async Task OnPageLoadedAsync_NewExpansionViewEntityAddedOldRemoved()
         {
             //Arrange
             _testee = new ManageCardArtifactViewModel();
 
-            CardArtifact cardArtifactToRemove = new CardArtifact();
-            _testee.CardArtifacts.Add(cardArtifactToRemove);
+            SelectedExpansionViewEntity selectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { Name = "OldExpansion" });
+            _testee.SelectedExpansionViewEntity = selectedExpansionViewEntity;
 
-            AdditionalCard additionalCardToRemove = new AdditionalCard();
+            AdditionalCard additionalCardToRemove = new AdditionalCard { MaxCosts = 2 };
             _testee.AdditionalCards.Add(additionalCardToRemove);
 
-            AdditionalCard additionalCardToAdd = new AdditionalCard();
+            DominionExpansion newExpansion = new DominionExpansion { Name = "NewExpansion" };
+
+            AdditionalCard additionalCardToAdd = new AdditionalCard { MaxCosts = 1 };
             CardArtifact cardArtifactToAdd = new CardArtifact { AdditionalCard = additionalCardToAdd };
-            CardArtifactToCard cardArtifactToCard = new CardArtifactToCard { CardArtifact = cardArtifactToAdd };
-            List<CardArtifactToCard> newArtifacts = new List<CardArtifactToCard> { cardArtifactToCard };
-            List<DominionExpansion> expansionsWithNewArtifacts = new List<DominionExpansion> { new DominionExpansion { ContainedCards = new List<Card> { new Card { CardArtifactsToCard = cardArtifactToCard } } } };
+            List<DominionExpansion> newExpansions = new List<DominionExpansion> 
+            {
+                new DominionExpansion 
+                {
+                    ContainedArtifacts = new List<CardArtifact> 
+                    {
+                        cardArtifactToAdd
+                    } 
+                } 
+            };
 
             //Act
-            await _testee.OnPageLoadedAsync(expansionsWithNewArtifacts);
+            await _testee.OnPageLoadedAsync(newExpansion, newExpansions);
 
             //Assert
-            _testee.CardArtifacts.Should().HaveCount(1);
-            _testee.CardArtifacts.Should().NotContain(cardArtifactToRemove);
-            _testee.CardArtifacts.Should().Contain(cardArtifactToAdd);
+            _testee.SelectedExpansionViewEntity.ExpansionName.Should().Be("NewExpansion");
 
             _testee.AdditionalCards.Should().HaveCount(1);
             _testee.AdditionalCards.Should().NotContain(additionalCardToRemove);
