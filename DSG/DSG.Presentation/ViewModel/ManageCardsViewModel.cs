@@ -36,7 +36,11 @@ namespace DSG.Presentation.ViewModel
 
         public ICardBc CardBc
         {
-            get { return _cardBc; }
+            get
+            {
+                Check.RequireInjected(CardBc, nameof(CardBc), nameof(ManageCardsViewModel));
+                return _cardBc;
+            }
             set { _cardBc = value; }
         }
 
@@ -129,6 +133,8 @@ namespace DSG.Presentation.ViewModel
 
         public void AddCard()
         {
+            Check.RequireNotNull(SelectedExpansionViewEntity, nameof(SelectedExpansionViewEntity), nameof(ManageCardsViewModel));
+
             Cost newCost = new Cost(NewCardsCost ?? 0, NewCardsDept ?? 0, NewCardCostsPotion);
             Cost matchingCost = AvailableCosts.SingleOrDefault(cost => cost.Equals(newCost));
 

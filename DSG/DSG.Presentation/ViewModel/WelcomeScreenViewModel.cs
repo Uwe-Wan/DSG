@@ -1,5 +1,6 @@
 ﻿using DSG.BusinessComponents.Expansions;
 using DSG.BusinessEntities;
+using DSG.Common;
 using DSG.Common.Extensions;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
@@ -21,19 +22,31 @@ namespace DSG.Presentation.ViewModel
 
         public IDominionExpansionBc DominionExpansionBc
         {
-            get { return _dominionExpansionBc; }
+            get
+            {
+                Check.RequireInjected(DominionExpansionBc, nameof(DominionExpansionBc), nameof(WelcomeScreenViewModel));
+                return _dominionExpansionBc;
+            }
             set { _dominionExpansionBc = value; }
         }
 
         public INaviService NaviService
         {
-            get { return _naviService; }
+            get
+            {
+                Check.RequireInjected(NaviService, nameof(NaviService), nameof(WelcomeScreenViewModel));
+                return _naviService;
+            }
             set { _naviService = value; }
         }
 
         public IUiService UiService
         {
-            get { return _uiService; }
+            get
+            {
+                Check.RequireInjected(UiService, nameof(UiService), nameof(WelcomeScreenViewModel));
+                return _uiService;
+            }
             set { _uiService = value; }
         }
 
@@ -59,8 +72,8 @@ namespace DSG.Presentation.ViewModel
         internal void GoToGenerationOptions()
         {
             int availableCards = DominionExpansions.SelectMany(expansions => expansions.ContainedCards).Count();
-            
-            if(availableCards < 10)
+
+            if (availableCards < 10)
             {
                 string message = string.Join(" ", "There are only", availableCards, "cards available. A minimum of 10 is needed to generate a set.");
                 string caption = "Not enough Cards!";

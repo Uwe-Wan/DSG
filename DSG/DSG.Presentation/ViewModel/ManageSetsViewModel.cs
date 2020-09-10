@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DSG.Common.Extensions;
+using DSG.Common;
 
 namespace DSG.Presentation.ViewModel
 {
@@ -16,13 +17,21 @@ namespace DSG.Presentation.ViewModel
 
         public IDominionExpansionBc DominionExpansionBc
         {
-            get { return _dominionExpansionBc; }
+            get
+            {
+                Check.RequireInjected(DominionExpansionBc, nameof(DominionExpansionBc), nameof(ManageSetsViewModel));
+                return _dominionExpansionBc;
+            }
             set { _dominionExpansionBc = value; }
         }
 
         public INaviService NaviService
         {
-            get { return _naviService; }
+            get
+            {
+                Check.RequireInjected(NaviService, nameof(NaviService), nameof(ManageSetsViewModel));
+                return _naviService;
+            }
             set { _naviService = value; }
         }
 
@@ -41,7 +50,7 @@ namespace DSG.Presentation.ViewModel
         }
 
         public ICommand InsertCommand { get; private set; }
-        public ICommand AddCardsCommand { get; private set; }        
+        public ICommand AddCardsCommand { get; private set; }
         public ICommand AddCardArtifactsCommand { get; private set; }
 
         public async Task OnPageLoadedAsync(params object[] data)
@@ -55,7 +64,7 @@ namespace DSG.Presentation.ViewModel
 
         public void InsertExpansion()
         {
-            //todo: add a check.requireNotNull here
+            Check.RequireNotNullNotEmpty(UserInput, nameof(UserInput), nameof(ManageSetsViewModel));
 
             DominionExpansionBc.InsertExpansion(UserInput);
             DominionExpansion newExpansion = DominionExpansionBc.GetExpansionByName(UserInput);

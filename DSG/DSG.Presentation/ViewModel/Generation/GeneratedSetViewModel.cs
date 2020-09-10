@@ -1,10 +1,9 @@
 ﻿using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
+using DSG.Common;
 using DSG.Presentation.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DSG.Presentation.ViewModel.Generation
@@ -17,7 +16,11 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public ISetGeneratorBc SetGeneratorBc
         {
-            get { return _setGeneratorBc; }
+            get
+            {
+                Check.RequireInjected(SetGeneratorBc, nameof(SetGeneratorBc), nameof(GeneratedSetViewModel));
+                return _setGeneratorBc;
+            }
             set { _setGeneratorBc = value; }
         }
 

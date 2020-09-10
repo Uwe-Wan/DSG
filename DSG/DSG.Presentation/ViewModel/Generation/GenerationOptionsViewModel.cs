@@ -1,5 +1,6 @@
 ﻿using DSG.BusinessComponents.StaticMethods;
 using DSG.BusinessEntities;
+using DSG.Common;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,21 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public IUiService UiService
         {
-            get { return _uiService; }
+            get
+            {
+                Check.RequireInjected(UiService, nameof(UiService), nameof(GenerationOptionsViewModel));
+                return _uiService;
+            }
             set { _uiService = value; }
         }
 
         public INaviService NaviService
         {
-            get { return _naviService; }
+            get
+            {
+                Check.RequireInjected(NaviService, nameof(NaviService), nameof(GenerationOptionsViewModel));
+                return _naviService;
+            }
             set { _naviService = value; }
         }
 

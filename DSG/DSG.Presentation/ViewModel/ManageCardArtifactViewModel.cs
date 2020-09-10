@@ -23,7 +23,11 @@ namespace DSG.Presentation.ViewModel
 
         public ICardArtifactBc CardArtifactBc
         {
-            get { return _cardArtifactBc; }
+            get
+            {
+                Check.RequireInjected(CardArtifactBc, nameof(CardArtifactBc), nameof(ManageCardArtifactViewModel));
+                return _cardArtifactBc;
+            }
             set { _cardArtifactBc = value; }
         }
 
@@ -36,7 +40,7 @@ namespace DSG.Presentation.ViewModel
         public List<TypeOfAdditionalCard> AvailableTypesOfAdditionalCard { get; set; }
 
         public TypeOfAdditionalCard SelectedAdditionalCardType { get; set; }
-        
+
         public int? MaxCost { get; set; }
 
         public int? MinCost { get; set; }
@@ -94,14 +98,14 @@ namespace DSG.Presentation.ViewModel
                 .Select(artifact => artifact.AdditionalCard);
             AdditionalCards.AddRange(additionalCards);
 
-            //todo: add logging if expansion was not set
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
             ManageCardArtifactsScreenTitle = string.Join(" ", "Manage Artifacts of Expansion", SelectedExpansionViewEntity.ExpansionName);
         }
 
         internal void AddArtifact()
         {
-            //todo: add logging that checks that selected expansion is set (maybe that other types need to be set as well?
+            Check.RequireNotNull(SelectedExpansionViewEntity, nameof(SelectedExpansionViewEntity), nameof(ManageCardArtifactViewModel));
+            Check.RequireNotNull(SelectedExpansionViewEntity.ContainedArtifacts, nameof(SelectedExpansionViewEntity.ContainedArtifacts), nameof(ManageCardArtifactViewModel));
 
             if (SelectedAdditionalCardType == TypeOfAdditionalCard.None)
             {
