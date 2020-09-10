@@ -97,7 +97,7 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn 
                     ElementStyle="{StaticResource checkboxStyle}" 
-                    Binding="{Binding IsSelected}" 
+                    Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     IsReadOnly="False"/>
                 <DataGridTextColumn 
                     Binding="{Binding CardType, Converter={StaticResource CardTypeEnumToStringConverter}}" 
@@ -124,7 +124,7 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn 
                     ElementStyle="{StaticResource checkboxStyle}" 
-                    Binding="{Binding IsSelected}" 
+                    Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     IsReadOnly="False"/>
                 <DataGridTextColumn 
                     Binding="{Binding CardSubType, Converter={StaticResource CardSubTypeEnumToStringConverter}}"
@@ -150,7 +150,7 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn 
                     ElementStyle="{StaticResource checkboxStyle}" 
-                    Binding="{Binding IsSelected}" 
+                    Binding="{Binding IsSelected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                     IsReadOnly="False"/>
                 <DataGridTextColumn 
                     Binding="{Binding ArtifactName}"

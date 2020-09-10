@@ -123,7 +123,7 @@ namespace DSG.Presentation.ViewModel
 
             SelectedCardArtifacts = SelectedExpansionViewEntity
                 .ContainedArtifacts
-                .Select(artifact => new IsCardArtifactSelectedDto { ArtifactName = artifact.Name, IsSelected = false })
+                .Select(artifact => new IsCardArtifactSelectedDto { ArtifactName = artifact.Name, IsSelected = false, Artifact = artifact })
                 .ToList();
         }
 
@@ -151,6 +151,18 @@ namespace DSG.Presentation.ViewModel
                 .Select(type => new CardTypeToCard { CardTypeId = type })
                 .ToList();
 
+            List<CardSubTypeToCard> cardSubTypeToCards = SelectedCardSubTypes
+                .Where(type => type.IsSelected == true)
+                .Select(type => type.CardSubType)
+                .Select(type => new CardSubTypeToCard { CardSubTypeId = type })
+                .ToList();
+
+            List<CardArtifactToCard> cardArtifactToCards = SelectedCardArtifacts
+                .Where(artifact => artifact.IsSelected == true)
+                .Select(artifact => artifact.Artifact)
+                .Select(artifact => new CardArtifactToCard { CardArtifact = artifact })
+                .ToList();
+
             Card card = new Card
             {
                 Cost = cost,
@@ -158,7 +170,9 @@ namespace DSG.Presentation.ViewModel
                 DominionExpansion = SelectedExpansionViewEntity.DominionExpansion,
                 CostId = cost.Id,
                 DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id,
-                CardTypeToCards = cardTypeToCards
+                CardTypeToCards = cardTypeToCards,
+                CardSubTypeToCards = cardSubTypeToCards,
+                CardArtifactsToCard = cardArtifactToCards
             };
             CardBc.InsertCard(card);
 

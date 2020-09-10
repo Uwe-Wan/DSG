@@ -5,5 +5,7 @@
         public bool IsSelected { get; set; }
 
         public string ArtifactName { get; set; }
+
+        public CardArtifact Artifact { get; set; }
     }
 }
