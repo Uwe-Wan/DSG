@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessComponents.Probabilities;
 using DSG.BusinessComponents.StaticMethods;
 using DSG.BusinessEntities;
+using DSG.Common;
 using DSG.Common.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,21 @@ namespace DSG.BusinessComponents.Generation
 
         public IGetIntByProbabilityBc GetIntByProbabilityBc
         {
-            get { return _getIntByProbabilityBc; }
+            get
+            {
+                Check.RequireInjected(GetIntByProbabilityBc, nameof(GetIntByProbabilityBc), nameof(SetGeneratorBc));
+                return _getIntByProbabilityBc;
+            }
             set { _getIntByProbabilityBc = value; }
         }
 
         public IShuffleListBc<Card> ShuffleListBc
         {
-            get { return _shuffleListBc; }
+            get
+            {
+                Check.RequireInjected(ShuffleListBc, nameof(ShuffleListBc), nameof(SetGeneratorBc));
+                return _shuffleListBc;
+            }
             set { _shuffleListBc = value; }
         }
 
@@ -53,7 +62,7 @@ namespace DSG.BusinessComponents.Generation
 
             int numberOfNonSupplyCards = GetIntByProbabilityBc.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7);
 
-            if(numberOfNonSupplyCards > availableNonSupplyCards.Count)
+            if (numberOfNonSupplyCards > availableNonSupplyCards.Count)
             {
                 return availableNonSupplyCards;
             }

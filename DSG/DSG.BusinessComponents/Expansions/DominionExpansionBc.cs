@@ -1,4 +1,5 @@
 ﻿using DSG.BusinessEntities;
+using DSG.Common;
 using DSG.DAO.Expansions;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,11 @@ namespace DSG.BusinessComponents.Expansions
 
         public IDominionExpansionDao DominionExpansionDao
         {
-            get { return _dominionExpansionDao; }
+            get
+            {
+                Check.RequireInjected(DominionExpansionDao, nameof(DominionExpansionDao), nameof(DominionExpansionBc));
+                return _dominionExpansionDao;
+            }
             set { _dominionExpansionDao = value; }
         }
 

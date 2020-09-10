@@ -1,4 +1,5 @@
 ﻿using DSG.BusinessEntities.CardArtifacts;
+using DSG.Common;
 using DSG.DAO.CardArtifacts;
 
 namespace DSG.BusinessComponents.CardArtifacts
@@ -9,7 +10,11 @@ namespace DSG.BusinessComponents.CardArtifacts
 
         public ICardArtifactDao CardArtifactDao
         {
-            get { return _cardArtifactDao; }
+            get
+            {
+                Check.RequireInjected(CardArtifactDao, nameof(CardArtifactDao), nameof(CardArtifactBc));
+                return _cardArtifactDao;
+            }
             set { _cardArtifactDao = value; }
         }
 
