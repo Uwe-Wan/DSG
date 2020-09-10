@@ -12,7 +12,7 @@ namespace DSG.BusinessComponents.CardArtifacts
         {
             get
             {
-                Check.RequireInjected(CardArtifactDao, nameof(CardArtifactDao), nameof(CardArtifactBc));
+                Check.RequireInjected(_cardArtifactDao, nameof(CardArtifactDao), nameof(CardArtifactBc));
                 return _cardArtifactDao;
             }
             set { _cardArtifactDao = value; }

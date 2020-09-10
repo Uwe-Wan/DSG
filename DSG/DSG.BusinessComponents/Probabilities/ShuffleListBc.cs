@@ -12,7 +12,7 @@ namespace DSG.BusinessComponents.Probabilities
         {
             get
             {
-                Check.RequireInjected(Random, nameof(Random), nameof(ShuffleListBc<TEntity>));
+                Check.RequireInjected(_random, nameof(Random), nameof(ShuffleListBc<TEntity>));
                 return _random;
             }
             set

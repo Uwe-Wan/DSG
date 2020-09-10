@@ -17,7 +17,7 @@ namespace DSG.BusinessComponents.Expansions
         {
             get
             {
-                Check.RequireInjected(DominionExpansionDao, nameof(DominionExpansionDao), nameof(DominionExpansionBc));
+                Check.RequireInjected(_dominionExpansionDao, nameof(DominionExpansionDao), nameof(DominionExpansionBc));
                 return _dominionExpansionDao;
             }
             set { _dominionExpansionDao = value; }

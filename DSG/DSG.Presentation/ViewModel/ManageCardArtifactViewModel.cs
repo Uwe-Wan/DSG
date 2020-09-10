@@ -25,7 +25,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(CardArtifactBc, nameof(CardArtifactBc), nameof(ManageCardArtifactViewModel));
+                Check.RequireInjected(_cardArtifactBc, nameof(CardArtifactBc), nameof(ManageCardArtifactViewModel));
                 return _cardArtifactBc;
             }
             set { _cardArtifactBc = value; }

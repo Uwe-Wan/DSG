@@ -19,7 +19,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(DominionExpansionBc, nameof(DominionExpansionBc), nameof(ManageSetsViewModel));
+                Check.RequireInjected(_dominionExpansionBc, nameof(DominionExpansionBc), nameof(ManageSetsViewModel));
                 return _dominionExpansionBc;
             }
             set { _dominionExpansionBc = value; }
@@ -29,7 +29,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(NaviService, nameof(NaviService), nameof(ManageSetsViewModel));
+                Check.RequireInjected(_naviService, nameof(NaviService), nameof(ManageSetsViewModel));
                 return _naviService;
             }
             set { _naviService = value; }

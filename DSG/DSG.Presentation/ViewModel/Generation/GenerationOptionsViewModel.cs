@@ -21,7 +21,7 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             get
             {
-                Check.RequireInjected(UiService, nameof(UiService), nameof(GenerationOptionsViewModel));
+                Check.RequireInjected(_uiService, nameof(UiService), nameof(GenerationOptionsViewModel));
                 return _uiService;
             }
             set { _uiService = value; }
@@ -31,7 +31,7 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             get
             {
-                Check.RequireInjected(NaviService, nameof(NaviService), nameof(GenerationOptionsViewModel));
+                Check.RequireInjected(_naviService, nameof(NaviService), nameof(GenerationOptionsViewModel));
                 return _naviService;
             }
             set { _naviService = value; }

@@ -18,7 +18,7 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             get
             {
-                Check.RequireInjected(SetGeneratorBc, nameof(SetGeneratorBc), nameof(GeneratedSetViewModel));
+                Check.RequireInjected(_setGeneratorBc, nameof(SetGeneratorBc), nameof(GeneratedSetViewModel));
                 return _setGeneratorBc;
             }
             set { _setGeneratorBc = value; }

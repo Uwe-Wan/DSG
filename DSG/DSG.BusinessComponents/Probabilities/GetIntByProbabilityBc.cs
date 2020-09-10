@@ -13,7 +13,7 @@ namespace DSG.BusinessComponents.Probabilities
         {
             get
             {
-                Check.RequireInjected(Random, nameof(Random), nameof(GetIntByProbabilityBc));
+                Check.RequireInjected(_randomProvider, nameof(Random), nameof(GetIntByProbabilityBc));
                 return _randomProvider;
             }
             set

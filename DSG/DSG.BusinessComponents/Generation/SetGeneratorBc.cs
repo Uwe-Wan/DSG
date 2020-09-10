@@ -17,7 +17,7 @@ namespace DSG.BusinessComponents.Generation
         {
             get
             {
-                Check.RequireInjected(GetIntByProbabilityBc, nameof(GetIntByProbabilityBc), nameof(SetGeneratorBc));
+                Check.RequireInjected(_getIntByProbabilityBc, nameof(GetIntByProbabilityBc), nameof(SetGeneratorBc));
                 return _getIntByProbabilityBc;
             }
             set { _getIntByProbabilityBc = value; }
@@ -27,7 +27,7 @@ namespace DSG.BusinessComponents.Generation
         {
             get
             {
-                Check.RequireInjected(ShuffleListBc, nameof(ShuffleListBc), nameof(SetGeneratorBc));
+                Check.RequireInjected(_shuffleListBc, nameof(ShuffleListBc), nameof(SetGeneratorBc));
                 return _shuffleListBc;
             }
             set { _shuffleListBc = value; }

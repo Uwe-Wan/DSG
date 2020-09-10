@@ -24,7 +24,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(DominionExpansionBc, nameof(DominionExpansionBc), nameof(WelcomeScreenViewModel));
+                Check.RequireInjected(_dominionExpansionBc, nameof(DominionExpansionBc), nameof(WelcomeScreenViewModel));
                 return _dominionExpansionBc;
             }
             set { _dominionExpansionBc = value; }
@@ -34,7 +34,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(NaviService, nameof(NaviService), nameof(WelcomeScreenViewModel));
+                Check.RequireInjected(_naviService, nameof(NaviService), nameof(WelcomeScreenViewModel));
                 return _naviService;
             }
             set { _naviService = value; }
@@ -44,7 +44,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(UiService, nameof(UiService), nameof(WelcomeScreenViewModel));
+                Check.RequireInjected(_uiService, nameof(UiService), nameof(WelcomeScreenViewModel));
                 return _uiService;
             }
             set { _uiService = value; }
