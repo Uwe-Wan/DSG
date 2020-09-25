@@ -1,5 +1,6 @@
 ﻿using DSG.Presentation.Services;
 using DSG.Presentation.ViewModel;
+using DSG.Presentation.ViewModel.Management;
 using Spring.Context;
 using Spring.Context.Support;
 using System;

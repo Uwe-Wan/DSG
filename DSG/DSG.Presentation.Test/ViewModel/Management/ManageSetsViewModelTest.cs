@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using DSG.BusinessComponents.Expansions;
 using DSG.BusinessEntities;
-using DSG.Presentation.ViewModel;
+using DSG.Presentation.ViewModel.Management;
 using Moq;
 using NUnit.Framework;
 using FluentAssertions;
@@ -9,7 +9,7 @@ using DSG.Presentation.Services;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
 
-namespace DSG.Presentation.Test.ViewModel
+namespace DSG.Presentation.Test.ViewModel.Management
 {
     [TestFixture]
     public class ManageSetsViewModelTest

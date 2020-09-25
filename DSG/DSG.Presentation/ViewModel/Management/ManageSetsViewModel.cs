@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using DSG.Common.Extensions;
 using DSG.Common;
 
-namespace DSG.Presentation.ViewModel
+namespace DSG.Presentation.ViewModel.Management
 {
     public class ManageSetsViewModel : AbstractViewModel
     {

@@ -12,7 +12,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace DSG.Presentation.ViewModel
+namespace DSG.Presentation.ViewModel.Management
 {
     public class ManageCardArtifactViewModel : AbstractViewModel
     {

@@ -86,9 +86,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\Generation\GeneratedSetViewModelTest.cs" />
     <Compile Include="ViewModel\Generation\GenerationOptionsViewModelTest.cs" />
-    <Compile Include="ViewModel\ManageCardArtifactsViewModelTest.cs" />
-    <Compile Include="ViewModel\ManageCardsViewModelTest.cs" />
-    <Compile Include="ViewModel\ManageSetsViewModelTest.cs" />
+    <Compile Include="ViewModel\Management\ManageCardArtifactsViewModelTest.cs" />
+    <Compile Include="ViewModel\Management\ManageCardsViewModelTest.cs" />
+    <Compile Include="ViewModel\Management\ManageSetsViewModelTest.cs" />
     <Compile Include="ViewModel\WelcomeScreenViewModelTest.cs" />
   </ItemGroup>
   <ItemGroup>

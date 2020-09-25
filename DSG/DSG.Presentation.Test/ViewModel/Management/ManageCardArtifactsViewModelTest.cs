@@ -2,7 +2,7 @@
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.Presentation.ViewEntity;
-using DSG.Presentation.ViewModel;
+using DSG.Presentation.ViewModel.Management;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DSG.Presentation.Test.ViewModel
+namespace DSG.Presentation.Test.ViewModel.Management
 {
     [TestFixture]
     public class ManageCardArtifactsViewModelTest

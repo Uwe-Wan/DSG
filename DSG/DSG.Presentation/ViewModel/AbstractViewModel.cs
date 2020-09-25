@@ -15,7 +15,7 @@ namespace DSG.Presentation.ViewModel
         {
             get
             {
-                Check.RequireInjected(_naviService, nameof(NaviService), nameof(ManageCardsViewModel));
+                Check.RequireInjected(_naviService, nameof(NaviService), nameof(AbstractViewModel));
                 return _naviService;
             }
             set { _naviService = value; }

@@ -60,9 +60,9 @@
     <Compile Include="ViewModel\AbstractViewModel.cs" />
     <Compile Include="ViewModel\Generation\GeneratedSetViewModel.cs" />
     <Compile Include="ViewModel\Generation\GenerationOptionsViewModel.cs" />
-    <Compile Include="ViewModel\ManageCardArtifactViewModel.cs" />
-    <Compile Include="ViewModel\ManageCardsViewModel.cs" />
-    <Compile Include="ViewModel\ManageSetsViewModel.cs" />
+    <Compile Include="ViewModel\Management\ManageCardArtifactViewModel.cs" />
+    <Compile Include="ViewModel\Management\ManageCardsViewModel.cs" />
+    <Compile Include="ViewModel\Management\ManageSetsViewModel.cs" />
     <Compile Include="ViewModel\WelcomeScreenViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

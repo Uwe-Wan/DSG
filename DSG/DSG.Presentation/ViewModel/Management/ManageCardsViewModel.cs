@@ -13,7 +13,7 @@ using DSG.BusinessEntities.CardTypes;
 using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardArtifacts;
 
-namespace DSG.Presentation.ViewModel
+namespace DSG.Presentation.ViewModel.Management
 {
     public class ManageCardsViewModel : AbstractViewModel
     {
