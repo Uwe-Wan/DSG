@@ -15,7 +15,7 @@ using DSG.BusinessEntities.CardArtifacts;
 
 namespace DSG.Presentation.ViewModel
 {
-    public class ManageCardsViewModel : Notifier, IViewModel
+    public class ManageCardsViewModel : AbstractViewModel
     {
         private Card _selectedCard;
         private ICardBc _cardBc;
@@ -96,15 +96,24 @@ namespace DSG.Presentation.ViewModel
 
         public List<IsCardArtifactSelectedDto> SelectedCardArtifacts { get; set; }
 
+        public bool MenuOpened { get; set; }
+
         public ManageCardsViewModel()
         {
             AvailableCosts = new List<Cost>();
             AddCardCommand = new RelayCommand(cmd => AddCard());
+            NavigateToManageSetsScreenCommand = new RelayCommand(cmd => NavigateTo(NavigationDestination.ManageSets));
+            MenuCommand = new RelayCommand(cmd => OpenDropdownMenu());
+            MenuOpened = false;
         }
 
         public ICommand AddCardCommand { get; set; }
 
-        public async Task OnPageLoadedAsync(params object[] data)
+        public ICommand NavigateToManageSetsScreenCommand { get; private set; }
+
+        public ICommand MenuCommand { get; private set; }
+
+        public override async Task OnPageLoadedAsync(params object[] data)
         {
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
 
@@ -184,6 +193,11 @@ namespace DSG.Presentation.ViewModel
             CardBc.InsertCard(card);
 
             SelectedExpansionViewEntity.ContainedCards.Add(card);
+        }
+
+        private void OpenDropdownMenu()
+        {
+            MenuOpened = !MenuOpened;
         }
     }
 }

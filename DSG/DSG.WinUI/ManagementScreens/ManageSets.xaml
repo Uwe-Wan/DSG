@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:DSG.WinUI"
+      xmlns:local="clr-namespace:DSG.WinUI" xmlns:local1="clr-namespace:DSG.WinUI.Behavior" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ManageSets">
@@ -22,10 +22,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="2*"/>
-            <RowDefinition Height="0.2*"/>
+            <RowDefinition Height="0.4*"/>
             <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="0.8*"/>
         </Grid.RowDefinitions>
 
         <TextBlock 
@@ -34,6 +33,45 @@
             Style="{StaticResource pageTitleDefaultStyle}">
             Manage Sets
         </TextBlock>
+
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" Background="HotPink" Margin="20, 20">
+            <i:Interaction.Behaviors>
+                <local1:DropDownButtonBehavior/>
+            </i:Interaction.Behaviors>
+            <Button.Content>
+                <Image Source="../Images/cog.png"/>
+            </Button.Content>
+            <Button.ContextMenu>
+                <ContextMenu IsEnabled="True"  Placement="Bottom" Background="HotPink" Width="200">
+                    <Button Margin="-37, 0, 0, 0" Command="{Binding NavigateToWelcomeScreenCommand}" Style="{StaticResource PinkButton}" Width="200">
+                        <i:Interaction.Behaviors>
+                            <local1:DropDownButtonContextMenuBehavior/>
+                        </i:Interaction.Behaviors>
+                        <TextBlock>
+                            Welcome Screen
+                        </TextBlock>
+                    </Button>
+                    <Button Margin="-37, 0, 0, 0" Command="{Binding AddCardsCommand}" Style="{StaticResource PinkButton}" Width="200" 
+                            IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}">
+                        <i:Interaction.Behaviors>
+                            <local1:DropDownButtonContextMenuBehavior/>
+                        </i:Interaction.Behaviors>
+                        <TextBlock>
+                            Add Cards
+                        </TextBlock>
+                    </Button>
+                    <Button Margin="-37, 0, 0, 0" Command="{Binding AddCardArtifactsCommand}" Style="{StaticResource PinkButton}" Width="200" 
+                            IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}">
+                        <i:Interaction.Behaviors>
+                            <local1:DropDownButtonContextMenuBehavior/>
+                        </i:Interaction.Behaviors>
+                        <TextBlock>
+                            Add Artifacts
+                        </TextBlock>
+                    </Button>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
 
         <DataGrid 
             Grid.Column="1" 
@@ -48,7 +86,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="*">
                     <DataGridTextColumn.Header>
-                        <TextBlock Text="Dominion Sets"/>
+                        <TextBlock Text="Dominion Sets" FontWeight="Bold"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>
@@ -59,7 +97,8 @@
             Grid.Row="1"  
             ItemsSource="{Binding SelectedExpansion.ContainedCards}"
             Style="{StaticResource dataGridDefaultStyle}"                  
-            IsReadOnly="True">
+            IsReadOnly="True"
+            Grid.RowSpan="3">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -77,7 +116,8 @@
             Grid.Row="1"  
             ItemsSource="{Binding SelectedExpansion.ContainedCards.CardArtifacts}"
             Style="{StaticResource dataGridDefaultStyle}"                  
-            IsReadOnly="True">
+            IsReadOnly="True"
+            Grid.RowSpan="3">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -91,40 +131,20 @@
         </DataGrid>
 
         <TextBox 
-            Grid.Row="3" 
-            Grid.Column="1" Height="32" 
+            Grid.Row="2" 
+            Grid.Column="1" 
+            Height="32" 
+            VerticalAlignment="Bottom"
             Text="{Binding UserInput, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
             Style="{StaticResource nameBox}"/>
 
         <Button 
-            Grid.Row="4" 
+            Grid.Row="3" 
             Grid.Column="1" 
             Command="{Binding InsertCommand}" 
             Style="{StaticResource PinkButton}">
             <TextBlock>
                 Add Set
-            </TextBlock>
-        </Button>
-
-        <Button 
-            Grid.Row="4" 
-            Grid.Column="3" 
-            Command="{Binding AddCardsCommand}" 
-            IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}"
-            Style="{StaticResource PinkButton}">
-            <TextBlock>
-                Add Cards
-            </TextBlock>
-        </Button>
-
-        <Button 
-            Grid.Row="4" 
-            Grid.Column="5" 
-            Command="{Binding AddCardArtifactsCommand}" 
-            IsEnabled="{Binding SelectedExpansion, Converter={StaticResource ObjectSelectedToBooleanConvert}}"
-            Style="{StaticResource PinkButton}">
-            <TextBlock>
-                Add Artifacts
             </TextBlock>
         </Button>
 

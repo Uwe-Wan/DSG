@@ -14,7 +14,7 @@ using System.Windows.Input;
 
 namespace DSG.Presentation.ViewModel
 {
-    public class ManageCardArtifactViewModel : Notifier, IViewModel
+    public class ManageCardArtifactViewModel : AbstractViewModel
     {
         private ICardArtifactBc _cardArtifactBc;
         private AdditionalCard _selectedAdditionalCard;
@@ -75,6 +75,10 @@ namespace DSG.Presentation.ViewModel
             }
         }
 
+        public ICommand AddArtifactCommand { get; private set; }
+
+        public ICommand NavigateToManageSetsScreenCommand { get; private set; }
+
         public ManageCardArtifactViewModel()
         {
             AddArtifactCommand = new RelayCommand(c => AddArtifact());
@@ -83,11 +87,11 @@ namespace DSG.Presentation.ViewModel
             AvailableTypesOfAdditionalCard = Enum.GetValues(typeof(TypeOfAdditionalCard))
                     .OfType<TypeOfAdditionalCard>()
                     .ToList();
+
+            NavigateToManageSetsScreenCommand = new RelayCommand(cmd => NavigateTo(NavigationDestination.ManageSets));
         }
 
-        public ICommand AddArtifactCommand { get; private set; }
-
-        public async Task OnPageLoadedAsync(params object[] data)
+        public override async Task OnPageLoadedAsync(params object[] data)
         {
             AdditionalCards.Clear();
 

@@ -77,6 +77,7 @@ namespace DSG.Presentation.Test.ViewModel
         {
             //Arrange
             _testee.AvailableCosts = new List<Cost> { new Cost(2) };
+            _testee.NewCardsName = "Test";
             _testee.NewCardCostsPotion = false;
             _testee.NewCardsCost = 2;
             _testee.NewCardsDept = 0;
@@ -101,6 +102,7 @@ namespace DSG.Presentation.Test.ViewModel
         {
             //Arrange
             _testee.AvailableCosts = new List<Cost> { new Cost(2) };
+            _testee.NewCardsName = "Test";
             _testee.NewCardCostsPotion = false;
             _testee.NewCardsCost = 3;
             _testee.NewCardsDept = 0;

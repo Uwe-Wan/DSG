@@ -10,10 +10,10 @@ using DSG.Common;
 
 namespace DSG.Presentation.ViewModel
 {
-    public class ManageSetsViewModel : IViewModel
+    public class ManageSetsViewModel : AbstractViewModel
     {
         private IDominionExpansionBc _dominionExpansionBc;
-        private INaviService _naviService;
+        private DominionExpansion _selectedExpansion;
 
         public IDominionExpansionBc DominionExpansionBc
         {
@@ -25,17 +25,15 @@ namespace DSG.Presentation.ViewModel
             set { _dominionExpansionBc = value; }
         }
 
-        public INaviService NaviService
+        public DominionExpansion SelectedExpansion
         {
-            get
+            get { return _selectedExpansion; }
+            set
             {
-                Check.RequireInjected(_naviService, nameof(NaviService), nameof(ManageSetsViewModel));
-                return _naviService;
+                _selectedExpansion = value;
+                OnPropertyChanged(nameof(SelectedExpansion));
             }
-            set { _naviService = value; }
         }
-
-        public DominionExpansion SelectedExpansion { get; set; }
 
         public ObservableCollection<DominionExpansion> DominionExpansions { get; set; }
 
@@ -53,8 +51,13 @@ namespace DSG.Presentation.ViewModel
         public ICommand AddCardsCommand { get; private set; }
         public ICommand AddCardArtifactsCommand { get; private set; }
 
-        public async Task OnPageLoadedAsync(params object[] data)
+        public override async Task OnPageLoadedAsync(params object[] data)
         {
+            if (data.Length == 0)
+            {
+                return;
+            }
+
             DominionExpansions.Clear();
 
             IEnumerable<DominionExpansion> expansions = data[0] as IEnumerable<DominionExpansion>;

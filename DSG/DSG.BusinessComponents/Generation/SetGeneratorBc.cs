@@ -69,14 +69,5 @@ namespace DSG.BusinessComponents.Generation
 
             return ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(availableNonSupplyCards, numberOfNonSupplyCards);
         }
-
-        private List<Card> RetrieveEitherSupplyCardsOrOthers(List<Card> cardsToSplit, bool isSupplyType)
-        {
-            return cardsToSplit.Where(
-                card => card.CardTypeToCards
-                    .Select(x => x.CardType.IsSupplyType == isSupplyType)
-                    .Any(x => x == true))
-                .ToList();
-        }
     }
 }
