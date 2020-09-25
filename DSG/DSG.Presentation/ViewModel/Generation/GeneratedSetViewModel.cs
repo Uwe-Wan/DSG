@@ -5,10 +5,11 @@ using DSG.Presentation.Services;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace DSG.Presentation.ViewModel.Generation
 {
-    public class GeneratedSetViewModel : IViewModel
+    public class GeneratedSetViewModel : AbstractViewModel, IViewModel
     {
         private ISetGeneratorBc _setGeneratorBc;
 
@@ -22,6 +23,14 @@ namespace DSG.Presentation.ViewModel.Generation
                 return _setGeneratorBc;
             }
             set { _setGeneratorBc = value; }
+        }
+
+
+        public ICommand NavigateToGenerationOptionsCommand { get; private set; }
+
+        public GeneratedSetViewModel()
+        {
+            NavigateToGenerationOptionsCommand = new RelayCommand(c => NaviService.NavigateToAsync(NavigationDestination.GenerationOptions));
         }
 
         public async Task OnPageLoadedAsync(params object[] data)

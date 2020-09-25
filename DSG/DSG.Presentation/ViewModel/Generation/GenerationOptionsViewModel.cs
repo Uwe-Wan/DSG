@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace DSG.Presentation.ViewModel.Generation
 {
-    public class GenerationOptionsViewModel : IViewModel
+    public class GenerationOptionsViewModel : AbstractViewModel, IViewModel
     {
         private IUiService _uiService;
         private INaviService _naviService;
@@ -50,6 +50,11 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public async Task OnPageLoadedAsync(params object[] data)
         {
+            if(data.Length == 0)
+            {
+                return;
+            }
+
             IEnumerable<DominionExpansion> expansionData = data[0] as IEnumerable<DominionExpansion>;
             List<DominionExpansion> expansions = expansionData.ToList();
 
