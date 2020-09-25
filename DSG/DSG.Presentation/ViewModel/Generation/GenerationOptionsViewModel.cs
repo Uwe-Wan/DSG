@@ -63,7 +63,10 @@ namespace DSG.Presentation.ViewModel.Generation
 
         internal void GenerateSet()
         {
-            List<Card> availableCards = IsDominionExpansionSelectedDtos.SelectMany(dto => dto.DominionExpansion.ContainedCards).ToList();
+            List<Card> availableCards = IsDominionExpansionSelectedDtos
+                .Where(dto => dto.IsSelected)
+                .SelectMany(dto => dto.DominionExpansion.ContainedCards)
+                .ToList();
             int availableSupplyCards = RetrieveCards.SupplyOrOthers(availableCards, true).Count;
 
             if (availableSupplyCards < 10)
