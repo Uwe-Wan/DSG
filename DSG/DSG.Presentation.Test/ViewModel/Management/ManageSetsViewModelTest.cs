@@ -37,7 +37,7 @@ namespace DSG.Presentation.Test.ViewModel.Management
         {
             //Arrange
             string newExpansionName = "New Expansion";
-            _testee.UserInput = newExpansionName;
+            _testee.NewSetsName = newExpansionName;
 
             DominionExpansion newExpansion = new DominionExpansion { Name = newExpansionName };
             _dominionExpansionBcMock.Setup(bc => bc.GetExpansionByName(newExpansionName)).Returns(newExpansion);
@@ -68,7 +68,7 @@ namespace DSG.Presentation.Test.ViewModel.Management
         }
 
         [Test]
-        public void AddCards_NaviServiceInvoked()
+        public async Task NavigateToAsync_NaviServiceInvoked()
         {
             //Arrange
             DominionExpansion selectedExpansion = new DominionExpansion();
@@ -77,11 +77,14 @@ namespace DSG.Presentation.Test.ViewModel.Management
             ObservableCollection<DominionExpansion> expansions = new ObservableCollection<DominionExpansion> { selectedExpansion };
             _testee.DominionExpansions = expansions;
 
+            _testee.NewSetsName = "TestSet";
+
             //Act
-            _testee.AddCards();
+            await _testee.NavigateToAsync(NavigationDestination.ManageCards);
 
             //Assert
             _naviServiceMock.Verify(mock => mock.NavigateToAsync(NavigationDestination.ManageCards, selectedExpansion, expansions));
+            _testee.NewSetsName.Should().BeNull();
         }
     }
 }

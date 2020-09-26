@@ -33,7 +33,7 @@ namespace DSG.Presentation.ViewModel.Generation
             NavigateToGenerationOptionsCommand = new RelayCommand(c => NaviService.NavigateToAsync(NavigationDestination.GenerationOptions));
         }
 
-        public async Task OnPageLoadedAsync(params object[] data)
+        public override async Task OnPageLoadedAsync(params object[] data)
         {
             IEnumerable<DominionExpansion> expansionData = data[0] as IEnumerable<DominionExpansion>;
             List<DominionExpansion> expansions = expansionData.ToList();

@@ -8,6 +8,7 @@ namespace DSG.Presentation.ViewModel
     public class AbstractViewModel : Notifier, IViewModel
     {
         private INaviService _naviService;
+        private bool _isDataLoaded;
 
         #region Properties
 
@@ -23,24 +24,37 @@ namespace DSG.Presentation.ViewModel
 
         public ICommand NavigateToWelcomeScreenCommand { get; private set; }
 
+        public bool IsDataLoaded
+        {
+            get { return _isDataLoaded; }
+            set
+            {
+                _isDataLoaded = value;
+                OnPropertyChanged(nameof(IsDataLoaded));
+            }
+        }
+
         #endregion
 
         public AbstractViewModel()
         {
-            NavigateToWelcomeScreenCommand = new RelayCommand(cmd => NavigateTo(NavigationDestination.WelcomeScreen));
+            NavigateToWelcomeScreenCommand = new RelayCommand(async cmd => await NavigateToAsync(NavigationDestination.WelcomeScreen));
         }
 
         #region Methods
 
+#pragma warning disable CS1998 // Async method lacks 'await' operator, but it is overwritten in child classes and used asynchronous there
         public virtual async Task OnPageLoadedAsync(params object[] data)
+#pragma warning restore CS1998
         {
         }
-
-        protected void NavigateTo(NavigationDestination destination)
+        
+        public virtual async Task NavigateToAsync(NavigationDestination destination)
         {
-            NaviService.NavigateToAsync(destination);
+            await NaviService.NavigateToAsync(destination);
         }
 
-        #endregion
-    }
+
+    #endregion
+}
 }

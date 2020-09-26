@@ -12,7 +12,7 @@ using NUnit.Framework;
 namespace DSG.Presentation.Test.ViewModel
 {
     [TestFixture]
-    public class WelcomeScreenViewModelTest
+    public class WelcomeScreenViewModelTestB
     {
         private WelcomeScreenViewModel _testee;
         private Mock<IUiService> _uiServiceMock;
@@ -36,6 +36,7 @@ namespace DSG.Presentation.Test.ViewModel
         {
             //Arrange
             _testee.DominionExpansions = new ObservableCollection<DominionExpansion>();
+            _testee.DominionExpansions.Add(new DominionExpansion());
 
             List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
             _dominionExpansionBcMock.Setup(bc => bc.GetExpansions()).Returns(expansions);
@@ -45,11 +46,11 @@ namespace DSG.Presentation.Test.ViewModel
 
             //Assert
             _dominionExpansionBcMock.Verify(bc => bc.GetExpansions(), Times.Once);
-            _testee.DominionExpansions.Should().HaveCount(1);
+            _testee.DominionExpansions.Should().HaveCount(2);
         }
 
         [Test]
-        public void GenerateSet_NotEnoughCards_OpenUiWindow()
+        public async Task GoToGenerationOptions_NotEnoughCards_OpenUiWindow()
         {
             //Arrange
             _testee = new WelcomeScreenViewModel();
@@ -65,7 +66,7 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.DominionExpansions = new ObservableCollection<DominionExpansion> { expansion };
 
             //Act
-            _testee.GoToGenerationOptions();
+            await _testee.GoToGenerationOptions();
 
             //Assert
             _uiServiceMock.Verify(x => x.ShowErrorMessage("There are only 1 cards available. " +
@@ -74,7 +75,7 @@ namespace DSG.Presentation.Test.ViewModel
         }
 
         [Test]
-        public void GenerateSet_EnoughCards_NavigationInvoked()
+        public async Task GoToGenerationOptions_EnoughCards_NavigationInvoked()
         {
             //Arrange
             _testee = new WelcomeScreenViewModel();
@@ -95,11 +96,29 @@ namespace DSG.Presentation.Test.ViewModel
             _testee.DominionExpansions = new ObservableCollection<DominionExpansion> { expansion };
 
             //Act
-            _testee.GoToGenerationOptions();
+            await _testee.GoToGenerationOptions();
 
             //Assert
             _uiServiceMock.Verify(x => x.ShowErrorMessage(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-            _naviServiceMock.Verify(x => x.NavigateToAsync(NavigationDestination.GenerationOptions, new ObservableCollection<DominionExpansion> { expansion }), Times.Once);
+            _naviServiceMock.Verify(x => x.NavigateToAsync(NavigationDestination.GenerationOptions, _testee.DominionExpansions), Times.Once);
+
+            _testee.DominionExpansions.Should().HaveCount(0);
+        }
+
+        [Test]
+        public async Task NavigateToAsync_NavigationInvoked_DataCleaned()
+        {
+            //Arrange
+            _testee.DominionExpansions = new ObservableCollection<DominionExpansion>();
+            _testee.DominionExpansions.Add(new DominionExpansion());
+
+            //Act
+            await _testee.NavigateToAsync(NavigationDestination.ManageCards);
+
+            //Assert
+            _testee.DominionExpansions.Should().HaveCount(0);
+
+            _naviServiceMock.Verify(x => x.NavigateToAsync(NavigationDestination.ManageCards, _testee.DominionExpansions), Times.Once);
         }
     }
 }

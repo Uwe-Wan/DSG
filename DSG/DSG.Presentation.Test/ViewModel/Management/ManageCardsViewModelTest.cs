@@ -6,6 +6,7 @@ using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
+using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel.Management;
 using FluentAssertions;
@@ -19,6 +20,7 @@ namespace DSG.Presentation.Test.ViewModel.Management
     {
         private ManageCardsViewModel _testee;
         private Mock<ICardBc> _cardBcMock;
+        private Mock<INaviService> _naviMock;
 
         [SetUp]
         public void Setup()
@@ -27,6 +29,9 @@ namespace DSG.Presentation.Test.ViewModel.Management
 
             _cardBcMock = new Mock<ICardBc>();
             _testee.CardBc = _cardBcMock.Object;
+
+            _naviMock = new Mock<INaviService>();
+            _testee.NaviService = _naviMock.Object;
         }
 
         [Test]
@@ -121,6 +126,37 @@ namespace DSG.Presentation.Test.ViewModel.Management
             _cardBcMock.Verify(bc => bc.InsertCard(It.Is<Card>(card => card.Cost.Money == 3 && card.Cost.Dept == 0 && card.Cost.Potion == false)), Times.Once);
             _cardBcMock.VerifyNoOtherCalls();
             _testee.AvailableCosts.Should().HaveCount(2);
+        }
+
+        [Test]
+        public async Task NavigateToAsync_NavigationInvoked_DataCleaned()
+        {
+            //Arrange
+            _testee.NewCardCostsPotion = true;
+            _testee.NewCardsCost = 2;
+            _testee.NewCardsDept = 3;
+            _testee.NewCardsName = "Test";
+            _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
+            _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
+            _testee.SelectedCardArtifacts = new List<IsCardArtifactSelectedDto>();
+            _testee.SelectedCardSubTypes = new List<IsCardSubTypeSelectedDto>();
+            _testee.ManageCardsScreenTitle = "Title";
+
+            //Act
+            await _testee.NavigateToAsync(NavigationDestination.ManageCardArtifacts);
+
+            //Assert
+            _naviMock.Verify(x => x.NavigateToAsync(NavigationDestination.ManageCardArtifacts), Times.Once);
+
+            _testee.NewCardCostsPotion.Should().BeFalse();
+            _testee.NewCardsCost.Should().BeNull();
+            _testee.NewCardsDept.Should().BeNull();
+            _testee.NewCardsName.Should().BeNull();
+            _testee.SelectedExpansionViewEntity.Should().BeNull();
+            _testee.SelectedCardTypes.Should().BeNull();
+            _testee.SelectedCardArtifacts.Should().BeNull();
+            _testee.SelectedCardSubTypes.Should().BeNull();
+            _testee.ManageCardsScreenTitle.Should().Be("Manage Cards of Expansion ???");
         }
     }
 }

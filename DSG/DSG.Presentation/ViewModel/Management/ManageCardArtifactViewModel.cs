@@ -16,10 +16,18 @@ namespace DSG.Presentation.ViewModel.Management
 {
     public class ManageCardArtifactViewModel : AbstractViewModel
     {
+        #region Fields 
+
         private ICardArtifactBc _cardArtifactBc;
-        private AdditionalCard _selectedAdditionalCard;
         private int? _selectedAmountOfAdditionalCards;
         public string _nameOfNewArtifact;
+        private string _manageCardArtifactsScreenTitle;
+        private SelectedExpansionViewEntity _selectedExpansionViewEntity;
+
+        #endregion Fields
+
+
+        #region Injected Dependencies
 
         public ICardArtifactBc CardArtifactBc
         {
@@ -31,9 +39,30 @@ namespace DSG.Presentation.ViewModel.Management
             set { _cardArtifactBc = value; }
         }
 
-        public string ManageCardArtifactsScreenTitle { get; set; }
+        #endregion Injected Dependencies
 
-        public SelectedExpansionViewEntity SelectedExpansionViewEntity { get; set; }
+
+        #region Properties
+
+        public string ManageCardArtifactsScreenTitle
+        {
+            get { return _manageCardArtifactsScreenTitle ?? "Manage Artifacts of Expansion ???"; }
+            set
+            {
+                _manageCardArtifactsScreenTitle = value;
+                OnPropertyChanged(nameof(ManageCardArtifactsScreenTitle));
+            }
+        }
+
+        public SelectedExpansionViewEntity SelectedExpansionViewEntity
+        {
+            get { return _selectedExpansionViewEntity; }
+            set
+            {
+                _selectedExpansionViewEntity = value;
+                OnPropertyChanged(nameof(SelectedExpansionViewEntity));
+            }
+        }
 
         public ObservableCollection<AdditionalCard> AdditionalCards { get; set; }
 
@@ -44,16 +73,6 @@ namespace DSG.Presentation.ViewModel.Management
         public int? MaxCost { get; set; }
 
         public int? MinCost { get; set; }
-
-        public AdditionalCard SelectedAdditionalCard
-        {
-            get { return _selectedAdditionalCard; }
-            set
-            {
-                _selectedAdditionalCard = value;
-                OnPropertyChanged(nameof(SelectedAdditionalCard));
-            }
-        }
 
         public int? SelectedAmountOfAdditionalCards
         {
@@ -75,35 +94,51 @@ namespace DSG.Presentation.ViewModel.Management
             }
         }
 
-        public ICommand AddArtifactCommand { get; private set; }
+        #endregion Properties
 
-        public ICommand NavigateToManageSetsScreenCommand { get; private set; }
 
         public ManageCardArtifactViewModel()
         {
             AddArtifactCommand = new RelayCommand(c => AddArtifact());
             AdditionalCards = new ObservableCollection<AdditionalCard>();
-            SelectedAdditionalCard = new AdditionalCard();
             AvailableTypesOfAdditionalCard = Enum.GetValues(typeof(TypeOfAdditionalCard))
                     .OfType<TypeOfAdditionalCard>()
                     .ToList();
 
-            NavigateToManageSetsScreenCommand = new RelayCommand(cmd => NavigateTo(NavigationDestination.ManageSets));
+            NavigateToManageSetsScreenCommand = new RelayCommand(async cmd => await NavigateToAsync(NavigationDestination.ManageSets));
         }
+
+
+        #region Commands
+
+        public ICommand AddArtifactCommand { get; private set; }
+        public ICommand NavigateToManageSetsScreenCommand { get; private set; }
+
+        #endregion Commands
+
+
+        #region Methods
 
         public override async Task OnPageLoadedAsync(params object[] data)
         {
-            AdditionalCards.Clear();
+            IsDataLoaded = false;
 
-            IEnumerable<DominionExpansion> expansions = data[1] as IEnumerable<DominionExpansion>;
+            await Task.Run(() => LoadData(data[0], data[1]));
+
+            IsDataLoaded = true;
+        }
+
+        private void LoadData(object selectedExpansionData, object expansionsData)
+        {
+            SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)selectedExpansionData);
+            ManageCardArtifactsScreenTitle = string.Join(" ", "Manage Artifacts of Expansion", SelectedExpansionViewEntity.ExpansionName);
+
+            IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
             IEnumerable<AdditionalCard> additionalCards = expansions
                 .SelectMany(expansion => expansion.ContainedArtifacts)
                 .Where(artifact => artifact.AdditionalCard != null)
                 .Select(artifact => artifact.AdditionalCard);
             AdditionalCards.AddRange(additionalCards);
-
-            SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
-            ManageCardArtifactsScreenTitle = string.Join(" ", "Manage Artifacts of Expansion", SelectedExpansionViewEntity.ExpansionName);
         }
 
         internal void AddArtifact()
@@ -122,8 +157,6 @@ namespace DSG.Presentation.ViewModel.Management
 
         private void HandleArtifactWithAdditionalCard()
         {
-            SelectedAdditionalCard.AlreadyIncludedCard = SelectedAdditionalCardType == TypeOfAdditionalCard.Existing;
-
             AdditionalCard additionalCard = new AdditionalCard(MinCost, MaxCost, SelectedAdditionalCardType);
 
             AdditionalCard matchedAdditionalCard = AdditionalCards.SingleOrDefault(card => card.Equals(additionalCard));
@@ -154,5 +187,25 @@ namespace DSG.Presentation.ViewModel.Management
 
             SelectedExpansionViewEntity.ContainedArtifacts.Add(newArtifact);
         }
+
+        public override async Task NavigateToAsync(NavigationDestination destination)
+        {
+            await base.NavigateToAsync(destination);
+            await Task.Run(CleanData);
+        }
+
+        private void CleanData()
+        {
+            AdditionalCards.Clear();
+            SelectedExpansionViewEntity = null;
+            SelectedAmountOfAdditionalCards = null;
+            ManageCardArtifactsScreenTitle = null;
+            NameOfNewArtifact = null;
+            MaxCost = null;
+            MinCost = null;
+            SelectedAdditionalCardType = TypeOfAdditionalCard.None;
+        }
+
+        #endregion Methods
     }
 }

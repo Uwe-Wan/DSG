@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessComponents.CardArtifacts;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
+using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel.Management;
 using FluentAssertions;
@@ -17,15 +18,24 @@ namespace DSG.Presentation.Test.ViewModel.Management
     {
         private ManageCardArtifactViewModel _testee;
         private Mock<ICardArtifactBc> _cardArtifactBcMock;
+        private Mock<INaviService> _naviMock;
 
-        [Test]
-        public void InsertCard_BcInvokedAndAddedToCollection()
+        [SetUp]
+        public void Setup()
         {
-            //Arrange
             _testee = new ManageCardArtifactViewModel();
 
             _cardArtifactBcMock = new Mock<ICardArtifactBc>();
             _testee.CardArtifactBc = _cardArtifactBcMock.Object;
+
+            _naviMock = new Mock<INaviService>();
+            _testee.NaviService = _naviMock.Object;
+        }
+
+        [Test]
+        public void AddArtifact_BcInvokedAndAddedToCollection()
+        {
+            //Arrange
 
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
 
@@ -44,13 +54,11 @@ namespace DSG.Presentation.Test.ViewModel.Management
         public async Task OnPageLoadedAsync_NewExpansionViewEntityAddedOldRemoved()
         {
             //Arrange
-            _testee = new ManageCardArtifactViewModel();
-
             SelectedExpansionViewEntity selectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { Name = "OldExpansion" });
             _testee.SelectedExpansionViewEntity = selectedExpansionViewEntity;
 
-            AdditionalCard additionalCardToRemove = new AdditionalCard { MaxCosts = 2 };
-            _testee.AdditionalCards.Add(additionalCardToRemove);
+            AdditionalCard existingAdditionalCard = new AdditionalCard { MaxCosts = 2 };
+            _testee.AdditionalCards.Add(existingAdditionalCard);
 
             DominionExpansion newExpansion = new DominionExpansion { Name = "NewExpansion" };
 
@@ -72,10 +80,36 @@ namespace DSG.Presentation.Test.ViewModel.Management
 
             //Assert
             _testee.SelectedExpansionViewEntity.ExpansionName.Should().Be("NewExpansion");
+            _testee.ManageCardArtifactsScreenTitle.Should().Be("Manage Artifacts of Expansion NewExpansion");
 
-            _testee.AdditionalCards.Should().HaveCount(1);
-            _testee.AdditionalCards.Should().NotContain(additionalCardToRemove);
+            _testee.AdditionalCards.Should().HaveCount(2);
+            _testee.AdditionalCards.Should().Contain(existingAdditionalCard);
             _testee.AdditionalCards.Should().Contain(additionalCardToAdd);
+        }
+
+        [Test]
+        public async Task NavigateToAsync_NavigationInvoked_DataCleared()
+        {
+            //Arrange
+            _testee.NameOfNewArtifact = "TestArtifact";
+            _testee.MaxCost = 4;
+            _testee.MinCost = 2;
+            _testee.ManageCardArtifactsScreenTitle = "TestTitle";
+            _testee.SelectedAdditionalCardType = TypeOfAdditionalCard.Additional;
+            _testee.SelectedAmountOfAdditionalCards = 2;
+
+            //Act
+            await _testee.NavigateToAsync(NavigationDestination.WelcomeScreen);
+
+            //Assert
+            _naviMock.Verify(x => x.NavigateToAsync(NavigationDestination.WelcomeScreen), Times.Once);
+
+            _testee.NameOfNewArtifact.Should().BeNull();
+            _testee.MaxCost.Should().BeNull();
+            _testee.MinCost.Should().BeNull();
+            _testee.ManageCardArtifactsScreenTitle.Should().Be("Manage Artifacts of Expansion ???");
+            _testee.SelectedAdditionalCardType.Should().Be(TypeOfAdditionalCard.None);
+            _testee.SelectedAmountOfAdditionalCards.Should().BeNull();
         }
     }
 }

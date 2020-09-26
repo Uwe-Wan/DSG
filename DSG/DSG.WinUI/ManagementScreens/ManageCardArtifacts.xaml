@@ -35,11 +35,13 @@
         <TextBlock 
             Grid.Row="0" 
             Grid.ColumnSpan="10" 
-            Style="{StaticResource pageTitleDefaultStyle}">
-            Manage Artifacts
-        </TextBlock>
+            Style="{StaticResource pageTitleDefaultStyle}"
+            Text="{Binding ManageCardArtifactsScreenTitle}"/>
 
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" Background="HotPink" Margin="20, 20">
+
+
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" 
+                HorizontalAlignment="Left" Background="HotPink" Margin="20, 20" IsEnabled="{Binding IsDataLoaded}">
             <i:Interaction.Behaviors>
                 <local1:DropDownButtonBehavior/>
             </i:Interaction.Behaviors>
@@ -121,7 +123,13 @@
                 SelectedItem="{Binding SelectedAdditionalCardType}"/>
         </StackPanel>
 
-        <Button Grid.Row="3" Grid.Column="4" Grid.ColumnSpan="2" Height="32" Command="{Binding AddArtifactCommand}" Style="{StaticResource PinkButton}">
+        <Button 
+            Grid.Row="3" 
+            Grid.Column="4" 
+            Grid.ColumnSpan="2" 
+            Command="{Binding AddArtifactCommand}" 
+            Style="{StaticResource PinkButton}"
+            IsEnabled="{Binding IsDataLoaded}">
             <TextBlock>
                 Add Artifact
             </TextBlock>

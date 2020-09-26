@@ -6,18 +6,15 @@ using DSG.Presentation.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-[assembly: InternalsVisibleTo("DSG.Presentation.Test")]
 
 namespace DSG.Presentation.ViewModel
 {
-    public class WelcomeScreenViewModel : IViewModel
+    public class WelcomeScreenViewModel : AbstractViewModel, IViewModel
     {
         private IDominionExpansionBc _dominionExpansionBc;
-        private INaviService _naviService;
         private IUiService _uiService;
 
         public IDominionExpansionBc DominionExpansionBc
@@ -28,16 +25,6 @@ namespace DSG.Presentation.ViewModel
                 return _dominionExpansionBc;
             }
             set { _dominionExpansionBc = value; }
-        }
-
-        public INaviService NaviService
-        {
-            get
-            {
-                Check.RequireInjected(_naviService, nameof(NaviService), nameof(WelcomeScreenViewModel));
-                return _naviService;
-            }
-            set { _naviService = value; }
         }
 
         public IUiService UiService
@@ -54,22 +41,25 @@ namespace DSG.Presentation.ViewModel
 
         public WelcomeScreenViewModel()
         {
-            NavigateToManageSetsScreenCommand = new RelayCommand(p => NavigateTo(NavigationDestination.ManageSets));
-            GenerationOptionsCommand = new RelayCommand(c => GoToGenerationOptions());
+            NavigateToManageSetsScreenCommand = new RelayCommand(async p => await NavigateToAsync(NavigationDestination.ManageSets));
+            GenerationOptionsCommand = new RelayCommand(async c => await GoToGenerationOptions());
             DominionExpansions = new ObservableCollection<DominionExpansion>();
         }
 
         public ICommand NavigateToManageSetsScreenCommand { get; private set; }
         public ICommand GenerationOptionsCommand { get; private set; }
 
-        public async Task OnPageLoadedAsync(params object[] data)
+
+        public override async Task OnPageLoadedAsync(params object[] data)
         {
-            List<DominionExpansion> expansions = DominionExpansionBc.GetExpansions();
-            DominionExpansions.Clear();
-            DominionExpansions.AddRange(expansions);
+            IsDataLoaded = false;
+            Task<List<DominionExpansion>> getExpansionsTask = Task.Run(DominionExpansionBc.GetExpansions);
+            await getExpansionsTask;
+            DominionExpansions.AddRange(getExpansionsTask.Result);
+            IsDataLoaded = true;
         }
 
-        internal void GoToGenerationOptions()
+        internal async Task GoToGenerationOptions()
         {
             int availableCards = DominionExpansions.SelectMany(expansions => expansions.ContainedCards).Count();
 
@@ -81,12 +71,18 @@ namespace DSG.Presentation.ViewModel
                 return;
             }
 
-            NavigateTo(NavigationDestination.GenerationOptions);
+            await NavigateToAsync(NavigationDestination.GenerationOptions);
         }
 
-        private void NavigateTo(NavigationDestination destination)
+        public override async Task NavigateToAsync(NavigationDestination destination)
         {
-            NaviService.NavigateToAsync(destination, DominionExpansions);
+            await NaviService.NavigateToAsync(destination, DominionExpansions);
+            await Task.Run(CleanData);
+        }
+
+        private void CleanData()
+        {
+            DominionExpansions.Clear();
         }
     }
 }

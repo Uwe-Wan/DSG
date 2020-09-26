@@ -7,7 +7,6 @@ using DSG.BusinessComponents.Cards;
 using System.Windows.Input;
 using System.Linq;
 using DSG.Presentation.ViewEntity;
-using System;
 using DSG.BusinessEntities.GetEnums;
 using DSG.BusinessEntities.CardTypes;
 using DSG.BusinessEntities.CardSubTypes;
@@ -17,22 +16,23 @@ namespace DSG.Presentation.ViewModel.Management
 {
     public class ManageCardsViewModel : AbstractViewModel
     {
-        private Card _selectedCard;
+        #region Fields
+
         private ICardBc _cardBc;
         private string _newCardsName;
         private int? _newCardsCost;
         private int? _newCardsDept;
         private bool _newCardCostsPotion;
+        private SelectedExpansionViewEntity _selectedExpansionViewEntity;
+        private string _manageCardsScreenTitle;
+        private List<IsCardTypeSelectedDto> _selectedCardTypes;
+        private List<IsCardSubTypeSelectedDto> _selectedCardSubTypes;
+        private List<IsCardArtifactSelectedDto> _selectedCardArtifacts;
 
-        public Card SelectedCard
-        {
-            get { return _selectedCard; }
-            set
-            {
-                _selectedCard = value;
-                OnPropertyChanged(nameof(SelectedCard));
-            }
-        }
+        #endregion Fields
+
+
+        #region Injected Dependencies
 
         public ICardBc CardBc
         {
@@ -43,6 +43,11 @@ namespace DSG.Presentation.ViewModel.Management
             }
             set { _cardBc = value; }
         }
+
+        #endregion Injected Dependencies
+
+
+        #region Properties
 
         public List<Cost> AvailableCosts { get; set; }
 
@@ -86,47 +91,98 @@ namespace DSG.Presentation.ViewModel.Management
             }
         }
 
-        public string ManageCardsScreenTitle { get; set; }
+        public string ManageCardsScreenTitle
+        {
+            get { return _manageCardsScreenTitle ?? "Manage Cards of Expansion ???"; }
+            set
+            {
+                _manageCardsScreenTitle = value;
+                OnPropertyChanged(nameof(ManageCardsScreenTitle));
+            }
+        }
 
-        public SelectedExpansionViewEntity SelectedExpansionViewEntity { get; set; }
+        public SelectedExpansionViewEntity SelectedExpansionViewEntity
+        {
+            get { return _selectedExpansionViewEntity; }
+            set
+            {
+                _selectedExpansionViewEntity = value;
+                OnPropertyChanged(nameof(SelectedExpansionViewEntity));
+            }
+        }
 
-        public List<IsCardTypeSelectedDto> SelectedCardTypes { get; set; }
+        public List<IsCardTypeSelectedDto> SelectedCardTypes
+        {
+            get { return _selectedCardTypes; }
+            set
+            {
+                _selectedCardTypes = value;
+                OnPropertyChanged(nameof(SelectedCardTypes));
+            }
+        }
 
-        public List<IsCardSubTypeSelectedDto> SelectedCardSubTypes { get; set; }
+        public List<IsCardSubTypeSelectedDto> SelectedCardSubTypes
+        {
+            get { return _selectedCardSubTypes; }
+            set
+            {
+                _selectedCardSubTypes = value;
+                OnPropertyChanged(nameof(SelectedCardSubTypes));
+            }
+        }
 
-        public List<IsCardArtifactSelectedDto> SelectedCardArtifacts { get; set; }
+        public List<IsCardArtifactSelectedDto> SelectedCardArtifacts
+        {
+            get { return _selectedCardArtifacts; }
+            set
+            {
+                _selectedCardArtifacts = value;
+                OnPropertyChanged(nameof(SelectedCardArtifacts));
+            }
+        }
 
-        public bool MenuOpened { get; set; }
+        #endregion Properties
+
 
         public ManageCardsViewModel()
         {
             AvailableCosts = new List<Cost>();
             AddCardCommand = new RelayCommand(cmd => AddCard());
-            NavigateToManageSetsScreenCommand = new RelayCommand(cmd => NavigateTo(NavigationDestination.ManageSets));
-            MenuCommand = new RelayCommand(cmd => OpenDropdownMenu());
-            MenuOpened = false;
+            NavigateToManageSetsScreenCommand = new RelayCommand(async cmd => await NavigateToAsync(NavigationDestination.ManageSets));
         }
+
+        #region Commands
 
         public ICommand AddCardCommand { get; set; }
 
         public ICommand NavigateToManageSetsScreenCommand { get; private set; }
 
-        public ICommand MenuCommand { get; private set; }
+        #endregion Commands
+
+
+        #region Methods
 
         public override async Task OnPageLoadedAsync(params object[] data)
         {
-            SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)data[0]);
+            IsDataLoaded = false;
+            Task dataLoadingTask = Task.Run(() => LoadData(data[0], data[1]));
+            await dataLoadingTask;
+            IsDataLoaded = true;
+        }
 
-            IEnumerable<DominionExpansion> expansions = data[1] as IEnumerable<DominionExpansion>;
-            AvailableCosts.Clear();
+        private void LoadData(object selectedExpansionData, object expansionData)
+        {
+            SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)selectedExpansionData);
+
+            ManageCardsScreenTitle = string.Join(" ", "Manage Cards of Expansion", SelectedExpansionViewEntity.ExpansionName);
+
+            IEnumerable<DominionExpansion> expansions = expansionData as IEnumerable<DominionExpansion>;
             AvailableCosts.AddRange(
                 expansions
                 .SelectMany(expansion => expansion.ContainedCards)
                 .Select(card => card.Cost)
                 .Distinct()
                 .ToList());
-
-            ManageCardsScreenTitle = string.Join(" ", "Manage Cards of Expansion", SelectedExpansionViewEntity.ExpansionName);
 
             List<CardTypeEnum> cardTypes = GetEnum.CardType();
             SelectedCardTypes = cardTypes.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
@@ -195,9 +251,26 @@ namespace DSG.Presentation.ViewModel.Management
             SelectedExpansionViewEntity.ContainedCards.Add(card);
         }
 
-        private void OpenDropdownMenu()
+        public override async Task NavigateToAsync(NavigationDestination destination)
         {
-            MenuOpened = !MenuOpened;
+            await base.NavigateToAsync(destination);
+            await Task.Run(CleanData);
         }
+
+        private void CleanData()
+        {
+            SelectedExpansionViewEntity = null;
+            ManageCardsScreenTitle = null;
+            SelectedCardTypes = null;
+            SelectedCardArtifacts = null;
+            SelectedCardSubTypes = null;
+            AvailableCosts.Clear();
+            NewCardCostsPotion = false;
+            NewCardsCost = null;
+            NewCardsDept = null;
+            NewCardsName = null;
+        }
+
+        #endregion Methods
     }
 }

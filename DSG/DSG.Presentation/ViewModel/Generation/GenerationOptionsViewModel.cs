@@ -4,18 +4,15 @@ using DSG.Common;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-[assembly: InternalsVisibleTo("DSG.Presentation.Test")]
 
 namespace DSG.Presentation.ViewModel.Generation
 {
     public class GenerationOptionsViewModel : AbstractViewModel, IViewModel
     {
         private IUiService _uiService;
-        private INaviService _naviService;
 
         public IUiService UiService
         {
@@ -25,16 +22,6 @@ namespace DSG.Presentation.ViewModel.Generation
                 return _uiService;
             }
             set { _uiService = value; }
-        }
-
-        public INaviService NaviService
-        {
-            get
-            {
-                Check.RequireInjected(_naviService, nameof(NaviService), nameof(GenerationOptionsViewModel));
-                return _naviService;
-            }
-            set { _naviService = value; }
         }
 
         public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
@@ -48,7 +35,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public ICommand GenerateSetCommand { get; private set; }
 
-        public async Task OnPageLoadedAsync(params object[] data)
+        public override async Task OnPageLoadedAsync(params object[] data)
         {
             if(data.Length == 0)
             {
