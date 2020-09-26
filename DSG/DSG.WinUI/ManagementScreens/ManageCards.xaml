@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+      xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
       xmlns:local1="clr-namespace:DSG.WinUI.Behavior"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
@@ -206,6 +207,16 @@
                 Add Card
             </TextBlock>
         </Button>
+
+        <!-- This control has to be on bottom to be overlaying all the other controls. -->
+        <Image gif:AnimationBehavior.SourceUri="/Images/Loading.gif" 
+               HorizontalAlignment="Center"  
+               Grid.ColumnSpan="13" 
+               Grid.RowSpan="8"
+               VerticalAlignment="Center" 
+               Height="150" 
+               Width="150" 
+               Visibility="{Binding Path=IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
     </Grid>
 </Page>

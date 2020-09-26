@@ -254,10 +254,10 @@ namespace DSG.Presentation.ViewModel.Management
         public override async Task NavigateToAsync(NavigationDestination destination)
         {
             await base.NavigateToAsync(destination);
-            await Task.Run(CleanData);
+            await Task.Run(ClearData);
         }
 
-        private void CleanData()
+        private void ClearData()
         {
             SelectedExpansionViewEntity = null;
             ManageCardsScreenTitle = null;

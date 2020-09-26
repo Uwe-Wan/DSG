@@ -9,6 +9,7 @@ namespace DSG.Presentation.ViewModel
     {
         private INaviService _naviService;
         private bool _isDataLoaded;
+        private bool _isDataLoading;
 
         #region Properties
 
@@ -30,7 +31,18 @@ namespace DSG.Presentation.ViewModel
             set
             {
                 _isDataLoaded = value;
+                IsDataLoading = !value;
                 OnPropertyChanged(nameof(IsDataLoaded));
+            }
+        }
+
+        public bool IsDataLoading
+        {
+            get { return _isDataLoading; }
+            set
+            {
+                _isDataLoading = value;
+                OnPropertyChanged(nameof(IsDataLoading));
             }
         }
 

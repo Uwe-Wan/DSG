@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DSG.WinUI"
       xmlns:view="clr-namespace:DSG.Presentation.ViewModel;assembly=DSG.Presentation"
+      xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="WelcomeScreen"
       d:DataContext="{d:DesignInstance view:WelcomeScreenViewModel}">
 
     <Grid>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="*"/>
@@ -42,7 +44,9 @@
             Style="{StaticResource PinkButton}" 
             Command="{Binding GenerationOptionsCommand}"
             IsEnabled="{Binding IsDataLoaded}">
-            <TextBlock>Generate</TextBlock>
+            <TextBlock>
+                Generate
+            </TextBlock>
         </Button>
 
         <Button 
@@ -51,7 +55,19 @@
             Style="{StaticResource PinkButton}" 
             Command="{Binding NavigateToManageSetsScreenCommand}"
             IsEnabled="{Binding IsDataLoaded}">
-            <TextBlock>Manage Sets</TextBlock>
+            <TextBlock>
+                Manage Sets
+            </TextBlock>
         </Button>
+
+        <!-- This control has to be on bottom to be overlaying all the other controls. -->
+        <Image gif:AnimationBehavior.SourceUri="/Images/Loading.gif" 
+               HorizontalAlignment="Center"  
+               Grid.ColumnSpan="5" 
+               Grid.RowSpan="3"
+               VerticalAlignment="Center" 
+               Height="150" 
+               Width="150" 
+               Visibility="{Binding Path=IsDataLoading, Converter={StaticResource BooleanToVisibilityConverter}}"/>
     </Grid>
 </Page>

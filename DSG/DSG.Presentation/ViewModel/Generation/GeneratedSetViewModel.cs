@@ -3,7 +3,6 @@ using DSG.BusinessEntities;
 using DSG.Common;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,8 +11,17 @@ namespace DSG.Presentation.ViewModel.Generation
     public class GeneratedSetViewModel : AbstractViewModel, IViewModel
     {
         private ISetGeneratorBc _setGeneratorBc;
+        private List<Card> _generatedSet;
 
-        public List<Card> GeneratedSet { get; set; }
+        public List<Card> GeneratedSet
+        {
+            get { return _generatedSet; }
+            set
+            {
+                _generatedSet = value;
+                OnPropertyChanged(nameof(GeneratedSet));
+            }
+        }
 
         public ISetGeneratorBc SetGeneratorBc
         {

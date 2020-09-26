@@ -104,6 +104,7 @@
         <converter:ObjectSelectedToBooleanConverter x:Key="ObjectSelectedToBooleanConvert"/>
         <converter:CardTypeEnumToStringConverter x:Key="CardTypeEnumToStringConverter"/>
         <converter:CardSubTypeEnumToStringConverter x:Key="CardSubTypeEnumToStringConverter"/>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         
         <Image x:Key="WhatAWorld">
             <Image.Source>

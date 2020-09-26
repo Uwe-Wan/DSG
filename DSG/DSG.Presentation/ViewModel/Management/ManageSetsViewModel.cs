@@ -106,10 +106,10 @@ namespace DSG.Presentation.ViewModel.Management
         public override async Task NavigateToAsync(NavigationDestination destination)
         {
             await NaviService.NavigateToAsync(destination, SelectedExpansion, DominionExpansions);
-            await Task.Run(CleanData);
+            await Task.Run(ClearData);
         }
 
-        private void CleanData()
+        private void ClearData()
         {
             NewSetsName = null;
         }

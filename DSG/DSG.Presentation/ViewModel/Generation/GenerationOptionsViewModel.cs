@@ -13,6 +13,7 @@ namespace DSG.Presentation.ViewModel.Generation
     public class GenerationOptionsViewModel : AbstractViewModel, IViewModel
     {
         private IUiService _uiService;
+        private List<IsDominionExpansionSelectedDto> _isDominionExpansionSelectedDtos;
 
         public IUiService UiService
         {
@@ -24,7 +25,15 @@ namespace DSG.Presentation.ViewModel.Generation
             set { _uiService = value; }
         }
 
-        public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
+        public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos
+        {
+            get { return _isDominionExpansionSelectedDtos; }
+            set
+            {
+                _isDominionExpansionSelectedDtos = value;
+                OnPropertyChanged(nameof(IsDominionExpansionSelectedDtos));
+            }
+        }
 
         public GenerationOptionsViewModel()
         {
@@ -53,7 +62,6 @@ namespace DSG.Presentation.ViewModel.Generation
         private void LoadData(object expansionsData)
         {
             IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
-
             IsDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
         }
 
