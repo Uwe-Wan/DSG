@@ -32,7 +32,8 @@
             Generation Options
         </TextBlock>
 
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" Background="HotPink" Margin="20, 20">
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" 
+                Background="HotPink" Margin="20, 20" IsEnabled="{Binding IsDataLoaded}">
             <i:Interaction.Behaviors>
                 <local1:DropDownButtonBehavior/>
             </i:Interaction.Behaviors>
@@ -79,7 +80,14 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Height="32" Command="{Binding GenerateSetCommand}" Style="{StaticResource PinkButton}">
+        <Button 
+            Grid.Row="2" 
+            Grid.Column="2" 
+            Grid.ColumnSpan="2" 
+            Height="32" 
+            Command="{Binding GenerateSetCommand}" 
+            Style="{StaticResource PinkButton}"
+            IsEnabled="{Binding IsDataLoaded}">
             <TextBlock>
                 Generate
             </TextBlock>

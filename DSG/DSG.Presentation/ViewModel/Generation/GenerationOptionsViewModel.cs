@@ -35,6 +35,9 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public ICommand GenerateSetCommand { get; private set; }
 
+
+        #region Methods
+
         public override async Task OnPageLoadedAsync(params object[] data)
         {
             if(data.Length == 0)
@@ -42,8 +45,14 @@ namespace DSG.Presentation.ViewModel.Generation
                 return;
             }
 
-            IEnumerable<DominionExpansion> expansionData = data[0] as IEnumerable<DominionExpansion>;
-            List<DominionExpansion> expansions = expansionData.ToList();
+            IsDataLoaded = false;
+            await Task.Run(() => LoadData(data[0]));
+            IsDataLoaded = true;
+        }
+
+        private void LoadData(object expansionsData)
+        {
+            IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
 
             IsDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
         }
@@ -76,5 +85,7 @@ namespace DSG.Presentation.ViewModel.Generation
                 .ToList();
             NaviService.NavigateToAsync(destination, selectedExpansions);
         }
+
+        #endregion Methods
     }
 }
