@@ -117,7 +117,7 @@
         <DataGrid 
             Grid.Column="5" 
             Grid.Row="1"  
-            ItemsSource="{Binding SelectedExpansion.ContainedCards.CardArtifacts}"
+            ItemsSource="{Binding SelectedExpansion.ContainedArtifacts}"
             Style="{StaticResource dataGridDefaultStyle}"                  
             IsReadOnly="True"
             Grid.RowSpan="3">
