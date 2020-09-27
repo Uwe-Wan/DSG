@@ -8,6 +8,6 @@
         Loaded="OnLoaded"
         Title="MainWindow" Height="750" Width="1333">
     <Grid>
-        <Frame x:Name="Frame"/>
+        <Frame x:Name="Frame" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>
