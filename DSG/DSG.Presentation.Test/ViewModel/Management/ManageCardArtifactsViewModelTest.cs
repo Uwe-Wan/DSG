@@ -140,12 +140,12 @@ namespace DSG.Presentation.Test.ViewModel.Management
             SelectedExpansionViewEntity selectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { Name = "OldExpansion" });
             _testee.SelectedExpansionViewEntity = selectedExpansionViewEntity;
 
-            AdditionalCard existingAdditionalCard = new AdditionalCard { MaxCosts = 2 };
+            AdditionalCard existingAdditionalCard = new AdditionalCard { MaxCost = 2 };
             _testee.AdditionalCards.Add(existingAdditionalCard);
 
             DominionExpansion newExpansion = new DominionExpansion { Name = "NewExpansion" };
 
-            AdditionalCard additionalCardToAdd = new AdditionalCard { MaxCosts = 1 };
+            AdditionalCard additionalCardToAdd = new AdditionalCard { MaxCost = 1 };
             CardArtifact cardArtifactToAdd = new CardArtifact { AdditionalCard = additionalCardToAdd };
             List<DominionExpansion> newExpansions = new List<DominionExpansion> 
             {

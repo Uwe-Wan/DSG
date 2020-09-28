@@ -19,11 +19,11 @@ namespace DSG.Presentation.ViewModel.Management
         #region Fields 
 
         private ICardArtifactBc _cardArtifactBc;
-        private int? _selectedAmountOfAdditionalCards;
         public string _nameOfNewArtifact;
         private string _manageCardArtifactsScreenTitle;
         private SelectedExpansionViewEntity _selectedExpansionViewEntity;
         private CardArtifact _newArtifact;
+        private TypeOfAdditionalCard _selectedAdditionalCardType;
 
         #endregion Fields
 
@@ -69,7 +69,15 @@ namespace DSG.Presentation.ViewModel.Management
 
         public List<TypeOfAdditionalCard> AvailableTypesOfAdditionalCard { get; set; }
 
-        public TypeOfAdditionalCard SelectedAdditionalCardType { get; set; }
+        public TypeOfAdditionalCard SelectedAdditionalCardType
+        {
+            get { return _selectedAdditionalCardType; }
+            set
+            {
+                _selectedAdditionalCardType = value;
+                OnPropertyChanged(nameof(SelectedAdditionalCardType));
+            }
+        }
 
         public CardArtifact NewArtifact
         {
@@ -126,7 +134,8 @@ namespace DSG.Presentation.ViewModel.Management
             IEnumerable<AdditionalCard> additionalCards = expansions
                 .SelectMany(expansion => expansion.ContainedArtifacts)
                 .Where(artifact => artifact.AdditionalCard != null)
-                .Select(artifact => artifact.AdditionalCard);
+                .Select(artifact => artifact.AdditionalCard)
+                .Distinct();
             AdditionalCards.AddRange(additionalCards);
         }
 
@@ -200,6 +209,7 @@ namespace DSG.Presentation.ViewModel.Management
             };
             NewArtifact.AdditionalCardId = NewArtifact.AdditionalCard.Id;
             NewArtifact.DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id;
+            SelectedAdditionalCardType = TypeOfAdditionalCard.None;
         }
 
         #endregion Methods

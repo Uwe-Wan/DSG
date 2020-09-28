@@ -1,4 +1,5 @@
 ﻿using DSG.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DSG.BusinessEntities.CardArtifacts
 {
@@ -8,11 +9,14 @@ namespace DSG.BusinessEntities.CardArtifacts
 
         public int Id { get; set; }
 
+        [Index("UQX_AdditionalCards_AlreadyIncludedCard_MaxCost_MinCost", 1, IsUnique = true)]
         public bool AlreadyIncludedCard { get; set; }
 
-        public int? MaxCosts { get; set; }
+        [Index("UQX_AdditionalCards_AlreadyIncludedCard_MaxCost_MinCost", 2, IsUnique = true)]
+        public int? MaxCost { get; set; }
 
-        public int? MinCosts { get; set; }
+        [Index("UQX_AdditionalCards_AlreadyIncludedCard_MaxCost_MinCost", 3, IsUnique = true)]
+        public int? MinCost { get; set; }
 
         public AdditionalCard()
         {
@@ -20,8 +24,8 @@ namespace DSG.BusinessEntities.CardArtifacts
 
         public AdditionalCard(int? minCost, int? maxCost, TypeOfAdditionalCard typeOfAdditionalCard)
         {
-            MinCosts = minCost;
-            MaxCosts = maxCost;
+            MinCost = minCost;
+            MaxCost = maxCost;
             AlreadyIncludedCard = typeOfAdditionalCard == TypeOfAdditionalCard.Existing;
         }
 
@@ -33,8 +37,8 @@ namespace DSG.BusinessEntities.CardArtifacts
             }
 
             AdditionalCard additionalCard = (AdditionalCard)obj;
-            if (additionalCard.MaxCosts == this.MaxCosts && 
-                additionalCard.MinCosts == this.MinCosts &&
+            if (additionalCard.MaxCost == this.MaxCost && 
+                additionalCard.MinCost == this.MinCost &&
                 additionalCard.AlreadyIncludedCard == this.AlreadyIncludedCard)
             {
                 return true;
@@ -46,15 +50,15 @@ namespace DSG.BusinessEntities.CardArtifacts
         public override int GetHashCode()
         {
             int hashCode = base.GetHashCode();
-            if (MaxCosts.HasValue)
+            if (MaxCost.HasValue)
             {
-                hashCode = (hashCode << 2) ^ MaxCosts.Value;
+                hashCode = (hashCode << 2) ^ MaxCost.Value;
             }
-            if (MinCosts.HasValue)
+            if (MinCost.HasValue)
             {
-                hashCode = (GetHashCode() << 2) ^ MinCosts.Value;
+                hashCode = (hashCode << 2) ^ MinCost.Value;
             }
-            hashCode = (GetHashCode() << 2) ^ AlreadyIncludedCard.GetHashCode();
+            hashCode = (hashCode << 2) ^ AlreadyIncludedCard.GetHashCode();
             
             return hashCode;
         }

@@ -108,13 +108,13 @@
         <StackPanel Grid.Row="2" Grid.Column="5">
             <Label FontSize="17">Max Cost</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AdditionalCard.MaxCosts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AdditionalCard.MaxCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="6">
             <Label FontSize="17">Min Cost</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AdditionalCard.MinCosts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AdditionalCard.MinCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="3">
