@@ -18,7 +18,7 @@ namespace DSG.BusinessEntities.CardArtifacts
         public int? AdditionalCardId { get; set; }
         public AdditionalCard AdditionalCard { get; set; }
 
-        public int AmountOfAdditionalCards { get; set; }
+        public int? AmountOfAdditionalCards { get; set; }
 
         public DominionExpansion DominionExpansion { get; set; }
 
