@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessEntities.CardArtifacts;
 using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
+using DSG.Common;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,8 +9,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DSG.BusinessEntities
 {
     [Table("Card")]
-    public class Card
+    public class Card : Notifier
     {
+        private Cost _cost;
+
         public int Id { get; set; }
 
         [Required]
@@ -21,7 +24,15 @@ namespace DSG.BusinessEntities
         [ForeignKey("Cost")]
         public int CostId { get; set; }
         [Required]
-        public Cost Cost { get; set; }
+        public Cost Cost
+        {
+            get { return _cost; }
+            set
+            {
+                _cost = value;
+                OnPropertyChanged(nameof(Cost));
+            }
+        }
 
         [Required]
         [ForeignKey("DominionExpansion")]

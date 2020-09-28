@@ -96,25 +96,25 @@
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3">
             <Label FontSize="17">Name</Label>
 
-            <TextBox  Style="{StaticResource nameBox}" Text="{Binding NewCardsName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox  Style="{StaticResource nameBox}" Text="{Binding NewCard.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="3">
             <Label FontSize="17">Money</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewCardsCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewCard.Cost.Money, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="4">
             <Label FontSize="17">Dept</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewCardsDept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewCard.Cost.Dept, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="5">
             <Label FontSize="17">Potion</Label>
 
-            <CheckBox Background="Wheat" IsChecked="{Binding NewCardCostsPotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <CheckBox Background="Wheat" IsChecked="{Binding NewCard.Cost.Potion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <DataGrid 

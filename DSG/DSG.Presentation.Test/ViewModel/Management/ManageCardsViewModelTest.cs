@@ -60,6 +60,10 @@ namespace DSG.Presentation.Test.ViewModel.Management
             _testee.AvailableCosts.Should().HaveCount(1);
             _testee.AvailableCosts.First().Money.Should().Be(2);
 
+            _testee.NewCard.DominionExpansion.Should().BeEquivalentTo(world);
+            _testee.NewCard.DominionExpansionId.Should().Be(world.Id);
+            _testee.NewCard.Cost.Should().BeEquivalentTo(new Cost());
+
             CheckCardTypeList();
         }
 
@@ -81,11 +85,12 @@ namespace DSG.Presentation.Test.ViewModel.Management
         public void AddCard_CostAlreadyAvailable_NotInserted()
         {
             //Arrange
-            _testee.AvailableCosts = new List<Cost> { new Cost(2) };
-            _testee.NewCardsName = "Test";
-            _testee.NewCardCostsPotion = false;
-            _testee.NewCardsCost = 2;
-            _testee.NewCardsDept = 0;
+            _testee.AvailableCosts = new List<Cost> { new Cost(money: 2) };
+            _testee.NewCard = new Card
+            {
+                Cost = new Cost(money: 2),
+                Name = "Test"
+            };
 
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { ContainedCards = new List<Card>()});
             
@@ -107,11 +112,11 @@ namespace DSG.Presentation.Test.ViewModel.Management
         {
             //Arrange
             _testee.AvailableCosts = new List<Cost> { new Cost(2) };
-            _testee.NewCardsName = "Test";
-            _testee.NewCardCostsPotion = false;
-            _testee.NewCardsCost = 3;
-            _testee.NewCardsDept = 0;
-            _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
+            _testee.NewCard = new Card
+            {
+                Cost = new Cost(money: 3),
+                Name = "Test"
+            };
 
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { ContainedCards = new List<Card>()});
 
@@ -129,13 +134,45 @@ namespace DSG.Presentation.Test.ViewModel.Management
         }
 
         [Test]
-        public async Task NavigateToAsync_NavigationInvoked_DataCleaned()
+        public void AddCard_DataReset()
         {
             //Arrange
-            _testee.NewCardCostsPotion = true;
-            _testee.NewCardsCost = 2;
-            _testee.NewCardsDept = 3;
-            _testee.NewCardsName = "Test";
+            _testee.NewCard = new Card
+            {
+                Cost = new Cost(money: 3),
+                Name = "Test"
+            };
+            _testee.AvailableCosts = new List<Cost>();
+            DominionExpansion selectedExpansion = new DominionExpansion { ContainedCards = new List<Card>() };
+            _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(selectedExpansion);
+
+            _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto> { new IsCardTypeSelectedDto { IsSelected = true } };
+            _testee.SelectedCardSubTypes = new List<IsCardSubTypeSelectedDto> { new IsCardSubTypeSelectedDto { IsSelected = true } };
+            _testee.SelectedCardArtifacts = new List<IsCardArtifactSelectedDto> { new IsCardArtifactSelectedDto { IsSelected = true } };
+
+            //Act
+            _testee.AddCard();
+
+            //Assert
+            _testee.SelectedCardArtifacts.First().IsSelected.Should().BeFalse();
+            _testee.SelectedCardTypes.First().IsSelected.Should().BeFalse();
+            _testee.SelectedCardSubTypes.First().IsSelected.Should().BeFalse();
+
+            _testee.NewCard.Cost.Should().BeEquivalentTo(new Cost());
+            _testee.NewCard.DominionExpansion.Should().BeEquivalentTo(selectedExpansion);
+            _testee.NewCard.DominionExpansionId.Should().Be(selectedExpansion.Id);
+            _testee.NewCard.Name.Should().BeNull();
+        }
+
+        [Test]
+        public async Task NavigateToAsync_NavigationInvoked_DataCleared()
+        {
+            //Arrange
+            _testee.NewCard = new Card
+            {
+                Cost = new Cost(money: 2, dept: 3, potion: true),
+                Name = "Test"
+            };
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
             _testee.SelectedCardTypes = new List<IsCardTypeSelectedDto>();
             _testee.SelectedCardArtifacts = new List<IsCardArtifactSelectedDto>();
@@ -148,10 +185,7 @@ namespace DSG.Presentation.Test.ViewModel.Management
             //Assert
             _naviMock.Verify(x => x.NavigateToAsync(NavigationDestination.ManageCardArtifacts), Times.Once);
 
-            _testee.NewCardCostsPotion.Should().BeFalse();
-            _testee.NewCardsCost.Should().BeNull();
-            _testee.NewCardsDept.Should().BeNull();
-            _testee.NewCardsName.Should().BeNull();
+            _testee.NewCard.Should().BeNull();
             _testee.SelectedExpansionViewEntity.Should().BeNull();
             _testee.SelectedCardTypes.Should().BeNull();
             _testee.SelectedCardArtifacts.Should().BeNull();

@@ -19,15 +19,12 @@ namespace DSG.Presentation.ViewModel.Management
         #region Fields
 
         private ICardBc _cardBc;
-        private string _newCardsName;
-        private int? _newCardsCost;
-        private int? _newCardsDept;
-        private bool _newCardCostsPotion;
         private SelectedExpansionViewEntity _selectedExpansionViewEntity;
         private string _manageCardsScreenTitle;
         private List<IsCardTypeSelectedDto> _selectedCardTypes;
         private List<IsCardSubTypeSelectedDto> _selectedCardSubTypes;
         private List<IsCardArtifactSelectedDto> _selectedCardArtifacts;
+        private Card _newCard;
 
         #endregion Fields
 
@@ -51,43 +48,13 @@ namespace DSG.Presentation.ViewModel.Management
 
         public List<Cost> AvailableCosts { get; set; }
 
-        public string NewCardsName
+        public Card NewCard
         {
-            get { return _newCardsName; }
+            get { return _newCard; }
             set
             {
-                _newCardsName = value;
-                OnPropertyChanged(nameof(NewCardsName));
-            }
-        }
-
-        public int? NewCardsCost
-        {
-            get { return _newCardsCost; }
-            set
-            {
-                _newCardsCost = value;
-                OnPropertyChanged(nameof(NewCardsCost));
-            }
-        }
-
-        public int? NewCardsDept
-        {
-            get { return _newCardsDept; }
-            set
-            {
-                _newCardsDept = value;
-                OnPropertyChanged(nameof(NewCardsDept));
-            }
-        }
-
-        public bool NewCardCostsPotion
-        {
-            get { return _newCardCostsPotion; }
-            set
-            {
-                _newCardCostsPotion = value;
-                OnPropertyChanged(nameof(NewCardCostsPotion));
+                _newCard = value;
+                OnPropertyChanged(nameof(NewCard));
             }
         }
 
@@ -184,11 +151,8 @@ namespace DSG.Presentation.ViewModel.Management
                 .Distinct()
                 .ToList());
 
-            List<CardTypeEnum> cardTypes = GetEnum.CardType();
-            SelectedCardTypes = cardTypes.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
-
-            List<CardSubTypeEnum> cardSubTypes = GetEnum.CardSubType();
-            SelectedCardSubTypes = cardSubTypes.Select(subType => new IsCardSubTypeSelectedDto { CardSubType = subType, IsSelected = false }).ToList();
+            LoadEnums();
+            InitializeNewCard();
 
             SelectedCardArtifacts = SelectedExpansionViewEntity
                 .ContainedArtifacts
@@ -196,59 +160,69 @@ namespace DSG.Presentation.ViewModel.Management
                 .ToList();
         }
 
+        private void LoadEnums()
+        {
+            List<CardTypeEnum> cardTypes = GetEnum.CardType();
+            SelectedCardTypes = cardTypes.Select(cardType => new IsCardTypeSelectedDto { CardType = cardType, IsSelected = false }).ToList();
+
+            List<CardSubTypeEnum> cardSubTypes = GetEnum.CardSubType();
+            SelectedCardSubTypes = cardSubTypes.Select(subType => new IsCardSubTypeSelectedDto { CardSubType = subType, IsSelected = false }).ToList();
+        }
+
         public void AddCard()
         {
             Check.RequireNotNull(SelectedExpansionViewEntity, nameof(SelectedExpansionViewEntity), nameof(ManageCardsViewModel));
-            Check.RequireNotNullNotEmpty(NewCardsName, nameof(NewCardsName), nameof(ManageCardsViewModel));
+            Check.RequireNotNullNotEmpty(NewCard.Name, nameof(NewCard.Name), nameof(ManageCardsViewModel));
 
-            Cost newCost = new Cost(NewCardsCost ?? 0, NewCardsDept ?? 0, NewCardCostsPotion);
-            Cost matchingCost = AvailableCosts.SingleOrDefault(cost => cost.Equals(newCost));
+            CheckForMatchingCost();
+            InsertCard();
+            ResetData();
+        }
+
+        private void CheckForMatchingCost()
+        {
+            Cost matchingCost = AvailableCosts.SingleOrDefault(cost => cost.Equals(NewCard.Cost));
 
             if (matchingCost == null)
             {
-                AvailableCosts.Add(newCost);
-                InsertCard(newCost);
+                AvailableCosts.Add(NewCard.Cost);
             }
             else
             {
-                InsertCard(matchingCost);
+                NewCard.Cost = matchingCost;
             }
         }
 
-        private void InsertCard(Cost cost)
+        private void ResetData()
         {
-            List<CardTypeToCard> cardTypeToCards = SelectedCardTypes
+            InitializeNewCard();
+            SelectedCardArtifacts.ForEach(artifact => artifact.IsSelected = false);
+            SelectedCardTypes.ForEach(type => type.IsSelected = false);
+            SelectedCardSubTypes.ForEach(type => type.IsSelected = false);
+        }
+
+        private void InsertCard()
+        {
+            NewCard.CardTypeToCards = SelectedCardTypes
                 .Where(type => type.IsSelected == true)
                 .Select(type => type.CardType)
                 .Select(type => new CardTypeToCard { CardTypeId = type })
                 .ToList();
 
-            List<CardSubTypeToCard> cardSubTypeToCards = SelectedCardSubTypes
+            NewCard.CardSubTypeToCards = SelectedCardSubTypes
                 .Where(type => type.IsSelected == true)
                 .Select(type => type.CardSubType)
                 .Select(type => new CardSubTypeToCard { CardSubTypeId = type })
                 .ToList();
 
-            List<CardArtifactToCard> cardArtifactToCards = SelectedCardArtifacts
+            NewCard.CardArtifactsToCard = SelectedCardArtifacts
                 .Where(artifact => artifact.IsSelected == true)
                 .Select(artifact => artifact.Artifact)
                 .Select(artifact => new CardArtifactToCard { CardArtifact = artifact })
                 .ToList();
 
-            Card card = new Card
-            {
-                Cost = cost,
-                Name = NewCardsName,
-                DominionExpansion = SelectedExpansionViewEntity.DominionExpansion,
-                CostId = cost.Id,
-                DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id,
-                CardTypeToCards = cardTypeToCards,
-                CardSubTypeToCards = cardSubTypeToCards,
-                CardArtifactsToCard = cardArtifactToCards
-            };
-            CardBc.InsertCard(card);
-
-            SelectedExpansionViewEntity.ContainedCards.Add(card);
+            CardBc.InsertCard(NewCard);
+            SelectedExpansionViewEntity.ContainedCards.Add(NewCard);
         }
 
         public override async Task NavigateToAsync(NavigationDestination destination)
@@ -265,10 +239,16 @@ namespace DSG.Presentation.ViewModel.Management
             SelectedCardArtifacts = null;
             SelectedCardSubTypes = null;
             AvailableCosts.Clear();
-            NewCardCostsPotion = false;
-            NewCardsCost = null;
-            NewCardsDept = null;
-            NewCardsName = null;
+            NewCard = null;
+        }
+
+        private void InitializeNewCard()
+        {
+            NewCard = new Card();
+            NewCard.Cost = new Cost();
+            NewCard.CostId = NewCard.Cost.Id;
+            NewCard.DominionExpansion = SelectedExpansionViewEntity.DominionExpansion;
+            NewCard.DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id;
         }
 
         #endregion Methods

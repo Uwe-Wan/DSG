@@ -1,8 +1,20 @@
-﻿namespace DSG.BusinessEntities.CardSubTypes
+﻿using DSG.Common;
+
+namespace DSG.BusinessEntities.CardSubTypes
 {
-    public class IsCardSubTypeSelectedDto
+    public class IsCardSubTypeSelectedDto : Notifier
     {
-        public bool IsSelected { get; set; }
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
 
         public CardSubTypeEnum CardSubType { get; set; }
     }

@@ -7,8 +7,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using DSG.Common.Extensions;
 using DSG.Common;
-using DSG.BusinessEntities.CardArtifacts;
-using System.Linq;
 
 namespace DSG.Presentation.ViewModel.Management
 {
