@@ -23,6 +23,7 @@ namespace DSG.Presentation.ViewModel.Management
         public string _nameOfNewArtifact;
         private string _manageCardArtifactsScreenTitle;
         private SelectedExpansionViewEntity _selectedExpansionViewEntity;
+        private CardArtifact _newArtifact;
 
         #endregion Fields
 
@@ -70,27 +71,13 @@ namespace DSG.Presentation.ViewModel.Management
 
         public TypeOfAdditionalCard SelectedAdditionalCardType { get; set; }
 
-        public int? MaxCost { get; set; }
-
-        public int? MinCost { get; set; }
-
-        public int? SelectedAmountOfAdditionalCards
+        public CardArtifact NewArtifact
         {
-            get { return _selectedAmountOfAdditionalCards; }
+            get { return _newArtifact; }
             set
             {
-                _selectedAmountOfAdditionalCards = value;
-                OnPropertyChanged(nameof(SelectedAmountOfAdditionalCards));
-            }
-        }
-
-        public string NameOfNewArtifact
-        {
-            get { return _nameOfNewArtifact; }
-            set
-            {
-                _nameOfNewArtifact = value;
-                OnPropertyChanged(nameof(NameOfNewArtifact));
+                _newArtifact = value;
+                OnPropertyChanged(nameof(NewArtifact));
             }
         }
 
@@ -133,6 +120,8 @@ namespace DSG.Presentation.ViewModel.Management
             SelectedExpansionViewEntity = new SelectedExpansionViewEntity((DominionExpansion)selectedExpansionData);
             ManageCardArtifactsScreenTitle = string.Join(" ", "Manage Artifacts of Expansion", SelectedExpansionViewEntity.ExpansionName);
 
+            InitializeNewArtifact();
+
             IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
             IEnumerable<AdditionalCard> additionalCards = expansions
                 .SelectMany(expansion => expansion.ContainedArtifacts)
@@ -146,46 +135,46 @@ namespace DSG.Presentation.ViewModel.Management
             Check.RequireNotNull(SelectedExpansionViewEntity, nameof(SelectedExpansionViewEntity), nameof(ManageCardArtifactViewModel));
             Check.RequireNotNull(SelectedExpansionViewEntity.ContainedArtifacts, nameof(SelectedExpansionViewEntity.ContainedArtifacts), nameof(ManageCardArtifactViewModel));
 
+            CheckForAdditionalCardType();
+
+            InsertArtifact();
+        }
+
+        private void CheckForAdditionalCardType()
+        {
             if (SelectedAdditionalCardType == TypeOfAdditionalCard.None)
             {
-                InsertArtifact(null);
-                return;
+                NewArtifact.AdditionalCard = null;
+                NewArtifact.AdditionalCardId = null;
             }
-
-            HandleArtifactWithAdditionalCard();
+            else
+            {
+                HandleArtifactWithAdditionalCard();
+            }
         }
 
         private void HandleArtifactWithAdditionalCard()
         {
-            AdditionalCard additionalCard = new AdditionalCard(MinCost, MaxCost, SelectedAdditionalCardType);
-
-            AdditionalCard matchedAdditionalCard = AdditionalCards.SingleOrDefault(card => card.Equals(additionalCard));
+            NewArtifact.AdditionalCard.AlreadyIncludedCard = SelectedAdditionalCardType == TypeOfAdditionalCard.Existing;
+            AdditionalCard matchedAdditionalCard = AdditionalCards.SingleOrDefault(card => card.Equals(NewArtifact.AdditionalCard));
 
             if (matchedAdditionalCard == null)
             {
-                AdditionalCards.Add(additionalCard);
-                InsertArtifact(additionalCard);
+                AdditionalCards.Add(NewArtifact.AdditionalCard);
             }
             else
             {
-                InsertArtifact(matchedAdditionalCard);
+                NewArtifact.AdditionalCard = matchedAdditionalCard;
             }
         }
 
-        private void InsertArtifact(AdditionalCard additionalCard)
+        private void InsertArtifact()
         {
-            CardArtifact newArtifact = new CardArtifact
-            {
-                Name = NameOfNewArtifact,
-                AdditionalCard = additionalCard,
-                AdditionalCardId = additionalCard?.Id,
-                AmountOfAdditionalCards = SelectedAmountOfAdditionalCards.HasValue ? SelectedAmountOfAdditionalCards.Value : 0,
-                DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id
-            };
+            CardArtifactBc.InsertArtifact(NewArtifact);
 
-            CardArtifactBc.InsertArtifact(newArtifact);
+            SelectedExpansionViewEntity.ContainedArtifacts.Add(NewArtifact);
 
-            SelectedExpansionViewEntity.ContainedArtifacts.Add(newArtifact);
+            InitializeNewArtifact();
         }
 
         public override async Task NavigateToAsync(NavigationDestination destination)
@@ -198,12 +187,19 @@ namespace DSG.Presentation.ViewModel.Management
         {
             AdditionalCards.Clear();
             SelectedExpansionViewEntity = null;
-            SelectedAmountOfAdditionalCards = null;
             ManageCardArtifactsScreenTitle = null;
-            NameOfNewArtifact = null;
-            MaxCost = null;
-            MinCost = null;
+            NewArtifact = null;
             SelectedAdditionalCardType = TypeOfAdditionalCard.None;
+        }
+
+        private void InitializeNewArtifact()
+        {
+            NewArtifact = new CardArtifact
+            {
+                AdditionalCard = new AdditionalCard()
+            };
+            NewArtifact.AdditionalCardId = NewArtifact.AdditionalCard.Id;
+            NewArtifact.DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id;
         }
 
         #endregion Methods

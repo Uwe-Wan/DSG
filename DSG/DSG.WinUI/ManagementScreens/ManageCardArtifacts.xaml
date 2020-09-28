@@ -96,25 +96,25 @@
         <StackPanel Grid.Row="1" Grid.Column="3" Grid.ColumnSpan="3">
             <Label FontSize="17">Name</Label>
 
-            <TextBox  Style="{StaticResource nameBox}" Text="{Binding NameOfNewArtifact, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox  Style="{StaticResource nameBox}" Text="{Binding NewArtifact.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="4">
             <Label FontSize="17">Amount</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding SelectedAmountOfAdditionalCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AmountOfAdditionalCards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="5">
             <Label FontSize="17">Max Cost</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding MaxCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AdditionalCard.MaxCosts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="6">
             <Label FontSize="17">Min Cost</Label>
 
-            <TextBox Style="{StaticResource CostBox}" Text="{Binding MinCost, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
+            <TextBox Style="{StaticResource CostBox}" Text="{Binding NewArtifact.AdditionalCard.MinCosts, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="3">

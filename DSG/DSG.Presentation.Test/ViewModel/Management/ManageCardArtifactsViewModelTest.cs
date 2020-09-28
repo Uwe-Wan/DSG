@@ -33,21 +33,106 @@ namespace DSG.Presentation.Test.ViewModel.Management
         }
 
         [Test]
-        public void AddArtifact_BcInvokedAndAddedToCollection()
+        public void AddArtifact_NoAdditionalCard_BcInvokedWithNoAdditional_AddedToCollection_NewArtifactReset()
         {
             //Arrange
-
             _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
 
-            _testee.NameOfNewArtifact = "TestArtifact";
+            _testee.NewArtifact = new CardArtifact();
+            _testee.NewArtifact.Name = "TestArtifact";
+            _testee.SelectedAdditionalCardType = TypeOfAdditionalCard.None;
+            _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion { Id = 1 });
+
+            CardArtifact selectedArtifactAfterAdding = new CardArtifact
+            {
+                AdditionalCard = new AdditionalCard()
+            };
+            selectedArtifactAfterAdding.AdditionalCardId = selectedArtifactAfterAdding.AdditionalCard.Id;
+            selectedArtifactAfterAdding.DominionExpansionId = _testee.SelectedExpansionViewEntity.DominionExpansion.Id;
 
             //Act
             _testee.AddArtifact();
 
             //Assert
-            _cardArtifactBcMock.Verify(x => x.InsertArtifact(It.Is<CardArtifact>(artifact => artifact.Name == "TestArtifact")), Times.Once);
+            _cardArtifactBcMock.Verify(x => x.InsertArtifact(It.Is<CardArtifact>(artifact => 
+            artifact.Name == "TestArtifact" &&
+            artifact.AdditionalCard == null
+            )), Times.Once);
+
             _testee.SelectedExpansionViewEntity.ContainedArtifacts.Should().HaveCount(1);
             _testee.SelectedExpansionViewEntity.ContainedArtifacts.First().Name.Should().Be("TestArtifact");
+
+            _testee.AdditionalCards.Should().HaveCount(0);
+
+            _testee.NewArtifact.Should().BeEquivalentTo(selectedArtifactAfterAdding);
+        }
+
+        [Test]
+        [Ignore("DSG-26: ignored till bug is fixed")]
+        public void AddArtifact_ExistingCard_AvailableAdditional_BcInvoked_AddedToCollection()
+        {
+            //Arrange
+
+            _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
+
+            _testee.NewArtifact = new CardArtifact();
+            _testee.NewArtifact.Name = "TestArtifact";
+            _testee.SelectedAdditionalCardType = TypeOfAdditionalCard.Existing;
+            AdditionalCard additionalCard = new AdditionalCard(2, 4, TypeOfAdditionalCard.None);
+            _testee.NewArtifact.AdditionalCard = additionalCard;
+
+            _testee.AdditionalCards.Add(
+                new AdditionalCard(2, 4, TypeOfAdditionalCard.Additional));
+            _testee.AdditionalCards.Add(
+                new AdditionalCard(2, 6, TypeOfAdditionalCard.Existing));
+
+            //Act
+            _testee.AddArtifact();
+
+            //Assert
+            _cardArtifactBcMock.Verify(x => x.InsertArtifact(It.Is<CardArtifact>(artifact => 
+            artifact.Name == "TestArtifact" &&
+            artifact.AdditionalCard.Equals(additionalCard)
+            )), Times.Once);
+
+            _testee.SelectedExpansionViewEntity.ContainedArtifacts.Should().HaveCount(1);
+            _testee.SelectedExpansionViewEntity.ContainedArtifacts.First().Name.Should().Be("TestArtifact");
+
+            _testee.AdditionalCards.Should().HaveCount(3);
+        }
+
+        [Test]
+        [Ignore("DSG-26: ignored till bug is fixed")]
+        public void AddArtifact_AdditionalCard_AvailableAdditional_BcInvoked_AddedToCollection()
+        {
+            //Arrange
+
+            _testee.SelectedExpansionViewEntity = new SelectedExpansionViewEntity(new DominionExpansion());
+
+            _testee.NewArtifact = new CardArtifact();
+            _testee.NewArtifact.Name = "TestArtifact";
+            _testee.SelectedAdditionalCardType = TypeOfAdditionalCard.Additional;
+            AdditionalCard additionalCard = new AdditionalCard(2, 4, TypeOfAdditionalCard.None);
+            _testee.NewArtifact.AdditionalCard = additionalCard;
+
+            _testee.AdditionalCards.Add(
+                new AdditionalCard(2, 4, TypeOfAdditionalCard.Existing));
+            _testee.AdditionalCards.Add(
+                new AdditionalCard(2, 6, TypeOfAdditionalCard.Additional));
+
+            //Act
+            _testee.AddArtifact();
+
+            //Assert
+            _cardArtifactBcMock.Verify(x => x.InsertArtifact(It.Is<CardArtifact>(artifact => 
+            artifact.Name == "TestArtifact" &&
+            artifact.AdditionalCard.Equals(additionalCard)
+            )), Times.Once);
+
+            _testee.SelectedExpansionViewEntity.ContainedArtifacts.Should().HaveCount(1);
+            _testee.SelectedExpansionViewEntity.ContainedArtifacts.First().Name.Should().Be("TestArtifact");
+
+            _testee.AdditionalCards.Should().HaveCount(3);
         }
 
         [Test]
@@ -91,12 +176,9 @@ namespace DSG.Presentation.Test.ViewModel.Management
         public async Task NavigateToAsync_NavigationInvoked_DataCleared()
         {
             //Arrange
-            _testee.NameOfNewArtifact = "TestArtifact";
-            _testee.MaxCost = 4;
-            _testee.MinCost = 2;
+            _testee.NewArtifact = new CardArtifact();
             _testee.ManageCardArtifactsScreenTitle = "TestTitle";
             _testee.SelectedAdditionalCardType = TypeOfAdditionalCard.Additional;
-            _testee.SelectedAmountOfAdditionalCards = 2;
 
             //Act
             await _testee.NavigateToAsync(NavigationDestination.WelcomeScreen);
@@ -104,12 +186,9 @@ namespace DSG.Presentation.Test.ViewModel.Management
             //Assert
             _naviMock.Verify(x => x.NavigateToAsync(NavigationDestination.WelcomeScreen), Times.Once);
 
-            _testee.NameOfNewArtifact.Should().BeNull();
-            _testee.MaxCost.Should().BeNull();
-            _testee.MinCost.Should().BeNull();
             _testee.ManageCardArtifactsScreenTitle.Should().Be("Manage Artifacts of Expansion ???");
             _testee.SelectedAdditionalCardType.Should().Be(TypeOfAdditionalCard.None);
-            _testee.SelectedAmountOfAdditionalCards.Should().BeNull();
+            _testee.NewArtifact.Should().BeNull();
         }
     }
 }
