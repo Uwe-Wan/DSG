@@ -1,5 +1,4 @@
 ﻿using DSG.Common;
-using System.ComponentModel;
 
 namespace DSG.BusinessEntities.CardArtifacts
 {
@@ -13,15 +12,7 @@ namespace DSG.BusinessEntities.CardArtifacts
 
         public int? MaxCosts { get; set; }
 
-        public int? MinCosts
-        {
-            get { return _minCost; }
-            set
-            {
-                _minCost = value;
-                OnPropertyChanged(nameof(MinCosts));
-            }
-        }
+        public int? MinCosts { get; set; }
 
         public AdditionalCard()
         {
@@ -42,7 +33,9 @@ namespace DSG.BusinessEntities.CardArtifacts
             }
 
             AdditionalCard additionalCard = (AdditionalCard)obj;
-            if (additionalCard.MaxCosts == this.MaxCosts && additionalCard.MinCosts == this.MinCosts)
+            if (additionalCard.MaxCosts == this.MaxCosts && 
+                additionalCard.MinCosts == this.MinCosts &&
+                additionalCard.AlreadyIncludedCard == this.AlreadyIncludedCard)
             {
                 return true;
             }
@@ -59,8 +52,10 @@ namespace DSG.BusinessEntities.CardArtifacts
             }
             if (MinCosts.HasValue)
             {
-                hashCode = (base.GetHashCode() << 2) ^ MinCosts.Value;
+                hashCode = (GetHashCode() << 2) ^ MinCosts.Value;
             }
+            hashCode = (GetHashCode() << 2) ^ AlreadyIncludedCard.GetHashCode();
+            
             return hashCode;
         }
     }

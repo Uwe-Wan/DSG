@@ -68,7 +68,6 @@ namespace DSG.Presentation.Test.ViewModel.Management
         }
 
         [Test]
-        [Ignore("DSG-26: ignored till bug is fixed")]
         public void AddArtifact_ExistingCard_AvailableAdditional_BcInvoked_AddedToCollection()
         {
             //Arrange
@@ -102,7 +101,6 @@ namespace DSG.Presentation.Test.ViewModel.Management
         }
 
         [Test]
-        [Ignore("DSG-26: ignored till bug is fixed")]
         public void AddArtifact_AdditionalCard_AvailableAdditional_BcInvoked_AddedToCollection()
         {
             //Arrange

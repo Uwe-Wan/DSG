@@ -26,6 +26,7 @@ namespace DSG.DAO.Expansions
                 .Include("ContainedCards.CardArtifactsToCard")
                 .Include("ContainedCards.CardArtifactsToCard.CardArtifact")
                 .Include("ContainedArtifacts")
+                .Include("ContainedArtifacts.AdditionalCard")
                 .ToList();
         }
 
