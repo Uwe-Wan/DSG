@@ -13,9 +13,11 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -66,6 +68,42 @@
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="Created Set" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            Grid.Column="1" 
+            Grid.Row="1" 
+            ItemsSource="{Binding GeneratedSet}" 
+            IsReadOnly="True" 
+            Style="{StaticResource dataGridDefaultStyle}">
+            <DataGrid.Resources>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Created Set" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid 
+            Grid.Column="3" 
+            Grid.Row="1" 
+            ItemsSource="{Binding ArtifactsOfGeneratedSet}" 
+            IsReadOnly="True" 
+            Style="{StaticResource dataGridDefaultStyle}">
+            <DataGrid.Resources>
+                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Artifacts" FontWeight="Bold"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>

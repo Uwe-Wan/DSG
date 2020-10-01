@@ -1,8 +1,10 @@
 ﻿using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common;
 using DSG.Presentation.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -12,6 +14,7 @@ namespace DSG.Presentation.ViewModel.Generation
     {
         private ISetGeneratorBc _setGeneratorBc;
         private List<Card> _generatedSet;
+        private List<CardArtifact> _artifactsOfGeneratedSet;
 
         public List<Card> GeneratedSet
         {
@@ -19,7 +22,18 @@ namespace DSG.Presentation.ViewModel.Generation
             set
             {
                 _generatedSet = value;
+                ArtifactsOfGeneratedSet = value?.SelectMany(card => card.CardArtifactsToCard).Select(x => x.CardArtifact).ToList();
                 OnPropertyChanged(nameof(GeneratedSet));
+            }
+        }
+
+        public List<CardArtifact> ArtifactsOfGeneratedSet
+        {
+            get { return _artifactsOfGeneratedSet; }
+            set
+            {
+                _artifactsOfGeneratedSet = value;
+                OnPropertyChanged(nameof(ArtifactsOfGeneratedSet));
             }
         }
 
