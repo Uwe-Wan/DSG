@@ -5,8 +5,6 @@ namespace DSG.BusinessEntities.CardArtifacts
 {
     public class AdditionalCard : Notifier
     {
-        private int? _minCost;
-
         public int Id { get; set; }
 
         [Index("UQX_AdditionalCards_AlreadyIncludedCard_MaxCost_MinCost", 1, IsUnique = true)]

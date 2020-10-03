@@ -1,5 +1,6 @@
 ﻿using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardArtifacts;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewModel.Generation;
 using FluentAssertions;
@@ -38,6 +39,8 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         {
             //Arrange
             List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
+            GeneratedSetDto generatedSetDto = new GeneratedSetDto(new List<Card>(), new List<Card>(), new List<GeneratedAdditionalCard>(), new List<GeneratedAdditionalCard>());
+            _setGeneratorBcMock.Setup(x => x.GenerateSet(expansions)).Returns(generatedSetDto);
 
             //Act
             await _testee.OnPageLoadedAsync(expansions);
@@ -50,7 +53,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task NavigateToAsync_NavigationInvoked_DataCleared()
         {
             //Arrange
-            _testee.GeneratedSet = new List<Card> { new Card() };
+            _testee.GeneratedSet = new List<Card> { new Card { CardArtifactsToCard = new List<CardArtifactToCard> { new CardArtifactToCard { CardArtifact = new CardArtifact() } } } };
 
             //Act
             await _testee.NavigateToAsync(NavigationDestination.WelcomeScreen);

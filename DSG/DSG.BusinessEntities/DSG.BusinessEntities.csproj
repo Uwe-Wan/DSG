@@ -71,6 +71,7 @@
     <Compile Include="CardArtifacts\AdditionalCard.cs" />
     <Compile Include="CardArtifacts\CardArtifact.cs" />
     <Compile Include="CardArtifacts\CardArtifactToCard.cs" />
+    <Compile Include="CardArtifacts\GeneratedAdditionalCard.cs" />
     <Compile Include="CardArtifacts\IsCardArtifactSelectedDto.cs" />
     <Compile Include="CardArtifacts\TypeOfAdditionalCard.cs" />
     <Compile Include="CardManagementDbContext.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="CardTypes\CardTypeToCard.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="DominionExpansion.cs" />
+    <Compile Include="GeneratedSetDto.cs" />
     <Compile Include="GetEnums\GetEnum.cs" />
     <Compile Include="CardTypes\IsCardTypeSelectedDto.cs" />
     <Compile Include="IsDominionExpansionSelectedDto.cs" />

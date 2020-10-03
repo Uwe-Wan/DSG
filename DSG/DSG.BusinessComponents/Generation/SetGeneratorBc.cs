@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessComponents.Probabilities;
 using DSG.BusinessComponents.StaticMethods;
 using DSG.BusinessEntities;
+using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common;
 using DSG.Common.Exceptions;
 using System.Collections.Generic;
@@ -33,15 +34,85 @@ namespace DSG.BusinessComponents.Generation
             set { _shuffleListBc = value; }
         }
 
-        public List<Card> GenerateSet(List<DominionExpansion> dominionExpansions)
+        public GeneratedSetDto GenerateSet(List<DominionExpansion> dominionExpansions)
         {
             List<Card> availableCards = dominionExpansions.SelectMany(expansion => expansion.ContainedCards).ToList();
 
             List<Card> chosenSupplyCards = ChooseSupplyCards(availableCards);
-
             List<Card> chosenNonSupplyCards = ChooseNonSupplyCards(availableCards);
+            List<Card> temporarlySet = chosenSupplyCards.Union(chosenNonSupplyCards).ToList();
 
-            return chosenSupplyCards.Union(chosenNonSupplyCards).ToList();
+            availableCards = availableCards.Where(card => temporarlySet.Contains(card) == false).ToList();
+
+            List<GeneratedAdditionalCard> generatedAdditionalCards = GetAdditionalCards(availableCards, temporarlySet);
+            List<GeneratedAdditionalCard> generatedExistingAdditionalCards = GetExistingAdditionalCards(chosenSupplyCards, temporarlySet);
+
+            GeneratedSetDto generatedSetDto = new GeneratedSetDto(chosenSupplyCards, chosenNonSupplyCards, generatedAdditionalCards, generatedExistingAdditionalCards);
+
+            return generatedSetDto;
+        }
+
+        private List<GeneratedAdditionalCard> GetExistingAdditionalCards(List<Card> supplyCards, List<Card> temporarlySet)
+        {
+            return ChooseAdditionalCardsIsAlreadyIncluded(true, supplyCards, temporarlySet);
+        }
+
+        private List<GeneratedAdditionalCard> GetAdditionalCards(List<Card> availableCards, IEnumerable<Card> temporarlySet)
+        {
+            List<GeneratedAdditionalCard> additionalCardsForSet = ChooseAdditionalCardsIsAlreadyIncluded(false, availableCards, temporarlySet);
+
+            if (additionalCardsForSet.Count == 0)
+            {
+                return new List<GeneratedAdditionalCard>();
+            }
+
+            additionalCardsForSet.AddRange(
+                GetAdditionalCards(availableCards, additionalCardsForSet.Select(x => x.AdditionalCard)));
+
+            return additionalCardsForSet;
+        }
+
+        private List<GeneratedAdditionalCard> ChooseAdditionalCardsIsAlreadyIncluded(bool alreadyIncluded, List<Card> cardsToChooseFrom, IEnumerable<Card> temporarlySet)
+        {
+            List<Card> cardsWithAdditionalCards = temporarlySet
+                .Where(card => CardHelper.GetAdditionalCardsAlreadyIncluded(card, alreadyIncluded) != null)
+                .ToList();
+
+            List<GeneratedAdditionalCard> additionalCardsForSet = new List<GeneratedAdditionalCard>();
+
+            foreach (Card card in cardsWithAdditionalCards)
+            {
+                foreach (AdditionalCard additionalCard in CardHelper.GetAdditionalCardsAlreadyIncluded(card, alreadyIncluded))
+                {
+                    if (alreadyIncluded)
+                    {
+                        cardsToChooseFrom.Remove(card);
+                    }
+
+                    ChooseAdditionalCardForParentCard(additionalCard, card, additionalCardsForSet, cardsToChooseFrom);
+
+                    if (alreadyIncluded)
+                    {
+                        cardsToChooseFrom.Add(card);
+                    }
+                }
+            }
+
+            return additionalCardsForSet;
+        }
+
+        private void ChooseAdditionalCardForParentCard(AdditionalCard additionalCard, Card parent, 
+            List<GeneratedAdditionalCard> additionalCardsForSet, List<Card> cardsToChooseFrom)
+        {
+            List<Card> cardsWithAllowedCost = cardsToChooseFrom
+                .Where(x => additionalCard.MinCost.HasValue == false || x.Cost.Money >= additionalCard.MinCost.Value)
+                .Where(x => additionalCard.MaxCost.HasValue == false || x.Cost.Money <= additionalCard.MaxCost.Value)
+                .ToList();
+            // parent needs to be temporarly removed since we do not want to choose one card as its own additional
+            Card generatedAdditionalCard = ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(cardsWithAllowedCost, 1).Single();
+            additionalCardsForSet.Add(new GeneratedAdditionalCard(generatedAdditionalCard, parent));
+            //the way this is currently written, it is also ensured that an existing card is not used as additional card for two cards
+            cardsToChooseFrom.Remove(generatedAdditionalCard);
         }
 
         private List<Card> ChooseSupplyCards(List<Card> availableCards)

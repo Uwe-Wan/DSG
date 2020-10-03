@@ -65,7 +65,11 @@ namespace DSG.Presentation.ViewModel.Generation
         private void LoadData(object expansionsData)
         {
             List<DominionExpansion> expansions = expansionsData as List<DominionExpansion>;
-            GeneratedSet = SetGeneratorBc.GenerateSet(expansions);
+            GeneratedSetDto generatedSetDto = SetGeneratorBc.GenerateSet(expansions);
+            GeneratedSet = generatedSetDto.SupplyCardsWithoutAdditional
+                .Union(generatedSetDto.GeneratedAdditionalCards.Select(x => x.AdditionalCard))
+                .Union(generatedSetDto.GeneratedExistingAdditionalCards.Select(x => x.AdditionalCard))
+                .ToList();
         }
 
         public override async Task NavigateToAsync(NavigationDestination destination)
