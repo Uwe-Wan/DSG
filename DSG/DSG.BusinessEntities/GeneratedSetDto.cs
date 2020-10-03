@@ -47,6 +47,7 @@ namespace DSG.BusinessEntities
                 .SelectMany(card => card.CardArtifactsToCard)
                 .Select(x => x.CardArtifact)
                 .Where(x => x.AdditionalCard == null));
+            ArtifactsWithoutAdditionalCards = ArtifactsWithoutAdditionalCards.Distinct().ToList();
         }
     }
 }

@@ -2,6 +2,7 @@
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.Presentation.Services;
+using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel.Generation;
 using FluentAssertions;
 using Moq;
@@ -53,13 +54,13 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task NavigateToAsync_NavigationInvoked_DataCleared()
         {
             //Arrange
-            _testee.GeneratedSet = new List<Card> { new Card { CardArtifactsToCard = new List<CardArtifactToCard> { new CardArtifactToCard { CardArtifact = new CardArtifact() } } } };
+            _testee.SupplyCards = new List<CardAndArtifactViewEntity>();
 
             //Act
             await _testee.NavigateToAsync(NavigationDestination.WelcomeScreen);
 
             //Assert
-            _testee.GeneratedSet.Should().BeNull();
+            _testee.SupplyCards.Should().BeNull();
 
             _naviMock.Verify(x => x.NavigateToAsync(NavigationDestination.WelcomeScreen), Times.Once);
         }

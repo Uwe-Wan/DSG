@@ -16,8 +16,8 @@
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.7*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -55,28 +55,13 @@
             </Button.ContextMenu>
         </Button>
 
-        <DataGrid 
-            Grid.Column="1" 
-            Grid.Row="1" 
-            ItemsSource="{Binding GeneratedSet}" 
-            IsReadOnly="True" 
-            Style="{StaticResource dataGridDefaultStyle}">
-            <DataGrid.Resources>
-                <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
-            </DataGrid.Resources>
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
-                    <DataGridTextColumn.Header>
-                        <TextBlock Text="Created Set" FontWeight="Bold"/>
-                    </DataGridTextColumn.Header>
-                </DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+        <TextBlock Grid.Column="1" Grid.Row="0" Text="Supply" FontWeight="Bold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <TextBlock Grid.Column="3" Grid.Row="0" Text="Non Supply" FontWeight="Bold" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
         <DataGrid 
             Grid.Column="1" 
             Grid.Row="1" 
-            ItemsSource="{Binding GeneratedSet}" 
+            ItemsSource="{Binding SupplyCards}" 
             IsReadOnly="True" 
             Style="{StaticResource dataGridDefaultStyle}">
             <DataGrid.Resources>
@@ -85,7 +70,22 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
                     <DataGridTextColumn.Header>
-                        <TextBlock Text="Created Set" FontWeight="Bold"/>
+                        <TextBlock Text="Name" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Set}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Set" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Cost}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Cost" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding BelongsTo}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Belongs To" FontWeight="Bold"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>
@@ -94,7 +94,7 @@
         <DataGrid 
             Grid.Column="3" 
             Grid.Row="1" 
-            ItemsSource="{Binding ArtifactsOfGeneratedSet}" 
+            ItemsSource="{Binding NonSupplyStuff}" 
             IsReadOnly="True" 
             Style="{StaticResource dataGridDefaultStyle}">
             <DataGrid.Resources>
@@ -103,7 +103,22 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" FontSize="20" Width="Auto">
                     <DataGridTextColumn.Header>
-                        <TextBlock Text="Artifacts" FontWeight="Bold"/>
+                        <TextBlock Text="Name" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Set}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Set" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Cost}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Cost" FontWeight="Bold"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Type}" FontSize="20" Width="Auto">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Type" FontWeight="Bold"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
             </DataGrid.Columns>
