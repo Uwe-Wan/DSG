@@ -43,12 +43,6 @@ namespace DSG.Presentation.ViewEntity
 
         private string FormatCost(Card card)
         {
-            // can not check on IsNotSupplyType because mixed types are technically allowed
-            if (CardHelper.IsSupplyType(card) == false)
-            {
-                return null;
-            }
-
             int? moneyPlusDept = card.Cost?.Money + card.Cost?.Dept;
 
             if (card.Cost.Potion)

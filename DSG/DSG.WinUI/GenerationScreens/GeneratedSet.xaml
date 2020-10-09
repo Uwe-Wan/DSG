@@ -13,17 +13,17 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.4*"/>
+            <ColumnDefinition Width="1.1*"/>
             <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.8*"/>
-            <ColumnDefinition Width="0.7*"/>
+            <ColumnDefinition Width="1.1*"/>
+            <ColumnDefinition Width="0.4*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="6*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
         <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" 
                 Background="HotPink" Margin="20, 20" IsEnabled="{Binding IsDataLoaded}">

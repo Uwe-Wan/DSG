@@ -15,11 +15,6 @@ namespace DSG.BusinessComponents.StaticMethods
                 .Where(additional => additional?.AlreadyIncludedCard == alreadyIncluded);
         }
 
-        public static bool IsSupplyType(Card card)
-        {
-            return IsSupplyType(card, true);
-        }
-
         public static bool IsNonSupplyType(Card card)
         {
             return IsSupplyType(card, false);

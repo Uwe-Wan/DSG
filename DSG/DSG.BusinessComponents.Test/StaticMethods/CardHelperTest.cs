@@ -86,52 +86,6 @@ namespace DSG.BusinessComponentsTest.StaticMethods
         }
 
         [Test]
-        public void IsSupplyType_IsSupplyType_True()
-        {
-            //Arrange
-            Card card = new Card { CardTypeToCards = new List<CardTypeToCard> { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } } };
-
-            //Act
-            bool result = CardHelper.IsSupplyType(card);
-
-            //Assert
-            result.Should().BeTrue();
-        }
-
-        [Test]
-        public void IsSupplyType_IsNonSupplyType_False()
-        {
-            //Arrange
-            Card card = new Card { CardTypeToCards = new List<CardTypeToCard> { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } };
-
-            //Act
-            bool result = CardHelper.IsSupplyType(card);
-
-            //Assert
-            result.Should().BeFalse();
-        }
-
-        [Test]
-        public void IsSupplyType_MixedTypeTypes_True()
-        {
-            //Arrange
-            Card card = new Card
-            {
-                CardTypeToCards = new List<CardTypeToCard>
-            {
-                new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } ,
-                new CardTypeToCard { CardType = new CardType { IsSupplyType = true } }
-            }
-            };
-
-            //Act
-            bool result = CardHelper.IsSupplyType(card);
-
-            //Assert
-            result.Should().BeTrue();
-        }
-
-        [Test]
         public void GetSupplyCards_TwoSupplyOneMixedOneNonSupply_RetrieveSupplyCardsAndMixed3()
         {
             //Arrange

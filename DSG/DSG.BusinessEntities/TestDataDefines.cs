@@ -24,6 +24,7 @@ namespace DSG.BusinessEntities
         {
             public static CardType Action => new CardType { Name = "Action", Id = CardTypeEnum.Action, IsSupplyType = true };
             public static CardType Treasure => new CardType { Name = "Victory", Id = CardTypeEnum.Treasure, IsSupplyType = true };
+            public static CardType Victory => new CardType { Name = "Victory", Id = CardTypeEnum.Victory, IsSupplyType = true };
             public static CardType Event => new CardType { Name = "Event", Id = CardTypeEnum.Event, IsSupplyType = false };
             public static CardType Landmark => new CardType { Name = "Event", Id = CardTypeEnum.Landmark, IsSupplyType = false };
         }
@@ -46,6 +47,11 @@ namespace DSG.BusinessEntities
             {
                 new CardTypeToCard { CardType = CardTypes.Landmark }
             };
+            public static List<CardTypeToCard> ActionAndVictory => new List<CardTypeToCard>
+            {
+                new CardTypeToCard { CardType = CardTypes.Action },
+                new CardTypeToCard { CardType = CardTypes.Victory }
+            };
         }
 
         public static class DominionExpansions
@@ -53,6 +59,7 @@ namespace DSG.BusinessEntities
             public static DominionExpansion Adventure => new DominionExpansion { Name = "Adventure" };
             public static DominionExpansion Cornucopia => new DominionExpansion { Name = "Cornucopia" };
             public static DominionExpansion Empires => new DominionExpansion { Name = "Empires" };
+            public static DominionExpansion Alchemy => new DominionExpansion { Name = "Alchemy" };
         }
 
         public static class AdditionalCards
@@ -162,6 +169,22 @@ namespace DSG.BusinessEntities
                 CardArtifactsToCard = CardArtifactToCards.JourneyTokenArtifact,
                 CardTypeToCards = CardTypeToCards.EventType,
                 Cost = Costs.Three
+            };
+
+            public static Card Mill => new Card
+            {
+                Name = "Mill",
+                DominionExpansion = DominionExpansions.Empires,
+                CardTypeToCards = CardTypeToCards.ActionAndVictory,
+                Cost = Costs.Four
+            };
+
+            public static Card Apothecary => new Card
+            {
+                Name = "Apothecary",
+                DominionExpansion = DominionExpansions.Alchemy,
+                CardTypeToCards = CardTypeToCards.ActionType,
+                Cost = Costs.TwoMoneyPotion
             };
         }
 
