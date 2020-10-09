@@ -15,6 +15,11 @@ namespace DSG.BusinessComponents.StaticMethods
                 .Where(additional => additional?.AlreadyIncludedCard == alreadyIncluded);
         }
 
+        public static bool IsSupplyType(Card card)
+        {
+            return IsSupplyType(card, true);
+        }
+
         public static bool IsNonSupplyType(Card card)
         {
             return IsSupplyType(card, false);
@@ -23,8 +28,8 @@ namespace DSG.BusinessComponents.StaticMethods
         private static bool IsSupplyType(Card card, bool isSupplyType)
         {
             return card.CardTypeToCards
-                    .Select(x => x.CardType.IsSupplyType == isSupplyType)
-                    .Any(x => x == true);
+                    .Where(x => x.CardType.IsSupplyType == isSupplyType)
+                    .Any();
         }
 
         public static List<Card> GetSupplyCards(List<Card> cardsToSplit)

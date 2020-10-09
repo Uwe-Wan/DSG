@@ -84,6 +84,7 @@ namespace DSG.BusinessComponents.Generation
             {
                 foreach (AdditionalCard additionalCard in CardHelper.GetAdditionalCardsAlreadyIncluded(card, alreadyIncluded))
                 {
+                    // parent needs to be temporarly removed since we do not want to choose one card as its own additional
                     if (alreadyIncluded)
                     {
                         cardsToChooseFrom.Remove(card);
@@ -91,7 +92,7 @@ namespace DSG.BusinessComponents.Generation
 
                     ChooseAdditionalCardForParentCard(additionalCard, card, additionalCardsForSet, cardsToChooseFrom);
 
-                    if (alreadyIncluded)
+                    if (alreadyIncluded && CardHelper.IsSupplyType(card))
                     {
                         cardsToChooseFrom.Add(card);
                     }
@@ -108,7 +109,6 @@ namespace DSG.BusinessComponents.Generation
                 .Where(x => additionalCard.MinCost.HasValue == false || x.Cost.Money >= additionalCard.MinCost.Value)
                 .Where(x => additionalCard.MaxCost.HasValue == false || x.Cost.Money <= additionalCard.MaxCost.Value)
                 .ToList();
-            // parent needs to be temporarly removed since we do not want to choose one card as its own additional
             Card generatedAdditionalCard = ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(cardsWithAllowedCost, 1).Single();
             additionalCardsForSet.Add(new GeneratedAdditionalCard(generatedAdditionalCard, parent));
             //the way this is currently written, it is also ensured that an existing card is not used as additional card for two cards
