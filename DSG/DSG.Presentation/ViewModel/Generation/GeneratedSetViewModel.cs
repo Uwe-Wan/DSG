@@ -68,8 +68,8 @@ namespace DSG.Presentation.ViewModel.Generation
             GeneratedSetDto generatedSetDto = SetGeneratorBc.GenerateSet(expansions);
 
             SupplyCards = generatedSetDto.SupplyCardsWithoutAdditional.Select(card => new CardAndArtifactViewEntity(card)).ToList();
-            SupplyCards.AddRange(generatedSetDto.GeneratedAdditionalCards.Select(gac => new CardAndArtifactViewEntity(gac.AdditionalCard)));
-            SupplyCards.AddRange(generatedSetDto.GeneratedExistingAdditionalCards.Select(gac => new CardAndArtifactViewEntity(gac.AdditionalCard)));
+            SupplyCards.AddRange(generatedSetDto.GeneratedAdditionalCards.Select(gac => new CardAndArtifactViewEntity(gac)));
+            SupplyCards.AddRange(generatedSetDto.GeneratedExistingAdditionalCards.Select(gac => new CardAndArtifactViewEntity(gac)));
             SupplyCards = SupplyCards
                 .OrderBy(card => card.Set)
                 .ThenBy(card => card.BelongsTo)
@@ -78,6 +78,11 @@ namespace DSG.Presentation.ViewModel.Generation
 
             NonSupplyStuff = generatedSetDto.NonSupplyCards.Select(card => new CardAndArtifactViewEntity(card)).ToList();
             NonSupplyStuff.AddRange(generatedSetDto.ArtifactsWithoutAdditionalCards.Select(artifact => new CardAndArtifactViewEntity(artifact)));
+            NonSupplyStuff = NonSupplyStuff
+                .OrderBy(card => card.Set)
+                .ThenBy(card => card.Cost)
+                .ThenBy(card => card.BelongsTo)
+                .ToList();
         }
 
         public override async Task NavigateToAsync(NavigationDestination destination)

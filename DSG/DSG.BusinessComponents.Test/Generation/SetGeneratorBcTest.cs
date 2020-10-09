@@ -175,7 +175,7 @@ namespace DSG.BusinessComponentsTest.Generation
         }
 
         [Test]
-        public void GenerateSet_1AdditionalCardWithAnother_TwoAdditionalReturned()
+        public void GenerateSet_1AdditionalCardWithAnother_TwoAdditionalReturned_NonSupplyTypeNotRespectedForAdditionalCard()
         {
             //Arrange
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(0);
@@ -207,6 +207,11 @@ namespace DSG.BusinessComponentsTest.Generation
                 new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4 } } }
             };
 
+            expansions[2].ContainedCards.Add(new Card 
+            { 
+                CardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } 
+            });
+
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
             List<Card> validCardsForFirstAdditional = allSupplyCards.Skip(12).ToList();
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(validCardsForFirstAdditional, 1)).Returns(allSupplyCards.Skip(12).Take(1).ToList());
@@ -214,7 +219,7 @@ namespace DSG.BusinessComponentsTest.Generation
             validCardsForSecondAdditional.Remove(allSupplyCards[12]);
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(validCardsForSecondAdditional, 1)).Returns(allSupplyCards.Skip(11).Take(1).ToList());
 
-            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(new List<Card>(), 0)).Returns(new List<Card>());
+            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(It.Is<List<Card>>(list => list.Count == 1), 0)).Returns(new List<Card>());
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(expansions);

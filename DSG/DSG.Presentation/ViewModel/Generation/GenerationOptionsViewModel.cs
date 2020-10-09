@@ -71,7 +71,7 @@ namespace DSG.Presentation.ViewModel.Generation
                 .Where(dto => dto.IsSelected)
                 .SelectMany(dto => dto.DominionExpansion.ContainedCards)
                 .ToList();
-            int availableSupplyCards = RetrieveCards.SupplyOrOthers(availableCards, true).Count;
+            int availableSupplyCards = CardHelper.GetSupplyCards(availableCards).Count;
 
             if (availableSupplyCards < 10)
             {

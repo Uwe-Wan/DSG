@@ -1,11 +1,7 @@
-﻿using DSG.BusinessEntities;
+﻿using DSG.BusinessComponents.StaticMethods;
+using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
-using DSG.BusinessEntities.CardTypes;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSG.Presentation.ViewEntity
 {
@@ -24,7 +20,7 @@ namespace DSG.Presentation.ViewEntity
         public CardAndArtifactViewEntity(Card card)
         {
             Name = card.Name;
-            Cost = card.Cost.Potion ? card.Cost.Money + card.Cost.Dept + "+T" : (card.Cost.Money + card.Cost.Dept).ToString();
+            Cost = FormatCost(card);
             Set = card.DominionExpansion.Name;
             Type = string.Join(", ", card.CardTypeToCards.Select(x => x.CardType.Name));
         }
@@ -33,8 +29,7 @@ namespace DSG.Presentation.ViewEntity
         {
             Name = generatedAdditional.AdditionalCard.Name;
             BelongsTo = generatedAdditional.Parent.Name;
-            int moneyPlusDept = generatedAdditional.AdditionalCard.Cost.Money + generatedAdditional.AdditionalCard.Cost.Dept;
-            Cost = generatedAdditional.AdditionalCard.Cost.Potion ? moneyPlusDept + "+T" : moneyPlusDept.ToString();
+            Cost = FormatCost(generatedAdditional.AdditionalCard);
             Set = generatedAdditional.AdditionalCard.DominionExpansion.Name;
             Type = string.Join(", ", generatedAdditional.AdditionalCard.CardTypeToCards.Select(x => x.CardType.Name));
         }
@@ -44,6 +39,24 @@ namespace DSG.Presentation.ViewEntity
             Name = artifact.Name;
             Set = artifact.DominionExpansion.Name;
             Type = "Artifact";
+        }
+
+        private string FormatCost(Card card)
+        {
+            // can not check on IsNotSupplyType because mixed types are technically allowed
+            if (CardHelper.IsSupplyType(card) == false)
+            {
+                return null;
+            }
+
+            int moneyPlusDept = card.Cost.Money + card.Cost.Dept;
+
+            if (card.Cost.Potion)
+            {
+                return moneyPlusDept + "+T";
+            }
+
+            return moneyPlusDept.ToString();
         }
     }
 }

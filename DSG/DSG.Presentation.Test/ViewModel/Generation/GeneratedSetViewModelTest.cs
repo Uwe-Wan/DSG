@@ -36,11 +36,15 @@ namespace DSG.Presentation.Test.ViewModel.Generation
 
 
         [Test]
-        public async Task OnPageLoaded_BcInvokedWithInputExpansions()
+        public async Task OnPageLoaded_ExpansionsLoaded_PropertiesSet()
         {
             //Arrange
             List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
-            GeneratedSetDto generatedSetDto = new GeneratedSetDto(new List<Card>(), new List<Card>(), new List<GeneratedAdditionalCard>(), new List<GeneratedAdditionalCard>());
+            GeneratedSetDto generatedSetDto = new GeneratedSetDto(
+                new List<Card> { TestDataDefines.Cards.BridgeTroll }, 
+                new List<Card> { TestDataDefines.Cards.Plan }, 
+                new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Relic },
+                new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Ranger });
             _setGeneratorBcMock.Setup(x => x.GenerateSet(expansions)).Returns(generatedSetDto);
 
             //Act
@@ -48,6 +52,16 @@ namespace DSG.Presentation.Test.ViewModel.Generation
 
             //Assert
             _setGeneratorBcMock.Verify(x => x.GenerateSet(expansions), Times.Once);
+            _testee.SupplyCards.Should().HaveCount(3);
+            _testee.SupplyCards.First().Name.Should().Be("Bridge Troll");
+            _testee.SupplyCards[1].Name.Should().Be("Ranger");
+            _testee.SupplyCards[2].Name.Should().Be("Relic");
+            _testee.NonSupplyStuff.Should().HaveCount(5);
+            _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("Plan");
+            _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("-1 Coin Marker");
+            _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("-1 Card Marker");
+            _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("Journey Token");
+            _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("Trash Token");
         }
 
         [Test]
