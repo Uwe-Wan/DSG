@@ -11,7 +11,7 @@ namespace DSG.BusinessEntities
 
         [DefaultValue(0)]
         [Index("UQX_Cost_Money_Dept_Potion", 1, IsUnique = true)]
-        public int Money { get; set; }
+        public int? Money { get; set; }
         
         [DefaultValue(false)]
         [Index("UQX_Cost_Money_Dept_Potion", 2, IsUnique = true)]
@@ -19,7 +19,7 @@ namespace DSG.BusinessEntities
 
         [DefaultValue(0)]
         [Index("UQX_Cost_Money_Dept_Potion", 3, IsUnique = true)]
-        public int Dept { get; set; }
+        public int? Dept { get; set; }
 
         public Cost()
         {
@@ -50,7 +50,17 @@ namespace DSG.BusinessEntities
 
         public override int GetHashCode()
         {
-            return (base.GetHashCode() << 2) ^ Money;
+            int hashCode = (base.GetHashCode() << 2) ^ Potion.GetHashCode();
+            if (Money.HasValue)
+            {
+                hashCode = (hashCode << 2) ^ Money.Value;
+            }
+            if (Dept.HasValue)
+            {
+                hashCode = (hashCode << 2) ^ Dept.Value;
+            }
+
+            return hashCode;
         }
     }
 }

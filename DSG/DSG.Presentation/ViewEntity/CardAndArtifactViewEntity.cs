@@ -49,7 +49,7 @@ namespace DSG.Presentation.ViewEntity
                 return null;
             }
 
-            int moneyPlusDept = card.Cost.Money + card.Cost.Dept;
+            int? moneyPlusDept = card.Cost?.Money + card.Cost?.Dept;
 
             if (card.Cost.Potion)
             {
