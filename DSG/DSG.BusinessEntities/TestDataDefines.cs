@@ -114,7 +114,7 @@ namespace DSG.BusinessEntities
             {
                 new CardArtifactToCard { CardArtifact = CardArtifacts.JourneyToken }
             };
-            public static List<CardArtifactToCard> TrashToken => new List<CardArtifactToCard>
+            public static List<CardArtifactToCard> TrashTokenArtifact => new List<CardArtifactToCard>
             {
                 new CardArtifactToCard { CardArtifact = CardArtifacts.TrashToken }
             };
@@ -166,7 +166,7 @@ namespace DSG.BusinessEntities
             {
                 Name = "Plan",
                 DominionExpansion = DominionExpansions.Adventure,
-                CardArtifactsToCard = CardArtifactToCards.JourneyTokenArtifact,
+                CardArtifactsToCard = CardArtifactToCards.TrashTokenArtifact,
                 CardTypeToCards = CardTypeToCards.EventType,
                 Cost = Costs.Three
             };
