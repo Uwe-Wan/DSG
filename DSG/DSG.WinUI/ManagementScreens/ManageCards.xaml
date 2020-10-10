@@ -13,17 +13,17 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.25*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.85*"/>
+            <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.35*"/>
             <ColumnDefinition Width="0.25*"/>
             <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.47*"/>
             <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.55*"/>
+            <ColumnDefinition Width="0.54*"/>
             <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.85*"/>
             <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
 
