@@ -4,22 +4,16 @@ namespace DSG.Common.Provider.Impl
 {
     public class RandomProvider : IRandomProvider
     {
-        public int GetRandomInteger()
+        public Random Random { get; set; }
+
+        public RandomProvider()
         {
-            Random random = new Random();
-            return random.Next();
+            Random = new Random();
         }
 
         public int GetRandomIntegerByUpperBoarder(int upperBoarder)
         {
-            Random random = new Random();
-            return random.Next(upperBoarder);
-        }
-
-        public int GetRandomIntegerByLowerAndUpperBoarder(int lowerBoarder, int upperBoarder)
-        {
-            Random random = new Random();
-            return random.Next(lowerBoarder, upperBoarder);
+            return Random.Next(upperBoarder);
         }
     }
 }
