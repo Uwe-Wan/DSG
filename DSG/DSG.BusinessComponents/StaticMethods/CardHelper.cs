@@ -7,7 +7,7 @@ namespace DSG.BusinessComponents.StaticMethods
 {
     public static class CardHelper
     {
-        public static IEnumerable<AdditionalCard> GetAdditionalCardsAlreadyIncluded(Card card, bool alreadyIncluded)
+        public static IEnumerable<AdditionalCard> GetAdditionalCardsAlreadyIncluded(this Card card, bool alreadyIncluded)
         {
             return card.CardArtifactsToCard?
                 .Select(x => x.CardArtifact)
@@ -15,12 +15,12 @@ namespace DSG.BusinessComponents.StaticMethods
                 .Where(additional => additional?.AlreadyIncludedCard == alreadyIncluded);
         }
 
-        public static bool IsSupplyType(Card card)
+        public static bool IsSupplyType(this Card card)
         {
             return IsSupplyType(card, true);
         }
 
-        public static bool IsNonSupplyType(Card card)
+        public static bool IsNonSupplyType(this Card card)
         {
             return IsSupplyType(card, false);
         }
@@ -32,21 +32,28 @@ namespace DSG.BusinessComponents.StaticMethods
                     .Any();
         }
 
-        public static List<Card> GetSupplyCards(List<Card> cardsToSplit)
+        public static List<Card> GetSupplyCards(this IEnumerable<Card> cardsToSplit)
         {
             return GetSupplyOrOthers(cardsToSplit, true);
         }
 
-        public static List<Card> GetNonSupplyCards(List<Card> cardsToSplit)
+        public static List<Card> GetNonSupplyCards(this IEnumerable<Card> cardsToSplit)
         {
             return GetSupplyOrOthers(cardsToSplit, false);
         }
 
-        private static List<Card> GetSupplyOrOthers(List<Card> cardsToSplit, bool isSupplyType)
+        private static List<Card> GetSupplyOrOthers(IEnumerable<Card> cardsToSplit, bool isSupplyType)
         {
             return cardsToSplit
                 .Where(card => IsSupplyType(card, isSupplyType))                
                 .ToList();
+        }
+
+        public static IEnumerable<CardArtifact> GetArtifactsWithoutAdditional(this IEnumerable<Card> cards)
+        {
+            return cards.SelectMany(card => card.CardArtifactsToCard)
+                .Select(x => x.CardArtifact)
+                .Where(x => x.AdditionalCard == null);
         }
     }
 }

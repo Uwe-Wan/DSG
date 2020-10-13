@@ -186,6 +186,14 @@ namespace DSG.BusinessEntities
                 CardTypeToCards = CardTypeToCards.ActionType,
                 Cost = Costs.TwoMoneyPotion
             };
+
+            public static Card Obelisk => new Card
+            {
+                Name = "Obelisk",
+                DominionExpansion = DominionExpansions.Empires,
+                CardTypeToCards = CardTypeToCards.LandmarkType,
+                CardArtifactsToCard = CardArtifactToCards.ObelistArtifact
+            };
         }
 
         public static class GeneratedAdditionalCards

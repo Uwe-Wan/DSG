@@ -6,6 +6,7 @@ using DSG.Common;
 using DSG.Common.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
+using static DSG.BusinessComponents.StaticMethods.CardHelper;
 
 namespace DSG.BusinessComponents.Generation
 {
@@ -42,7 +43,9 @@ namespace DSG.BusinessComponents.Generation
             List<Card> chosenNonSupplyCards = ChooseNonSupplyCards(availableCards);
             List<Card> temporarlySet = chosenSupplyCards.Union(chosenNonSupplyCards).ToList();
 
-            List<Card> availableSupplyTypeCards = CardHelper.GetSupplyCards(availableCards.Where(card => temporarlySet.Contains(card) == false).ToList());
+            List<Card> availableSupplyTypeCards = availableCards
+                .Where(card => temporarlySet.Contains(card) == false)
+                .GetSupplyCards();
 
             List<GeneratedAdditionalCard> generatedAdditionalCards = GetAdditionalCards(availableSupplyTypeCards, temporarlySet);
             List<GeneratedAdditionalCard> generatedExistingAdditionalCards = GetExistingAdditionalCards(chosenSupplyCards, temporarlySet);
@@ -75,14 +78,14 @@ namespace DSG.BusinessComponents.Generation
         private List<GeneratedAdditionalCard> ChooseAdditionalCardsIsAlreadyIncluded(bool alreadyIncluded, List<Card> cardsToChooseFrom, IEnumerable<Card> temporarlySet)
         {
             List<Card> cardsWithAdditionalCards = temporarlySet
-                .Where(card => CardHelper.GetAdditionalCardsAlreadyIncluded(card, alreadyIncluded).Any())
+                .Where(card => card.GetAdditionalCardsAlreadyIncluded(alreadyIncluded).Any())
                 .ToList();
 
             List<GeneratedAdditionalCard> additionalCardsForSet = new List<GeneratedAdditionalCard>();
 
             foreach (Card card in cardsWithAdditionalCards)
             {
-                foreach (AdditionalCard additionalCard in CardHelper.GetAdditionalCardsAlreadyIncluded(card, alreadyIncluded))
+                foreach (AdditionalCard additionalCard in card.GetAdditionalCardsAlreadyIncluded(alreadyIncluded))
                 {
                     // parent needs to be temporarly removed since we do not want to choose one card as its own additional
                     if (alreadyIncluded)
@@ -92,7 +95,7 @@ namespace DSG.BusinessComponents.Generation
 
                     ChooseAdditionalCardForParentCard(additionalCard, card, additionalCardsForSet, cardsToChooseFrom);
 
-                    if (alreadyIncluded && CardHelper.IsSupplyType(card))
+                    if (alreadyIncluded && card.IsSupplyType())
                     {
                         cardsToChooseFrom.Add(card);
                     }
@@ -117,7 +120,7 @@ namespace DSG.BusinessComponents.Generation
 
         private List<Card> ChooseSupplyCards(List<Card> availableCards)
         {
-            List<Card> availableSupplyCards = CardHelper.GetSupplyCards(availableCards);
+            List<Card> availableSupplyCards = availableCards.GetSupplyCards();
 
             if (availableSupplyCards.Count < 10)
             {
@@ -129,7 +132,7 @@ namespace DSG.BusinessComponents.Generation
 
         private List<Card> ChooseNonSupplyCards(List<Card> availableCards)
         {
-            List<Card> availableNonSupplyCards = CardHelper.GetNonSupplyCards(availableCards);
+            List<Card> availableNonSupplyCards = availableCards.GetNonSupplyCards();
 
             int numberOfNonSupplyCards = GetIntByProbabilityBc.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7);
 

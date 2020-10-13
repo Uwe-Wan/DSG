@@ -16,18 +16,15 @@ namespace DSG.BusinessComponentsTest.StaticMethods
         public void GetAdditionalCardsAlreadyIncluded_TwoAlreadyIncludedSomeOther_TwoReturned()
         {
             //Arrange
-            CardArtifact artifactWithAlreadyIncluded1 = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = true } };
-            CardArtifact artifactWithAlreadyIncluded2 = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = true } };
-            CardArtifact artifactWithAdditional = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false } };
-            CardArtifact artifactWithoutAdditional = new CardArtifact();
+            CardArtifact artifactWithAlreadyIncluded = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = true } };
 
             Card card = new Card();
             card.CardArtifactsToCard = new List<CardArtifactToCard>
             {
-                new CardArtifactToCard{ CardArtifact = artifactWithAdditional},
-                new CardArtifactToCard{ CardArtifact = artifactWithAlreadyIncluded1},
-                new CardArtifactToCard{ CardArtifact = artifactWithAlreadyIncluded2},
-                new CardArtifactToCard{ CardArtifact = artifactWithoutAdditional}
+                new CardArtifactToCard{ CardArtifact = TestDataDefines.CardArtifacts.YoungWitchCard},
+                new CardArtifactToCard{ CardArtifact = TestDataDefines.CardArtifacts.ObeliskCard},
+                new CardArtifactToCard{ CardArtifact = artifactWithAlreadyIncluded},
+                new CardArtifactToCard{ CardArtifact = TestDataDefines.CardArtifacts.JourneyToken}
             };
 
             //Act
@@ -35,18 +32,15 @@ namespace DSG.BusinessComponentsTest.StaticMethods
 
             //Assert
             result.Should().HaveCount(2);
-            result.Should().Contain(artifactWithAlreadyIncluded1.AdditionalCard);
-            result.Should().Contain(artifactWithAlreadyIncluded2.AdditionalCard);
+            result.Should().Contain(TestDataDefines.CardArtifacts.ObeliskCard.AdditionalCard);
+            result.Should().Contain(artifactWithAlreadyIncluded.AdditionalCard);
         }
 
         [Test]
         public void IsNonSupplyType_IsSupplyType_False()
         {
-            //Arrange
-            Card card = new Card { CardTypeToCards = new List<CardTypeToCard> { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } } };
-
             //Act
-            bool result = CardHelper.IsNonSupplyType(card);
+            bool result = CardHelper.IsNonSupplyType(TestDataDefines.Cards.Apothecary);
 
             //Assert
             result.Should().BeFalse();
@@ -55,11 +49,8 @@ namespace DSG.BusinessComponentsTest.StaticMethods
         [Test]
         public void IsNonSupplyType_IsNonSupplyType_True()
         {
-            //Arrange
-            Card card = new Card { CardTypeToCards = new List<CardTypeToCard> { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } };
-
             //Act
-            bool result = CardHelper.IsNonSupplyType(card);
+            bool result = CardHelper.IsNonSupplyType(TestDataDefines.Cards.Plan);
 
             //Assert
             result.Should().BeTrue();
@@ -86,13 +77,10 @@ namespace DSG.BusinessComponentsTest.StaticMethods
         }
 
         [Test]
-        public void IsSupplyType_IsSupplyType_False()
+        public void IsSupplyType_IsSupplyType_True()
         {
-            //Arrange
-            Card card = new Card { CardTypeToCards = new List<CardTypeToCard> { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } } };
-
             //Act
-            bool result = CardHelper.IsSupplyType(card);
+            bool result = CardHelper.IsSupplyType(TestDataDefines.Cards.Apothecary);
 
             //Assert
             result.Should().BeTrue();
@@ -101,11 +89,8 @@ namespace DSG.BusinessComponentsTest.StaticMethods
         [Test]
         public void IsSupplyType_IsNonSupplyType_False()
         {
-            //Arrange
-            Card card = new Card { CardTypeToCards = new List<CardTypeToCard> { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } };
-
             //Act
-            bool result = CardHelper.IsSupplyType(card);
+            bool result = CardHelper.IsSupplyType(TestDataDefines.Cards.Plan);
 
             //Assert
             result.Should().BeFalse();
@@ -135,8 +120,6 @@ namespace DSG.BusinessComponentsTest.StaticMethods
         public void GetSupplyCards_TwoSupplyOneMixedOneNonSupply_RetrieveSupplyCardsAndMixed3()
         {
             //Arrange
-            List<CardTypeToCard> supplyTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
-            List<CardTypeToCard> nonSupplyTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } };
             List<CardTypeToCard> mixedTypes = new List<CardTypeToCard>() 
             { 
                 new CardTypeToCard { CardType = new CardType { IsSupplyType = false } },
@@ -144,9 +127,9 @@ namespace DSG.BusinessComponentsTest.StaticMethods
             };
             List<Card> cards = new List<Card>();
 
-            cards.Add(new Card { CardTypeToCards = supplyTypes });
-            cards.Add(new Card { CardTypeToCards = supplyTypes });
-            cards.Add(new Card { CardTypeToCards = nonSupplyTypes });
+            cards.Add(TestDataDefines.Cards.BridgeTroll);
+            cards.Add(TestDataDefines.Cards.Apothecary);
+            cards.Add(TestDataDefines.Cards.Plan);
             cards.Add(new Card { CardTypeToCards = mixedTypes });
 
             //Act
@@ -154,17 +137,15 @@ namespace DSG.BusinessComponentsTest.StaticMethods
 
             //Assert
             result.Should().HaveCount(3);
-            result.Select(x => x.CardTypeToCards).Should().Contain(supplyTypes);
+            result.Should().ContainEquivalentOf(TestDataDefines.Cards.BridgeTroll);
+            result.Should().ContainEquivalentOf(TestDataDefines.Cards.Apothecary);
             result.Select(x => x.CardTypeToCards).Should().Contain(mixedTypes);
-            result.Select(x => x.CardTypeToCards).Should().NotContain(nonSupplyTypes);
         }
 
         [Test]
         public void GetNonSupplyCards_TwoSupplyOneMixedOneNonSupply_RetrieveNonSupplyCardsAndMixed3()
         {
             //Arrange
-            List<CardTypeToCard> supplyTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
-            List<CardTypeToCard> nonSupplyTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } };
             List<CardTypeToCard> mixedTypes = new List<CardTypeToCard>() 
             { 
                 new CardTypeToCard { CardType = new CardType { IsSupplyType = false } },
@@ -172,9 +153,9 @@ namespace DSG.BusinessComponentsTest.StaticMethods
             };
             List<Card> cards = new List<Card>();
 
-            cards.Add(new Card { CardTypeToCards = supplyTypes });
-            cards.Add(new Card { CardTypeToCards = supplyTypes });
-            cards.Add(new Card { CardTypeToCards = nonSupplyTypes });
+            cards.Add(TestDataDefines.Cards.BridgeTroll);
+            cards.Add(TestDataDefines.Cards.Apothecary);
+            cards.Add(TestDataDefines.Cards.Plan);
             cards.Add(new Card { CardTypeToCards = mixedTypes });
 
             //Act
@@ -182,9 +163,27 @@ namespace DSG.BusinessComponentsTest.StaticMethods
 
             //Assert
             result.Should().HaveCount(2);
-            result.Select(x => x.CardTypeToCards).Should().Contain(nonSupplyTypes);
+            result.Should().ContainEquivalentOf(TestDataDefines.Cards.Plan);
             result.Select(x => x.CardTypeToCards).Should().Contain(mixedTypes);
-            result.Select(x => x.CardTypeToCards).Should().NotContain(supplyTypes);
+        }
+
+        [Test]
+        public void GetArtifactsWithoutAdditional_GetOnlyArtifactsWithoutAdditional()
+        {
+            //Arrange
+            List<Card> cards = new List<Card>
+            {
+                TestDataDefines.Cards.YoungWitch,
+                TestDataDefines.Cards.BridgeTroll,
+                TestDataDefines.Cards.Obelisk
+            };
+
+            //Act
+            List<CardArtifact> result = CardHelper.GetArtifactsWithoutAdditional(cards).ToList();
+
+            //Assert
+            result.Should().HaveCount(1);
+            result.Single().Should().BeEquivalentTo(TestDataDefines.CardArtifacts.MinusOneCoinMarker);
         }
     }
 }

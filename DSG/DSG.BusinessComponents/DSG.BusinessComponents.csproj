@@ -75,6 +75,7 @@
     <Compile Include="Cards\ICardBc.cs" />
     <Compile Include="Expansions\DominionExpansionBc.cs" />
     <Compile Include="Expansions\IDominionExpansionBc.cs" />
+    <Compile Include="Generation\GeneratedSetDto.cs" />
     <Compile Include="Generation\ISetGeneratorBc.cs" />
     <Compile Include="Generation\SetGeneratorBc.cs" />
     <Compile Include="LookupBc.cs" />

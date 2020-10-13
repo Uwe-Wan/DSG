@@ -43,7 +43,17 @@ namespace DSG.Presentation.ViewEntity
 
         private string FormatCost(Card card)
         {
-            int? moneyPlusDept = card.Cost?.Money + card.Cost?.Dept;
+            int? moneyPlusDept = 0;
+
+            if(card.Cost?.Money == null && card.Cost.Dept == null)
+            {
+                moneyPlusDept = null;
+            }
+            else
+            {
+                moneyPlusDept += card.Cost?.Money ?? 0;
+                moneyPlusDept += card.Cost?.Dept ?? 0;
+            }
 
             if (card.Cost.Potion)
             {

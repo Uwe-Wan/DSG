@@ -84,7 +84,6 @@
     <Compile Include="CardTypes\CardTypeToCard.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="DominionExpansion.cs" />
-    <Compile Include="GeneratedSetDto.cs" />
     <Compile Include="GetEnums\GetEnum.cs" />
     <Compile Include="CardTypes\IsCardTypeSelectedDto.cs" />
     <Compile Include="IsDominionExpansionSelectedDto.cs" />
