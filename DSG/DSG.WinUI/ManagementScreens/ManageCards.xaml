@@ -80,7 +80,8 @@
             Grid.RowSpan="4"  
             ItemsSource="{Binding SelectedExpansionViewEntity.ContainedCards}"
             IsReadOnly="True" 
-            Style="{StaticResource dataGridDefaultStyle}">
+            Style="{StaticResource dataGridDefaultStyle}"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/SelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -123,7 +124,8 @@
             Grid.RowSpan="2" 
             ItemsSource="{Binding SelectedCardTypes}"                 
             Style="{StaticResource dataGridDefaultStyle}"
-            Width="Auto">
+            Width="Auto"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -150,7 +152,8 @@
             Grid.RowSpan="3" 
             ItemsSource="{Binding SelectedCardSubTypes}"             
             Style="{StaticResource dataGridDefaultStyle}"            
-            Width="Auto">
+            Width="Auto"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -176,7 +179,8 @@
             Grid.RowSpan="3" 
             ItemsSource="{Binding SelectedCardArtifacts}"             
             Style="{StaticResource dataGridDefaultStyle}"            
-            Width="Auto">
+            Width="Auto"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>

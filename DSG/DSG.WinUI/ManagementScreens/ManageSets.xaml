@@ -82,7 +82,8 @@
             ItemsSource="{Binding DominionExpansions}"
             Style="{StaticResource dataGridDefaultStyle}"           
             IsReadOnly="True" 
-            SelectedItem="{Binding SelectedExpansion, Mode=TwoWay}">
+            SelectedItem="{Binding SelectedExpansion, Mode=TwoWay}"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/SelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -101,7 +102,8 @@
             ItemsSource="{Binding SelectedExpansion.ContainedCards}"
             Style="{StaticResource dataGridDefaultStyle}"                  
             IsReadOnly="True"
-            Grid.RowSpan="3">
+            Grid.RowSpan="3"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
@@ -120,7 +122,8 @@
             ItemsSource="{Binding SelectedExpansion.ContainedArtifacts}"
             Style="{StaticResource dataGridDefaultStyle}"                  
             IsReadOnly="True"
-            Grid.RowSpan="3">
+            Grid.RowSpan="3"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/NotSelectableCellDictionary.xaml"/>
             </DataGrid.Resources>

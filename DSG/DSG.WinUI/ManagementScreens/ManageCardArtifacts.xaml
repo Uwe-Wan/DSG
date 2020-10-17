@@ -79,7 +79,8 @@
             Grid.RowSpan="4"  
             ItemsSource="{Binding SelectedExpansionViewEntity.ContainedArtifacts}"
             IsReadOnly="True" 
-            Style="{StaticResource dataGridDefaultStyle}">
+            Style="{StaticResource dataGridDefaultStyle}"
+            CanUserAddRows="False">
             <DataGrid.Resources>
                 <ResourceDictionary Source="/ResourceDictionaries/SelectableCellDictionary.xaml"/>
             </DataGrid.Resources>
