@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Windows;
 
 namespace DSG.BusinessEntities
 {
@@ -34,7 +35,7 @@ namespace DSG.BusinessEntities
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
+            if (obj == null || obj == DependencyProperty.UnsetValue)
             {
                 return false;
             }
