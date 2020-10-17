@@ -185,31 +185,44 @@ namespace DSG.BusinessComponentsTest.Generation
             for (int j = 0; j < 3; j++)
             {
                 DominionExpansion expansion = new DominionExpansion();
-                for (int i = 0; i < 5; i++)
-                {
-                    expansion.ContainedCards.Add(
-                        new Card() { CardTypeToCards = cardTypeToCards, Cost = new Cost(2, 0, false), CardArtifactsToCard = new List<CardArtifactToCard>() });
-                }
-
                 expansions.Add(expansion);
             }
 
-            List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
-            allSupplyCards.First().CardArtifactsToCard = new List<CardArtifactToCard> 
-            {
-                new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4, MinCost = 2 } } }
-            };
-            allSupplyCards[10].Cost = new Cost(5, 0, false);
-            allSupplyCards[11].Cost = new Cost(1, 0, false);
-            allSupplyCards[12].CardArtifactsToCard = new List<CardArtifactToCard>
-            {
-                new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4 } } }
-            };
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.YoungWitch);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.Tournament);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.Menagerie);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.Remake);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.HorseTraders);
 
-            expansions[2].ContainedCards.Add(new Card 
-            { 
-                CardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } 
-            });
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Dungeon);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.BridgeTroll);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Magpie);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Ranger);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Relic);
+
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.PoorHouse);
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.Apprentice);
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.Mill);
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.Dungeon);
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.Apothecary);
+
+            List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
+            //allSupplyCards.First().CardArtifactsToCard = new List<CardArtifactToCard> 
+            //{
+            //    new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4, MinCost = 2 } } }
+            //};
+            //allSupplyCards[10].Cost = new Cost(5, 0, false);
+            //allSupplyCards[11].Cost = new Cost(1, 0, false);
+            //allSupplyCards[12].CardArtifactsToCard = new List<CardArtifactToCard>
+            //{
+            //    new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4 } } }
+            //};
+
+            //expansions[2].ContainedCards.Add(new Card 
+            //{ 
+            //    CardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } 
+            //});
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.Plan);
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
             List<Card> validCardsForFirstAdditional = allSupplyCards.Skip(12).ToList();

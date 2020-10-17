@@ -78,14 +78,14 @@ namespace DSG.BusinessComponents.Generation
         private List<GeneratedAdditionalCard> ChooseAdditionalCardsIsAlreadyIncluded(bool alreadyIncluded, List<Card> cardsToChooseFrom, IEnumerable<Card> temporarlySet)
         {
             List<Card> cardsWithAdditionalCards = temporarlySet
-                .Where(card => card.GetAdditionalCardsAlreadyIncluded(alreadyIncluded).Any())
+                .Where(card => card.GetAdditionalCardsAlreadyIncluded(alreadyIncluded)?.Any() == true)
                 .ToList();
 
             List<GeneratedAdditionalCard> additionalCardsForSet = new List<GeneratedAdditionalCard>();
 
             foreach (Card card in cardsWithAdditionalCards)
             {
-                foreach (AdditionalCard additionalCard in card.GetAdditionalCardsAlreadyIncluded(alreadyIncluded))
+                foreach (CardArtifact artifact in card.GetArtifactsWithAdditional(alreadyIncluded))
                 {
                     // parent needs to be temporarly removed since we do not want to choose one card as its own additional
                     if (alreadyIncluded)
@@ -93,7 +93,7 @@ namespace DSG.BusinessComponents.Generation
                         cardsToChooseFrom.Remove(card);
                     }
 
-                    ChooseAdditionalCardForParentCard(additionalCard, card, additionalCardsForSet, cardsToChooseFrom);
+                    ChooseAdditionalCardForParentCard(artifact, card, additionalCardsForSet, cardsToChooseFrom);
 
                     if (alreadyIncluded && card.IsSupplyType())
                     {
@@ -105,17 +105,21 @@ namespace DSG.BusinessComponents.Generation
             return additionalCardsForSet;
         }
 
-        private void ChooseAdditionalCardForParentCard(AdditionalCard additionalCard, Card parent, 
+        private void ChooseAdditionalCardForParentCard(CardArtifact artifact, Card parent, 
             List<GeneratedAdditionalCard> additionalCardsForSet, List<Card> cardsToChooseFrom)
         {
+            Check.RequireNotNull(artifact.AmountOfAdditionalCards, nameof(artifact.AmountOfAdditionalCards), nameof(SetGeneratorBc));
+
+            AdditionalCard additionalCard = artifact.AdditionalCard;
+
             List<Card> cardsWithAllowedCost = cardsToChooseFrom
                 .Where(x => additionalCard.MinCost.HasValue == false || x.Cost.Money >= additionalCard.MinCost.Value)
                 .Where(x => additionalCard.MaxCost.HasValue == false || x.Cost.Money <= additionalCard.MaxCost.Value)
                 .ToList();
-            Card generatedAdditionalCard = ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(cardsWithAllowedCost, 1).Single();
-            additionalCardsForSet.Add(new GeneratedAdditionalCard(generatedAdditionalCard, parent));
+            List<Card> generatedAdditionalCards = ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(cardsWithAllowedCost, artifact.AmountOfAdditionalCards.Value);
+            additionalCardsForSet.AddRange(generatedAdditionalCards.Select(card => new GeneratedAdditionalCard(card, parent)));
             //the way this is currently written, it is also ensured that an existing card is not used as additional card for two cards
-            cardsToChooseFrom.Remove(generatedAdditionalCard);
+            cardsToChooseFrom.RemoveAll(x => x.Equals(generatedAdditionalCards));
         }
 
         private List<Card> ChooseSupplyCards(List<Card> availableCards)

@@ -55,5 +55,12 @@ namespace DSG.BusinessComponents.StaticMethods
                 .Select(x => x.CardArtifact)
                 .Where(x => x.AdditionalCard == null);
         }
+
+        public static IEnumerable<CardArtifact> GetArtifactsWithAdditional(this Card cards, bool alreadyIncluded)
+        {
+            return cards.CardArtifactsToCard
+                .Select(x => x.CardArtifact)
+                .Where(x => x.AdditionalCard != null && x.AdditionalCard.AlreadyIncludedCard == alreadyIncluded);
+        }
     }
 }

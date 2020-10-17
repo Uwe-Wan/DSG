@@ -185,5 +185,36 @@ namespace DSG.BusinessComponentsTest.StaticMethods
             result.Should().HaveCount(1);
             result.Single().Should().BeEquivalentTo(TestDataDefines.CardArtifacts.MinusOneCoinMarker);
         }
+
+        [Test]
+        public void GetArtifactsWithAdditional_CardWithAdditionalExisting_IsExisting_ArtifactReturned()
+        {
+            //Act
+            IEnumerable<CardArtifact> result = CardHelper.GetArtifactsWithAdditional(TestDataDefines.Cards.Obelisk, true);
+
+            //Assert
+            result.Should().HaveCount(1);
+            result.Single().Should().BeEquivalentTo(TestDataDefines.CardArtifacts.ObeliskCard);
+        }
+
+        [Test]
+        public void GetArtifactsWithAdditional_CardWithAdditionalExisting_IsAdditional_NothingReturned()
+        {
+            //Act
+            IEnumerable<CardArtifact> result = CardHelper.GetArtifactsWithAdditional(TestDataDefines.Cards.Obelisk, false);
+
+            //Assert
+            result.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void GetArtifactsWithAdditional_CardWithNoAdditional_NothingReturned()
+        {
+            //Act
+            IEnumerable<CardArtifact> result = CardHelper.GetArtifactsWithAdditional(TestDataDefines.Cards.BridgeTroll, false);
+
+            //Assert
+            result.Should().HaveCount(0);
+        }
     }
 }
