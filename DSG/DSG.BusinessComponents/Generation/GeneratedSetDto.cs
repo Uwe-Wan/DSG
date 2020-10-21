@@ -17,6 +17,10 @@ namespace DSG.BusinessEntities
 
         public List<CardArtifact> ArtifactsWithoutAdditionalCards { get; set; }
 
+        public bool HasShelters { get; set; }
+
+        public bool HasPlatinumAndColony { get; set; }
+
         public GeneratedSetDto(List<Card> supplyCardsWithoutAdditional, List<Card> nonSupplyCards, 
             List<GeneratedAdditionalCard> generatedAdditionalCards, List<GeneratedAdditionalCard> generatedExistingAdditionalCards)
         {

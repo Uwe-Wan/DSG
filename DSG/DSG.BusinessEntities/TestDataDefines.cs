@@ -82,8 +82,10 @@ namespace DSG.BusinessEntities
 
         public static class AdditionalCards
         {
-            public static AdditionalCard Additional => new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4, MinCost = 2 };
-            public static AdditionalCard Existing => new AdditionalCard { AlreadyIncludedCard = true, MinCost = null, MaxCost = 5 };
+            public static AdditionalCard AdditionalMinMax => new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4, MinCost = 2 };
+            public static AdditionalCard AdditionalMin => new AdditionalCard { AlreadyIncludedCard = false, MinCost = 2, MaxCost = null };
+            public static AdditionalCard ExistingMax => new AdditionalCard { AlreadyIncludedCard = true, MinCost = null, MaxCost = 4 };
+            public static AdditionalCard ExistingMinMax => new AdditionalCard { AlreadyIncludedCard = true, MinCost = 2, MaxCost = 4 };
         }
 
         #endregion
@@ -95,7 +97,7 @@ namespace DSG.BusinessEntities
         {
             public static CardArtifact YoungWitchCard => new CardArtifact 
             {
-                Name = "Young Witch Card", DominionExpansion = DominionExpansions.Cornucopia, AdditionalCard = AdditionalCards.Additional, AmountOfAdditionalCards = 1
+                Name = "Young Witch Card", DominionExpansion = DominionExpansions.Cornucopia, AdditionalCard = AdditionalCards.AdditionalMinMax, AmountOfAdditionalCards = 1
             };
             public static CardArtifact MinusOneCoinMarker => new CardArtifact 
             { 
@@ -115,11 +117,19 @@ namespace DSG.BusinessEntities
             };
             public static CardArtifact ObeliskCard => new CardArtifact 
             { 
-                Name = "Obelisk Card", DominionExpansion = DominionExpansions.Empires, AdditionalCard = AdditionalCards.Existing,AmountOfAdditionalCards = 1 
+                Name = "Obelisk Card", DominionExpansion = DominionExpansions.Empires, AdditionalCard = AdditionalCards.ExistingMax, AmountOfAdditionalCards = 1 
             };
             public static CardArtifact Prices => new CardArtifact 
             { 
                 Name = "Prices", DominionExpansion = DominionExpansions.Cornucopia
+            };
+            public static CardArtifact TestAdditionalArtifact => new CardArtifact 
+            { 
+                Name = "Test Additional", DominionExpansion = DominionExpansions.Cornucopia, AdditionalCard = AdditionalCards.AdditionalMin, AmountOfAdditionalCards = 1
+            };
+            public static CardArtifact TestExistingArtifact => new CardArtifact 
+            { 
+                Name = "Test Existing", DominionExpansion = DominionExpansions.Cornucopia, AdditionalCard = AdditionalCards.ExistingMinMax, AmountOfAdditionalCards = 1
             };
         }
 
@@ -158,6 +168,16 @@ namespace DSG.BusinessEntities
             {
                 new CardArtifactToCard { CardArtifact = CardArtifacts.Prices }
             };
+            public static List<CardArtifactToCard> TestAdditional => new List<CardArtifactToCard>
+            {
+                new CardArtifactToCard { CardArtifact = CardArtifacts.TestAdditionalArtifact }
+            };
+            public static List<CardArtifactToCard> TestExisting => new List<CardArtifactToCard>
+            {
+                new CardArtifactToCard { CardArtifact = CardArtifacts.TestExistingArtifact }
+            };
+
+            public static List<CardArtifactToCard> EmptyList => new List<CardArtifactToCard>();
         }
 
         #endregion
@@ -183,6 +203,7 @@ namespace DSG.BusinessEntities
                 Name = "Menagerie",
                 DominionExpansion = DominionExpansions.Cornucopia,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Three
             };
             
@@ -200,6 +221,7 @@ namespace DSG.BusinessEntities
                 Name = "Horse Traders",
                 DominionExpansion = DominionExpansions.Cornucopia,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Four
             };
             
@@ -208,6 +230,7 @@ namespace DSG.BusinessEntities
                 Name = "Remake",
                 DominionExpansion = DominionExpansions.Cornucopia,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Four
             };
 
@@ -247,6 +270,7 @@ namespace DSG.BusinessEntities
                 Name = "Dungeon",
                 DominionExpansion = DominionExpansions.Adventure,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Three
             };
 
@@ -255,6 +279,7 @@ namespace DSG.BusinessEntities
                 Name = "Magpie",
                 DominionExpansion = DominionExpansions.Adventure,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Four
             };
 
@@ -274,6 +299,7 @@ namespace DSG.BusinessEntities
                 Name = "Mill",
                 DominionExpansion = DominionExpansions.Empires,
                 CardTypeToCards = CardTypeToCards.ActionAndVictory,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Four
             };
 
@@ -282,6 +308,7 @@ namespace DSG.BusinessEntities
                 Name = "Apothecary",
                 DominionExpansion = DominionExpansions.Alchemy,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.TwoMoneyPotion
             };
 
@@ -290,6 +317,7 @@ namespace DSG.BusinessEntities
                 Name = "Poor House",
                 DominionExpansion = DominionExpansions.Alchemy,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.One
             };
 
@@ -298,6 +326,7 @@ namespace DSG.BusinessEntities
                 Name = "Apprentice",
                 DominionExpansion = DominionExpansions.Alchemy,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
                 Cost = Costs.Five
             };
 
@@ -306,6 +335,34 @@ namespace DSG.BusinessEntities
                 Name = "Apprentice",
                 DominionExpansion = DominionExpansions.Empires,
                 CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.EmptyList,
+                Cost = Costs.Three
+            };
+
+            public static Card TestWithAdditional => new Card
+            {
+                Name = "Test With Additional",
+                DominionExpansion = DominionExpansions.Empires,
+                CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.TestAdditional,
+                Cost = Costs.Three
+            };
+
+            public static Card TestWithExisting => new Card
+            {
+                Name = "Test With Existing",
+                DominionExpansion = DominionExpansions.Empires,
+                CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.TestExisting,
+                Cost = Costs.Three
+            };
+
+            public static Card TestWithExistingOnlyMaxCost => new Card
+            {
+                Name = "Test With Existing Only Max Cost",
+                DominionExpansion = DominionExpansions.Empires,
+                CardTypeToCards = CardTypeToCards.ActionType,
+                CardArtifactsToCard = CardArtifactToCards.ObelistArtifact,
                 Cost = Costs.Three
             };
 

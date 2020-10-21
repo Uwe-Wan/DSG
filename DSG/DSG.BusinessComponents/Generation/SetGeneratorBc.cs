@@ -4,6 +4,7 @@ using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common;
 using DSG.Common.Exceptions;
+using DSG.Common.Provider;
 using System.Collections.Generic;
 using System.Linq;
 using static DSG.BusinessComponents.StaticMethods.CardHelper;
@@ -14,6 +15,7 @@ namespace DSG.BusinessComponents.Generation
     {
         private IGetIntByProbabilityBc _getIntByProbabilityBc;
         private IShuffleListBc<Card> _shuffleListBc;
+        private IRandomProvider _randomProvider;
 
         public IGetIntByProbabilityBc GetIntByProbabilityBc
         {
@@ -35,6 +37,16 @@ namespace DSG.BusinessComponents.Generation
             set { _shuffleListBc = value; }
         }
 
+        public IRandomProvider RandomProvider
+        {
+            get
+            {
+                Check.RequireInjected(_randomProvider, nameof(RandomProvider), nameof(SetGeneratorBc));
+                return _randomProvider;
+            }
+            set { _randomProvider = value; }
+        }
+
         public GeneratedSetDto GenerateSet(List<DominionExpansion> dominionExpansions)
         {
             List<Card> availableCards = dominionExpansions.SelectMany(expansion => expansion.ContainedCards).ToList();
@@ -52,7 +64,22 @@ namespace DSG.BusinessComponents.Generation
 
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(chosenSupplyCards, chosenNonSupplyCards, generatedAdditionalCards, generatedExistingAdditionalCards);
 
+            generatedSetDto.HasPlatinumAndColony = DrawPlatinumAndColonyByLot();
+            generatedSetDto.HasShelters = DrawSheltersByLot();
+
             return generatedSetDto;
+        }
+
+        private bool DrawPlatinumAndColonyByLot()
+        {
+            // 20% change for platinum and colony
+            return RandomProvider.GetRandomIntegerByUpperBoarder(5) == 0;
+        }
+
+        private bool DrawSheltersByLot()
+        {
+            // 10% change for shelters
+            return RandomProvider.GetRandomIntegerByUpperBoarder(10) == 0;
         }
 
         private List<GeneratedAdditionalCard> GetExistingAdditionalCards(List<Card> supplyCards, List<Card> temporarlySet)
@@ -119,7 +146,7 @@ namespace DSG.BusinessComponents.Generation
             List<Card> generatedAdditionalCards = ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(cardsWithAllowedCost, artifact.AmountOfAdditionalCards.Value);
             additionalCardsForSet.AddRange(generatedAdditionalCards.Select(card => new GeneratedAdditionalCard(card, parent)));
             //the way this is currently written, it is also ensured that an existing card is not used as additional card for two cards
-            cardsToChooseFrom.RemoveAll(x => x.Equals(generatedAdditionalCards));
+            cardsToChooseFrom.RemoveAll(poolCard => generatedAdditionalCards.Contains(poolCard));
         }
 
         private List<Card> ChooseSupplyCards(List<Card> availableCards)

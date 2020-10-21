@@ -7,6 +7,7 @@ using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
 using DSG.BusinessEntities.CardTypes;
 using DSG.Common.Exceptions;
+using DSG.Common.Provider;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -19,6 +20,7 @@ namespace DSG.BusinessComponentsTest.Generation
         private SetGeneratorBc _testee;
         private Mock<IGetIntByProbabilityBc> _getIntByProbabilityBcMock;
         private Mock<IShuffleListBc<Card>> _shuffleListBcMock;
+        private Mock<IRandomProvider> _randomMock;
 
         [SetUp]
         public void Setup()
@@ -30,6 +32,9 @@ namespace DSG.BusinessComponentsTest.Generation
 
             _shuffleListBcMock = new Mock<IShuffleListBc<Card>>();
             _testee.ShuffleListBc = _shuffleListBcMock.Object;
+
+            _randomMock = new Mock<IRandomProvider>();
+            _testee.RandomProvider = _randomMock.Object;
         }
 
         [Test]
@@ -81,10 +86,15 @@ namespace DSG.BusinessComponentsTest.Generation
         }
 
         [Test]
-        public void GenerateSet_15AvailableSupplyCards2NonSupply_SetOf10Plus1Returned()
+        public void GenerateSet_15AvailableSupplyCards2NonSupply_SetOf10Plus1Returned_PlatinumColonyAndSheltersDrawn()
         {
             //Arrange
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(1);
+
+            //this is to draw platinum, colony and shelters
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(5)).Returns(0);
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(10)).Returns(0);
+
 
             List<CardTypeToCard> supplyTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
 
@@ -130,6 +140,9 @@ namespace DSG.BusinessComponentsTest.Generation
             {
                 result.SupplyCardsWithoutAdditional.Should().Contain(card);
             }
+
+            result.HasPlatinumAndColony.Should().BeTrue();
+            result.HasShelters.Should().BeTrue();
         }
 
         [Test]
@@ -137,6 +150,10 @@ namespace DSG.BusinessComponentsTest.Generation
         {
             //Arrange
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(2);
+
+            //this is to NOT draw platinum, colony and shelters
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(5)).Returns(3);
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(10)).Returns(3);
 
             List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
 
@@ -171,6 +188,9 @@ namespace DSG.BusinessComponentsTest.Generation
             //Assert
             result.SupplyCardsWithoutAdditional.Should().HaveCount(10);
             result.NonSupplyCards.Should().Contain(nonSupplyCards.Single());
+
+            result.HasPlatinumAndColony.Should().BeFalse();
+            result.HasShelters.Should().BeFalse();
         }
 
         [Test]
@@ -178,6 +198,10 @@ namespace DSG.BusinessComponentsTest.Generation
         {
             //Arrange
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(0);
+
+            //this is to NOT draw platinum, colony and shelters
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(5)).Returns(3);
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(10)).Returns(3);
 
             List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
 
@@ -202,26 +226,11 @@ namespace DSG.BusinessComponentsTest.Generation
 
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.PoorHouse);
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Apprentice);
-            expansions[2].ContainedCards.Add(TestDataDefines.Cards.Mill);
+            expansions[2].ContainedCards.Add(TestDataDefines.Cards.TestWithAdditional);
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Dungeon);
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Apothecary);
 
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
-            //allSupplyCards.First().CardArtifactsToCard = new List<CardArtifactToCard> 
-            //{
-            //    new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4, MinCost = 2 } } }
-            //};
-            //allSupplyCards[10].Cost = new Cost(5, 0, false);
-            //allSupplyCards[11].Cost = new Cost(1, 0, false);
-            //allSupplyCards[12].CardArtifactsToCard = new List<CardArtifactToCard>
-            //{
-            //    new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = false, MaxCost = 4 } } }
-            //};
-
-            //expansions[2].ContainedCards.Add(new Card 
-            //{ 
-            //    CardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = false } } } 
-            //});
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Plan);
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
@@ -243,6 +252,9 @@ namespace DSG.BusinessComponentsTest.Generation
             result.GeneratedAdditionalCards.Select(x => x.Parent).Should().Contain(allSupplyCards.First());
             result.GeneratedAdditionalCards.Select(x => x.AdditionalCard).Should().Contain(allSupplyCards[11]);
             result.GeneratedAdditionalCards.Select(x => x.Parent).Should().Contain(allSupplyCards[12]);
+
+            result.HasPlatinumAndColony.Should().BeFalse();
+            result.HasShelters.Should().BeFalse();
         }
 
         [Test]
@@ -251,32 +263,35 @@ namespace DSG.BusinessComponentsTest.Generation
             //Arrange
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(0);
 
+            //this is to NOT draw platinum, colony and shelters
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(5)).Returns(3);
+            _randomMock.Setup(x => x.GetRandomIntegerByUpperBoarder(10)).Returns(3);
+
             List<CardTypeToCard> cardTypeToCards = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
 
             List<DominionExpansion> expansions = new List<DominionExpansion>();
-            for (int j = 0; j < 3; j++)
+            for (int j = 0; j < 2; j++)
             {
                 DominionExpansion expansion = new DominionExpansion();
-                for (int i = 0; i < 5; i++)
-                {
-                    expansion.ContainedCards.Add(
-                        new Card() { CardTypeToCards = cardTypeToCards, Cost = new Cost(2, 0, false), CardArtifactsToCard = new List<CardArtifactToCard>() });
-                }
 
                 expansions.Add(expansion);
             }
 
-            List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
-            allSupplyCards[0].CardArtifactsToCard = new List<CardArtifactToCard> 
-            {
-                new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = true, MaxCost = 4, MinCost = 2 } } }
-            };
-            allSupplyCards[1].CardArtifactsToCard = new List<CardArtifactToCard>
-            {
-                new CardArtifactToCard { CardArtifact = new CardArtifact { AdditionalCard = new AdditionalCard { AlreadyIncludedCard = true, MaxCost = 4 } } }
-            };
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.TestWithExisting);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.TestWithExistingOnlyMaxCost);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.Menagerie);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.Remake);
+            expansions[0].ContainedCards.Add(TestDataDefines.Cards.HorseTraders);
 
-            List<Card> temporarySet = allSupplyCards.Take(10).ToList();
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Dungeon);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.BridgeTroll);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Magpie);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Ranger);
+            expansions[1].ContainedCards.Add(TestDataDefines.Cards.Relic);
+
+            List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
+
+            List<Card> temporarySet = allSupplyCards.ToList();
 
             Card firstParent = temporarySet[0];
             Card secondParent = temporarySet[1];
@@ -284,9 +299,9 @@ namespace DSG.BusinessComponentsTest.Generation
             Card secondAdditional = temporarySet.Skip(3).First();
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(allSupplyCards, 10)).Returns(temporarySet);
-            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(It.Is<List<Card>>(y => y.Count == 9 && y.Contains(firstParent) == false), 1))
+            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(It.Is<List<Card>>(y => y.Count == 7 && y.Contains(firstParent) == false), 1))
                 .Returns(new List<Card> { firstAdditional });
-            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(It.Is<List<Card>>(y => y.Count == 8 && y.Contains(secondParent) == false), 1))
+            _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(It.Is<List<Card>>(y => y.Count == 6 && y.Contains(secondParent) == false), 1))
                 .Returns(new List<Card> { secondAdditional });
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(new List<Card>(), 0)).Returns(new List<Card>());
@@ -301,6 +316,9 @@ namespace DSG.BusinessComponentsTest.Generation
             result.GeneratedExistingAdditionalCards.Select(x => x.Parent).Should().Contain(firstParent);
             result.GeneratedExistingAdditionalCards.Select(x => x.AdditionalCard).Should().Contain(secondAdditional);
             result.GeneratedExistingAdditionalCards.Select(x => x.Parent).Should().Contain(secondParent);
+
+            result.HasPlatinumAndColony.Should().BeFalse();
+            result.HasShelters.Should().BeFalse();
         }
     }
 }
