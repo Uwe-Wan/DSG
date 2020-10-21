@@ -45,6 +45,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 new List<Card> { TestDataDefines.Cards.Plan }, 
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Relic },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Ranger });
+            generatedSetDto.HasPlatinumAndColony = true;
             _setGeneratorBcMock.Setup(x => x.GenerateSet(expansions)).Returns(generatedSetDto);
 
             //Act
@@ -62,6 +63,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("-1 Card Marker");
             _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("Journey Token");
             _testee.NonSupplyStuff.Select(x => x.Name).Should().Contain("Trash Token");
+            _testee.ContainsSheltersOrColony.Should().Be("This set is also played with Colony and Platinum");
         }
 
         [Test]

@@ -16,6 +16,7 @@ namespace DSG.Presentation.ViewModel.Generation
         private ISetGeneratorBc _setGeneratorBc;
         private List<CardAndArtifactViewEntity> _supplyCards;
         private List<CardAndArtifactViewEntity> _nonSupplyStuff;
+        private string _containsSheltersOrColony;
 
         public List<CardAndArtifactViewEntity> SupplyCards
         {
@@ -34,6 +35,19 @@ namespace DSG.Presentation.ViewModel.Generation
             {
                 _nonSupplyStuff = value;
                 OnPropertyChanged(nameof(NonSupplyStuff));
+            }
+        }
+
+        public string ContainsSheltersOrColony
+        {
+            get 
+            { 
+                return _containsSheltersOrColony == string.Empty ? string.Empty : "This set is also played with " + _containsSheltersOrColony; 
+            }
+            set
+            {
+                _containsSheltersOrColony = value;
+                OnPropertyChanged(nameof(ContainsSheltersOrColony));
             }
         }
 
@@ -67,6 +81,39 @@ namespace DSG.Presentation.ViewModel.Generation
             List<DominionExpansion> expansions = expansionsData as List<DominionExpansion>;
             GeneratedSetDto generatedSetDto = SetGeneratorBc.GenerateSet(expansions);
 
+            HandleSupplyStuff(generatedSetDto);
+            HandleNonSupplyStuff(generatedSetDto);
+            HandleCardIndependentStuff(generatedSetDto);
+        }
+
+        private void HandleCardIndependentStuff(GeneratedSetDto generatedSetDto)
+        {
+            List<string> cardIndependentStuff = new List<string>();
+            if (generatedSetDto.HasPlatinumAndColony)
+            {
+                cardIndependentStuff.Add("Colony and Platinum");
+            }
+
+            if (generatedSetDto.HasShelters)
+            {
+                cardIndependentStuff.Add("Shelters");
+            }
+            ContainsSheltersOrColony = string.Join(", ", cardIndependentStuff);
+        }
+
+        private void HandleNonSupplyStuff(GeneratedSetDto generatedSetDto)
+        {
+            NonSupplyStuff = generatedSetDto.NonSupplyCards.Select(card => new CardAndArtifactViewEntity(card)).ToList();
+            NonSupplyStuff.AddRange(generatedSetDto.ArtifactsWithoutAdditionalCards.Select(artifact => new CardAndArtifactViewEntity(artifact)));
+            NonSupplyStuff = NonSupplyStuff
+                .OrderBy(card => card.Set)
+                .ThenBy(card => card.Cost)
+                .ThenBy(card => card.BelongsTo)
+                .ToList();
+        }
+
+        private void HandleSupplyStuff(GeneratedSetDto generatedSetDto)
+        {
             SupplyCards = generatedSetDto.SupplyCardsWithoutAdditional.Select(card => new CardAndArtifactViewEntity(card)).ToList();
             SupplyCards.AddRange(generatedSetDto.GeneratedAdditionalCards.Select(gac => new CardAndArtifactViewEntity(gac)));
             SupplyCards.AddRange(generatedSetDto.GeneratedExistingAdditionalCards.Select(gac => new CardAndArtifactViewEntity(gac)));
@@ -74,14 +121,6 @@ namespace DSG.Presentation.ViewModel.Generation
                 .OrderBy(card => card.Set)
                 .ThenBy(card => card.BelongsTo)
                 .ThenBy(card => card.Cost)
-                .ToList();
-
-            NonSupplyStuff = generatedSetDto.NonSupplyCards.Select(card => new CardAndArtifactViewEntity(card)).ToList();
-            NonSupplyStuff.AddRange(generatedSetDto.ArtifactsWithoutAdditionalCards.Select(artifact => new CardAndArtifactViewEntity(artifact)));
-            NonSupplyStuff = NonSupplyStuff
-                .OrderBy(card => card.Set)
-                .ThenBy(card => card.Cost)
-                .ThenBy(card => card.BelongsTo)
                 .ToList();
         }
 
@@ -94,6 +133,7 @@ namespace DSG.Presentation.ViewModel.Generation
         private void ClearData()
         {
             SupplyCards = null;
+            ContainsSheltersOrColony = string.Empty;
         }
     }
 }
