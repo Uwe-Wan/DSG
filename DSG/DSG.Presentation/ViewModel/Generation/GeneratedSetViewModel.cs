@@ -1,6 +1,5 @@
 ﻿using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
-using DSG.BusinessEntities.CardArtifacts;
 using DSG.Common;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
@@ -40,9 +39,9 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public string ContainsSheltersOrColony
         {
-            get 
-            { 
-                return _containsSheltersOrColony == string.Empty ? string.Empty : "This set is also played with " + _containsSheltersOrColony; 
+            get
+            {
+                return _containsSheltersOrColony == string.Empty ? string.Empty : "This set is also played with " + _containsSheltersOrColony;
             }
             set
             {
@@ -76,10 +75,10 @@ namespace DSG.Presentation.ViewModel.Generation
             IsDataLoaded = true;
         }
 
-        private void LoadData(object expansionsData)
+        private void LoadData(object generationParameterData)
         {
-            List<DominionExpansion> expansions = expansionsData as List<DominionExpansion>;
-            GeneratedSetDto generatedSetDto = SetGeneratorBc.GenerateSet(expansions);
+            GenerationParameterDto generationParameter = generationParameterData as GenerationParameterDto;
+            GeneratedSetDto generatedSetDto = SetGeneratorBc.GenerateSet(generationParameter);
 
             HandleSupplyStuff(generatedSetDto);
             HandleNonSupplyStuff(generatedSetDto);

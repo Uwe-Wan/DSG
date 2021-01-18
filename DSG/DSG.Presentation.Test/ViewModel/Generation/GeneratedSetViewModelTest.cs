@@ -7,10 +7,8 @@ using DSG.Presentation.ViewModel.Generation;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DSG.Presentation.Test.ViewModel.Generation
@@ -41,18 +39,20 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             //Arrange
             List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(
-                new List<Card> { TestDataDefines.Cards.BridgeTroll }, 
-                new List<Card> { TestDataDefines.Cards.Plan }, 
+                new List<Card> { TestDataDefines.Cards.BridgeTroll },
+                new List<Card> { TestDataDefines.Cards.Plan },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Relic },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Ranger });
             generatedSetDto.HasPlatinumAndColony = true;
-            _setGeneratorBcMock.Setup(x => x.GenerateSet(expansions)).Returns(generatedSetDto);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 20);
+
+            _setGeneratorBcMock.Setup(x => x.GenerateSet(generationParameter)).Returns(generatedSetDto);
 
             //Act
-            await _testee.OnPageLoadedAsync(expansions);
+            await _testee.OnPageLoadedAsync(generationParameter);
 
             //Assert
-            _setGeneratorBcMock.Verify(x => x.GenerateSet(expansions), Times.Once);
+            _setGeneratorBcMock.Verify(x => x.GenerateSet(generationParameter), Times.Once);
             _testee.SupplyCards.Should().HaveCount(3);
             _testee.SupplyCards.First().Name.Should().Be("Bridge Troll");
             _testee.SupplyCards[1].Name.Should().Be("Ranger");

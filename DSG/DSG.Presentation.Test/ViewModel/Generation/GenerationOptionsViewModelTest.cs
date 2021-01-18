@@ -1,4 +1,5 @@
-﻿using DSG.BusinessEntities;
+﻿using DSG.BusinessComponents.Generation;
+using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardTypes;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewModel.Generation;
@@ -52,7 +53,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
 
             DominionExpansion expansion = new DominionExpansion
             {
-                ContainedCards = new List<Card> 
+                ContainedCards = new List<Card>
                 {
                     new Card { CardTypeToCards = new List<CardTypeToCard> { supplyType } }
                 }
@@ -91,13 +92,21 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             }
 
             _testee.IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };
+            _testee.PropabilityOfPlatinumAndColony = 20;
+
+            GenerationParameterDto generationParameter = new GenerationParameterDto(new List<DominionExpansion> { expansion }, 20);
 
             //Act
             _testee.GenerateSet();
 
             //Assert
             _uiServiceMock.Verify(x => x.ShowErrorMessage(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-            _naviServiceMock.Verify(x => x.NavigateToAsync(NavigationDestination.GeneratedSet, new List<DominionExpansion> { expansion }), Times.Once);
+            _naviServiceMock.Verify(x => x.NavigateToAsync(                
+                    NavigationDestination.GeneratedSet,
+                    It.Is<GenerationParameterDto>(parameter => 
+                        parameter.PropabilityForColonyAndPlatinum == 20 && 
+                        parameter.Expansions.First().Equals(expansion))),
+                Times.Once);
         }
     }
 }

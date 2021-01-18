@@ -1,4 +1,5 @@
-﻿using DSG.BusinessComponents.StaticMethods;
+﻿using DSG.BusinessComponents.Generation;
+using DSG.BusinessComponents.StaticMethods;
 using DSG.BusinessEntities;
 using DSG.Common;
 using DSG.Presentation.Services;
@@ -24,6 +25,8 @@ namespace DSG.Presentation.ViewModel.Generation
             }
             set { _uiService = value; }
         }
+
+        public int PropabilityOfPlatinumAndColony { get; set; }
 
         public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos
         {
@@ -63,6 +66,7 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
             IsDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
+            PropabilityOfPlatinumAndColony = 20;
         }
 
         internal void GenerateSet()
@@ -91,7 +95,10 @@ namespace DSG.Presentation.ViewModel.Generation
                 .Where(dto => dto.IsSelected == true)
                 .Select(dto => dto.DominionExpansion)
                 .ToList();
-            NaviService.NavigateToAsync(destination, selectedExpansions);
+
+            GenerationParameterDto generationParameterDto = new GenerationParameterDto(selectedExpansions, PropabilityOfPlatinumAndColony);
+
+            NaviService.NavigateToAsync(destination, generationParameterDto);
         }
 
         #endregion Methods

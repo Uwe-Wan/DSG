@@ -47,9 +47,12 @@ namespace DSG.BusinessComponents.Generation
             set { _randomProvider = value; }
         }
 
-        public GeneratedSetDto GenerateSet(List<DominionExpansion> dominionExpansions)
+        public GeneratedSetDto GenerateSet(GenerationParameterDto generationParameter)
         {
-            List<Card> availableCards = dominionExpansions.SelectMany(expansion => expansion.ContainedCards).ToList();
+            List<Card> availableCards = generationParameter
+                .Expansions
+                .SelectMany(expansion => expansion.ContainedCards)
+                .ToList();
 
             List<Card> chosenSupplyCards = ChooseSupplyCards(availableCards);
             List<Card> chosenNonSupplyCards = ChooseNonSupplyCards(availableCards);
@@ -64,16 +67,15 @@ namespace DSG.BusinessComponents.Generation
 
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(chosenSupplyCards, chosenNonSupplyCards, generatedAdditionalCards, generatedExistingAdditionalCards);
 
-            generatedSetDto.HasPlatinumAndColony = DrawPlatinumAndColonyByLot();
+            generatedSetDto.HasPlatinumAndColony = DrawPlatinumAndColonyByLot(generationParameter.PropabilityForColonyAndPlatinum);
             generatedSetDto.HasShelters = DrawSheltersByLot();
 
             return generatedSetDto;
         }
 
-        private bool DrawPlatinumAndColonyByLot()
+        private bool DrawPlatinumAndColonyByLot(int propability)
         {
-            // 20% change for platinum and colony
-            return RandomProvider.GetRandomIntegerByUpperBoarder(5) == 0;
+            return RandomProvider.GetRandomIntegerByUpperBoarder(100) < propability;
         }
 
         private bool DrawSheltersByLot()
