@@ -110,8 +110,9 @@
             <TextBlock 
                 TextWrapping="WrapWithOverflow" 
                 FontSize="18" 
-                FontWeight="Bold"
-                Text="Propability for Amounts of non-Supply Cards:"/>
+                FontWeight="Bold">
+                Propability for Amounts of non-Supply Cards: <LineBreak/> (Events, Ways, ...)
+            </TextBlock>
         </Label>
 
         <Button Grid.Row="2" Grid.Column="5" Height="39" Width="39" VerticalAlignment="Center" HorizontalAlignment="Left" 
@@ -127,7 +128,7 @@
                     <WrapPanel Margin="-37, 0, 0, 0">
                         <StackPanel>
                             <Label Content="0" Style="{StaticResource nonSupplyLabel}" />
-                            <Label Content=" 100 - Rest " FontSize="17" Background="Wheat"/>
+                            <Label Content=" 100 - Rest " FontSize="20" Background="Wheat"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="1" Style="{StaticResource nonSupplyLabel}"/>

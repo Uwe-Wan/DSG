@@ -47,7 +47,7 @@
         </Style>
 
         <Style TargetType="TextBox" x:Key="nonSupplyBox" >
-            <Setter Property="TextBox.Height" Value="32"/>
+            <Setter Property="TextBox.Height" Value="36"/>
             <Setter Property="TextBox.Width" Value="36"/>
             <Setter Property="TextBox.FontSize" Value="20"/>
             <Setter Property="TextBox.HorizontalContentAlignment" Value="Center"/>
