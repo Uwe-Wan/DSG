@@ -46,6 +46,15 @@
             <Setter Property="TextBox.Background" Value="Wheat"/>
         </Style>
 
+        <Style TargetType="TextBox" x:Key="nonSupplyBox" >
+            <Setter Property="TextBox.Height" Value="32"/>
+            <Setter Property="TextBox.Width" Value="36"/>
+            <Setter Property="TextBox.FontSize" Value="20"/>
+            <Setter Property="TextBox.HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="TextBox.VerticalContentAlignment" Value="Center"/>
+            <Setter Property="TextBox.Background" Value="White"/>
+        </Style>
+
         <Style TargetType="TextBox" x:Key="nameBox" >
             <Setter Property="TextBox.Height" Value="32"/>
             <Setter Property="TextBox.FontSize" Value="20"/>
@@ -85,17 +94,11 @@
             </Style.Triggers>
         </Style>
 
-        <!--<Style x:Key="{x:Type DataGridCell}" TargetType="{x:Type DataGridCell}">
-            <Setter Property="Background" Value="{x:Null}" />
-            <Setter Property="BorderBrush" Value="{x:Null}" />
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="{x:Null}" />
-                    <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource Self}, Path=Foreground}" />
-                    <Setter Property="BorderBrush" Value="{x:Null}" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>-->
+        <Style TargetType="Label" x:Key="nonSupplyLabel">
+            <Setter Property="Label.FontSize" Value="20"/>
+            <Setter Property="Label.HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Label.Background" Value="Wheat"/>
+        </Style>
 
         <Style TargetType="CheckBox" x:Key="checkboxStyle" >
             <Setter Property="CheckBox.Background" Value="SeaShell"/>

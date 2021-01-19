@@ -15,17 +15,19 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="2.3*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="1.5*"/>
-            <RowDefinition Height="4.5*"/>
+            <RowDefinition Height="0.5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
             <RowDefinition Height="0.8*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
@@ -33,7 +35,7 @@
 
         <TextBlock 
             Grid.Row="0" 
-            Grid.ColumnSpan="6" 
+            Grid.ColumnSpan="8" 
             Style="{StaticResource pageTitleDefaultStyle}">
             Generation Options
         </TextBlock>
@@ -63,7 +65,7 @@
         <DataGrid
             Grid.Row="1"
             Grid.Column="1"
-            Grid.RowSpan="2"
+            Grid.RowSpan="4"
             ItemsSource="{Binding IsDominionExpansionSelectedDtos}"              
             Style="{StaticResource dataGridDefaultStyle}"
             Width="Auto">
@@ -88,9 +90,8 @@
         </DataGrid>
 
         <Button 
-            Grid.Row="3" 
+            Grid.Row="5" 
             Grid.Column="2" 
-            Grid.ColumnSpan="2" 
             Height="32" 
             Command="{Binding GenerateSetCommand}" 
             Style="{StaticResource PinkButton}"
@@ -100,19 +101,70 @@
             </TextBlock>
         </Button>
 
-        <Label
+        <Label 
             Grid.Row="2"
-            Grid.Column="5"
+            Grid.Column="4"
+            HorizontalAlignment="Right"
             VerticalAlignment="Center"
-            HorizontalAlignment="Left"
+            Width="250">
+            <TextBlock 
+                TextWrapping="WrapWithOverflow" 
+                FontSize="18" 
+                FontWeight="Bold"
+                Text="Propability for Amounts of non-Supply Cards:"/>
+        </Label>
+
+        <Button Grid.Row="2" Grid.Column="5" Height="39" Width="39" VerticalAlignment="Center" HorizontalAlignment="Left" 
+                Background="Wheat" IsEnabled="{Binding IsDataLoaded}">
+            <i:Interaction.Behaviors>
+                <local1:DropDownButtonBehavior/>
+            </i:Interaction.Behaviors>
+            <Button.Content>
+                <Image Source="../Images/Events.png"/>
+            </Button.Content>
+            <Button.ContextMenu>
+                <ContextMenu IsEnabled="True"  Placement="Right" Background="Wheat" Width="260">
+                    <WrapPanel Margin="-37, 0, 0, 0">
+                        <StackPanel>
+                            <Label Content="0" Style="{StaticResource nonSupplyLabel}" />
+                            <Label Content=" 100 - Rest " FontSize="17" Background="Wheat"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="1" Style="{StaticResource nonSupplyLabel}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="2" Style="{StaticResource nonSupplyLabel}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="3"  Style="{StaticResource nonSupplyLabel}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="4"  Style="{StaticResource nonSupplyLabel}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                        </StackPanel>
+                    </WrapPanel>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+
+        <Label
+            Grid.Row="4"
+            Grid.Column="4"
+            VerticalAlignment="Bottom"
+            HorizontalAlignment="Right"
+            FontSize="18"
+            FontWeight="Bold"
             Content="Propability Platinum/Colony: "/>
 
         <TextBox
-            Grid.Column="6"
-            Grid.Row="2"
+            Grid.Column="5"
+            Grid.Row="4"
             Width="50"
             HorizontalAlignment="Left"
-            VerticalAlignment="Center"
+            VerticalAlignment="Bottom"
             Style="{StaticResource CostBox}"
             Text="{Binding PropabilityOfPlatinumAndColony, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
