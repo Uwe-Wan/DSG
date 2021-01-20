@@ -63,10 +63,17 @@ namespace DSG.Presentation.ViewModel.Generation
             IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
             List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
 
-            GenerationParameter = new GenerationParameterDto(
-                isDominionExpansionSelectedDtos, 
-                20, 
-                SetupInitialPropabilitiesForNonSupplies());
+            if(GenerationParameter == null)
+            {
+                GenerationParameter = new GenerationParameterDto(
+                    isDominionExpansionSelectedDtos,
+                    20,
+                    SetupInitialPropabilitiesForNonSupplies());
+            }
+            else if(isDominionExpansionSelectedDtos.Count != GenerationParameter.IsDominionExpansionSelectedDtos.Count)
+            {
+                GenerationParameter.IsDominionExpansionSelectedDtos = isDominionExpansionSelectedDtos;
+            }
         }
 
         private Dictionary<int, int> SetupInitialPropabilitiesForNonSupplies()
