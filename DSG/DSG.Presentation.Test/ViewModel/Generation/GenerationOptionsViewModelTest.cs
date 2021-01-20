@@ -32,9 +32,15 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             await _testee.OnPageLoadedAsync(expansions);
 
             //Assert
-            _testee.IsDominionExpansionSelectedDtos.Should().HaveCount(1);
-            _testee.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
-            _testee.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeTrue();
+            _testee.GenerationParameter.IsDominionExpansionSelectedDtos.Should().HaveCount(1);
+            _testee.GenerationParameter.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
+            _testee.GenerationParameter.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeTrue();
+            _testee.GenerationParameter.PropabilityForColonyAndPlatinum.Should().Be(20);
+            _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount.Should().HaveCount(4);
+            _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[1].Should().Be(50);
+            _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[2].Should().Be(30);
+            _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[3].Should().Be(7);
+            _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[4].Should().Be(0);
         }
 
         [Test]
@@ -59,7 +65,10 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 }
             };
 
-            _testee.IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };
+            _testee.GenerationParameter = new GenerationParameterDto(
+                new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) },
+                20,
+                new Dictionary<int, int>());
 
             //Act
             _testee.GenerateSet();
@@ -91,10 +100,10 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                     new Card { CardTypeToCards = new List<CardTypeToCard> { supplyType } });
             }
 
-            _testee.IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };
-            _testee.PropabilityOfPlatinumAndColony = 20;
-
-            GenerationParameterDto generationParameter = new GenerationParameterDto(new List<DominionExpansion> { expansion }, 20);
+            _testee.GenerationParameter = new GenerationParameterDto(
+                new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) },
+                20,
+                new Dictionary<int, int> { { 1, 20 } });
 
             //Act
             _testee.GenerateSet();
@@ -105,7 +114,8 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                     NavigationDestination.GeneratedSet,
                     It.Is<GenerationParameterDto>(parameter => 
                         parameter.PropabilityForColonyAndPlatinum == 20 && 
-                        parameter.Expansions.First().Equals(expansion))),
+                        parameter.Expansions.First().Equals(expansion) &&
+                        parameter.PropabilitiesForNonSuppliesByAmount.First().Value == 20)),
                 Times.Once);
         }
     }

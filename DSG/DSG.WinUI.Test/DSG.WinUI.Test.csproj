@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Behavior\DropDownButtonBehaviorTest.cs" />
     <Compile Include="Behavior\DropDownButtonContextMenuBehaviorTest.cs" />
+    <Compile Include="Behavior\DropDownButtonToRightBehaviorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

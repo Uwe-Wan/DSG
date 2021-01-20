@@ -14,7 +14,7 @@ namespace DSG.Presentation.ViewModel.Generation
     public class GenerationOptionsViewModel : AbstractViewModel, IViewModel
     {
         private IUiService _uiService;
-        private List<IsDominionExpansionSelectedDto> _isDominionExpansionSelectedDtos;
+        private GenerationParameterDto _generationParameter;
 
         public IUiService UiService
         {
@@ -26,23 +26,19 @@ namespace DSG.Presentation.ViewModel.Generation
             set { _uiService = value; }
         }
 
-        public int PropabilityOfPlatinumAndColony { get; set; }
-
-        public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos
+        public GenerationParameterDto GenerationParameter
         {
-            get { return _isDominionExpansionSelectedDtos; }
+            get { return _generationParameter; }
             set
             {
-                _isDominionExpansionSelectedDtos = value;
-                OnPropertyChanged(nameof(IsDominionExpansionSelectedDtos));
+                _generationParameter = value;
+                OnPropertyChanged(nameof(GenerationParameter));
             }
         }
 
         public GenerationOptionsViewModel()
         {
             GenerateSetCommand = new RelayCommand(c => GenerateSet());
-
-            IsDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto>();
         }
 
         public ICommand GenerateSetCommand { get; private set; }
@@ -65,13 +61,28 @@ namespace DSG.Presentation.ViewModel.Generation
         private void LoadData(object expansionsData)
         {
             IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
-            IsDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
-            PropabilityOfPlatinumAndColony = 20;
+            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
+
+            GenerationParameter = new GenerationParameterDto(
+                isDominionExpansionSelectedDtos, 
+                20, 
+                SetupInitialPropabilitiesForNonSupplies());
+        }
+
+        private Dictionary<int, int> SetupInitialPropabilitiesForNonSupplies()
+        {
+            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
+            propabilitiesForNonSuppliesByAmount.Add(1, 50);
+            propabilitiesForNonSuppliesByAmount.Add(2, 30);
+            propabilitiesForNonSuppliesByAmount.Add(3, 7);
+            propabilitiesForNonSuppliesByAmount.Add(4, 0);
+
+            return propabilitiesForNonSuppliesByAmount;
         }
 
         internal void GenerateSet()
         {
-            List<Card> availableCards = IsDominionExpansionSelectedDtos
+            List<Card> availableCards = GenerationParameter.IsDominionExpansionSelectedDtos
                 .Where(dto => dto.IsSelected)
                 .SelectMany(dto => dto.DominionExpansion.ContainedCards)
                 .ToList();
@@ -91,14 +102,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private void NavigateTo(NavigationDestination destination)
         {
-            List<DominionExpansion> selectedExpansions = IsDominionExpansionSelectedDtos
-                .Where(dto => dto.IsSelected == true)
-                .Select(dto => dto.DominionExpansion)
-                .ToList();
-
-            GenerationParameterDto generationParameterDto = new GenerationParameterDto(selectedExpansions, PropabilityOfPlatinumAndColony);
-
-            NaviService.NavigateToAsync(destination, generationParameterDto);
+            NaviService.NavigateToAsync(destination, GenerationParameter);
         }
 
         #endregion Methods

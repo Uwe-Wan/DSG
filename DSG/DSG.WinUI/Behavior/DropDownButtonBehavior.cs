@@ -11,6 +11,8 @@ namespace DSG.WinUI.Behavior
         private long _attachedCount;
         private bool _isContextMenuOpen;
 
+        protected virtual PlacementMode ChosenPlacement => PlacementMode.Bottom;
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -30,7 +32,7 @@ namespace DSG.WinUI.Behavior
                     Interlocked.Increment(ref _attachedCount);
                     // If there is a drop-down assigned to this button, then position and display it 
                     source.ContextMenu.PlacementTarget = source;
-                    source.ContextMenu.Placement = PlacementMode.Bottom;
+                    source.ContextMenu.Placement = ChosenPlacement;
                     source.ContextMenu.IsOpen = true;
                     _isContextMenuOpen = true;
                 }

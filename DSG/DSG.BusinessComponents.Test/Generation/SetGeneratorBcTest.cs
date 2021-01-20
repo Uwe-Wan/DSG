@@ -47,7 +47,7 @@ namespace DSG.BusinessComponentsTest.Generation
             DominionExpansion expansion = new DominionExpansion { ContainedCards = cards };
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion };
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 0);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(new List<IsDominionExpansionSelectedDto>(), 0, new Dictionary<int, int>());
 
             Action act = () => _testee.GenerateSet(generationParameter);
 
@@ -80,7 +80,7 @@ namespace DSG.BusinessComponentsTest.Generation
             Card oneCard = new Card { CardTypeToCards = new List<CardTypeToCard> { } };
             List<Card> cards = new List<Card> { oneCard };
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 0);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(new List<IsDominionExpansionSelectedDto>(), 0, new Dictionary<int, int>());
 
             Action act = () => _testee.GenerateSet(generationParameter);
 
@@ -92,6 +92,10 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_15AvailableSupplyCards2NonSupply_SetOf10Plus1Returned_PlatinumColonyAndSheltersDrawn()
         {
             //Arrange
+            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
+            propabilitiesForNonSuppliesByAmount.Add(1, 50);
+            propabilitiesForNonSuppliesByAmount.Add(2, 30);
+            propabilitiesForNonSuppliesByAmount.Add(3, 7);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(1);
 
             //this is to draw platinum, colony and shelters
@@ -125,10 +129,11 @@ namespace DSG.BusinessComponentsTest.Generation
                     CardArtifactsToCard = new List<CardArtifactToCard>() }
             };
             expansions[2].ContainedCards.AddRange(nonSupplyCards);
+            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 20);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, propabilitiesForNonSuppliesByAmount);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);
@@ -154,6 +159,10 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_1NonSupplyCardBut2Chosen_DoNotThrowReturnOnlyOne()
         {
             //Arrange
+            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
+            propabilitiesForNonSuppliesByAmount.Add(1, 50);
+            propabilitiesForNonSuppliesByAmount.Add(2, 30);
+            propabilitiesForNonSuppliesByAmount.Add(3, 7);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(2);
 
             //this is to NOT draw platinum, colony and shelters
@@ -184,10 +193,11 @@ namespace DSG.BusinessComponentsTest.Generation
                     CardArtifactsToCard = new List<CardArtifactToCard>() }
             };
             expansions[2].ContainedCards.AddRange(nonSupplyCards);
+            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 20);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, propabilitiesForNonSuppliesByAmount);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);
@@ -204,6 +214,10 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_1AdditionalCardWithAnother_TwoAdditionalReturned_NonSupplyTypeNotRespectedForAdditionalCard()
         {
             //Arrange
+            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
+            propabilitiesForNonSuppliesByAmount.Add(1, 50);
+            propabilitiesForNonSuppliesByAmount.Add(2, 30);
+            propabilitiesForNonSuppliesByAmount.Add(3, 7);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(0);
 
             //this is to NOT draw platinum, colony and shelters
@@ -239,6 +253,7 @@ namespace DSG.BusinessComponentsTest.Generation
 
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Plan);
+            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
             List<Card> validCardsForFirstAdditional = allSupplyCards.Skip(12).ToList();
@@ -249,7 +264,7 @@ namespace DSG.BusinessComponentsTest.Generation
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(It.Is<List<Card>>(list => list.Count == 1), 0)).Returns(new List<Card>());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 20);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, propabilitiesForNonSuppliesByAmount);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);
@@ -270,6 +285,10 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_2AdditionalExistingCards_TwoAdditionalExistingReturned()
         {
             //Arrange
+            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
+            propabilitiesForNonSuppliesByAmount.Add(1, 50);
+            propabilitiesForNonSuppliesByAmount.Add(2, 30);
+            propabilitiesForNonSuppliesByAmount.Add(3, 7);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7)).Returns(0);
 
             //this is to NOT draw platinum, colony and shelters
@@ -297,6 +316,7 @@ namespace DSG.BusinessComponentsTest.Generation
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Magpie);
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Ranger);
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Relic);
+            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)).ToList();
 
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
 
@@ -315,7 +335,7 @@ namespace DSG.BusinessComponentsTest.Generation
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfRandomElementsFromList(new List<Card>(), 0)).Returns(new List<Card>());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 0);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 0, propabilitiesForNonSuppliesByAmount);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);

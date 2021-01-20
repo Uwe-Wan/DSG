@@ -37,14 +37,15 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task OnPageLoaded_ExpansionsLoaded_PropertiesSet()
         {
             //Arrange
-            List<DominionExpansion> expansions = new List<DominionExpansion> { new DominionExpansion() };
+            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto>();
+            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(
                 new List<Card> { TestDataDefines.Cards.BridgeTroll },
                 new List<Card> { TestDataDefines.Cards.Plan },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Relic },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Ranger });
             generatedSetDto.HasPlatinumAndColony = true;
-            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, 20);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, propabilitiesForNonSuppliesByAmount);
 
             _setGeneratorBcMock.Setup(x => x.GenerateSet(generationParameter)).Returns(generatedSetDto);
 

@@ -66,7 +66,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="4"
-            ItemsSource="{Binding IsDominionExpansionSelectedDtos}"              
+            ItemsSource="{Binding GenerationParameter.IsDominionExpansionSelectedDtos}"              
             Style="{StaticResource dataGridDefaultStyle}"
             Width="Auto">
             <DataGrid.Resources>
@@ -116,15 +116,15 @@
         </Label>
 
         <Button Grid.Row="2" Grid.Column="5" Height="39" Width="39" VerticalAlignment="Center" HorizontalAlignment="Left" 
-                Background="Wheat" IsEnabled="{Binding IsDataLoaded}">
+                Background="Wheat" IsEnabled="{Binding IsDataLoaded}" ContextMenuService.Placement="Right">
             <i:Interaction.Behaviors>
-                <local1:DropDownButtonBehavior/>
+                <local1:DropDownButtonToRightBehavior/>
             </i:Interaction.Behaviors>
             <Button.Content>
                 <Image Source="../Images/Events.png"/>
             </Button.Content>
             <Button.ContextMenu>
-                <ContextMenu IsEnabled="True"  Placement="Right" Background="Wheat" Width="260">
+                <ContextMenu IsEnabled="True" Background="Wheat" Width="260">
                     <WrapPanel Margin="-37, 0, 0, 0">
                         <StackPanel>
                             <Label Content="0" Style="{StaticResource nonSupplyLabel}" />
@@ -132,19 +132,19 @@
                         </StackPanel>
                         <StackPanel>
                             <Label Content="1" Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[1]}"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="2" Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[2]}"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="3"  Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                                <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[3]}"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="4"  Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Style="{StaticResource nonSupplyBox}" Background="White"/>
+                                    <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[4]}"/>
                         </StackPanel>
                     </WrapPanel>
                 </ContextMenu>
@@ -167,7 +167,7 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             Style="{StaticResource CostBox}"
-            Text="{Binding PropabilityOfPlatinumAndColony, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding GenerationParameter.PropabilityForColonyAndPlatinum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- This control has to be on bottom to be overlaying all the other controls. -->
         <Image gif:AnimationBehavior.SourceUri="/Images/Loading.gif" 
