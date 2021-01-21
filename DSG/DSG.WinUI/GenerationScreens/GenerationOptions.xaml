@@ -41,8 +41,7 @@
             Generation Options
         </TextBlock>
 
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                Background="HotPink" Margin="20, 20" IsEnabled="{Binding IsDataLoaded}">
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource menuButton}" IsEnabled="{Binding IsDataLoaded}">
             <i:Interaction.Behaviors>
                 <local1:DropDownButtonBehavior/>
             </i:Interaction.Behaviors>
@@ -105,13 +104,11 @@
         <Label 
             Grid.Row="2"
             Grid.Column="4"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Center"
+            Style="{StaticResource generationOptionsLabel}"
             Width="250">
             <TextBlock 
                 TextWrapping="WrapWithOverflow" 
                 FontSize="18" 
-                Background="Wheat"
                 FontWeight="Bold">
                 Propability for Amounts of non-Supply Cards: <LineBreak/> (Events, Ways, ...)
             </TextBlock>
@@ -156,39 +153,25 @@
         <Label
             Grid.Row="3"
             Grid.Column="4"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Right"
-            Background="Wheat"
-            FontSize="18"
-            FontWeight="Bold"
+            Style="{StaticResource generationOptionsLabel}"
             Content="Propability Shelters: "/>
 
         <TextBox
             Grid.Column="5"
             Grid.Row="3"
-            Width="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Style="{StaticResource CostBox}"
+            Style="{StaticResource propabilitiesBox}"
             Text="{Binding GenerationParameter.PropabilityForShelters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label
             Grid.Row="4"
             Grid.Column="4"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Right"
-            Background="Wheat"
-            FontSize="18"
-            FontWeight="Bold"
+            Style="{StaticResource generationOptionsLabel}"
             Content="Propability Platinum/Colony: "/>
 
         <TextBox
             Grid.Column="5"
             Grid.Row="4"
-            Width="50"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center"
-            Style="{StaticResource CostBox}"
+            Style="{StaticResource propabilitiesBox}"
             Text="{Binding GenerationParameter.PropabilityForColonyAndPlatinum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- This control has to be on bottom to be overlaying all the other controls. -->

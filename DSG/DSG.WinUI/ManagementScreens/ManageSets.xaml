@@ -36,8 +36,7 @@
             Manage Sets
         </TextBlock>
 
-        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Height="29" Width="39" VerticalAlignment="Top" HorizontalAlignment="Left" 
-                Background="HotPink" Margin="20, 20" IsEnabled="{Binding IsDataLoaded}">
+        <Button Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource menuButton}" IsEnabled="{Binding IsDataLoaded}">
             <i:Interaction.Behaviors>
                 <local1:DropDownButtonBehavior/>
             </i:Interaction.Behaviors>
