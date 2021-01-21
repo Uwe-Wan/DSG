@@ -68,6 +68,7 @@ namespace DSG.Presentation.ViewModel.Generation
                 GenerationParameter = new GenerationParameterDto(
                     isDominionExpansionSelectedDtos,
                     20,
+                    10,
                     SetupInitialPropabilitiesForNonSupplies());
             }
             else if(isDominionExpansionSelectedDtos.Count != GenerationParameter.IsDominionExpansionSelectedDtos.Count)

@@ -27,7 +27,8 @@
             <RowDefinition Height="0.5*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="2*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="0.8*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="0.5*"/>
@@ -65,7 +66,7 @@
         <DataGrid
             Grid.Row="1"
             Grid.Column="1"
-            Grid.RowSpan="4"
+            Grid.RowSpan="5"
             ItemsSource="{Binding GenerationParameter.IsDominionExpansionSelectedDtos}"              
             Style="{StaticResource dataGridDefaultStyle}"
             Width="Auto">
@@ -90,7 +91,7 @@
         </DataGrid>
 
         <Button 
-            Grid.Row="5" 
+            Grid.Row="6" 
             Grid.Column="2" 
             Height="32" 
             Command="{Binding GenerateSetCommand}" 
@@ -110,6 +111,7 @@
             <TextBlock 
                 TextWrapping="WrapWithOverflow" 
                 FontSize="18" 
+                Background="Wheat"
                 FontWeight="Bold">
                 Propability for Amounts of non-Supply Cards: <LineBreak/> (Events, Ways, ...)
             </TextBlock>
@@ -152,10 +154,30 @@
         </Button>
 
         <Label
+            Grid.Row="3"
+            Grid.Column="4"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right"
+            Background="Wheat"
+            FontSize="18"
+            FontWeight="Bold"
+            Content="Propability Shelters: "/>
+
+        <TextBox
+            Grid.Column="5"
+            Grid.Row="3"
+            Width="50"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Style="{StaticResource CostBox}"
+            Text="{Binding GenerationParameter.PropabilityForShelters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <Label
             Grid.Row="4"
             Grid.Column="4"
-            VerticalAlignment="Bottom"
+            VerticalAlignment="Center"
             HorizontalAlignment="Right"
+            Background="Wheat"
             FontSize="18"
             FontWeight="Bold"
             Content="Propability Platinum/Colony: "/>
@@ -165,7 +187,7 @@
             Grid.Row="4"
             Width="50"
             HorizontalAlignment="Left"
-            VerticalAlignment="Bottom"
+            VerticalAlignment="Center"
             Style="{StaticResource CostBox}"
             Text="{Binding GenerationParameter.PropabilityForColonyAndPlatinum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 

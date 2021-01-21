@@ -59,7 +59,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };
             isDominionExpansionSelectedDtos.First().IsSelected = false;
 
-            _testee.GenerationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 30, propabilitiesForNonSuppliesByAmount);
+            _testee.GenerationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 30, 15, propabilitiesForNonSuppliesByAmount);
 
             //Act
             await _testee.OnPageLoadedAsync(expansions);
@@ -69,6 +69,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.GenerationParameter.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
             _testee.GenerationParameter.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeFalse();
             _testee.GenerationParameter.PropabilityForColonyAndPlatinum.Should().Be(30);
+            _testee.GenerationParameter.PropabilityForShelters.Should().Be(15);
             _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount.Should().HaveCount(3);
             _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[1].Should().Be(42);
             _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[2].Should().Be(14);
@@ -91,7 +92,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) };
             isDominionExpansionSelectedDtos.First().IsSelected = false;
 
-            _testee.GenerationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 30, propabilitiesForNonSuppliesByAmount);
+            _testee.GenerationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 30, 15, propabilitiesForNonSuppliesByAmount);
 
             //Act
             await _testee.OnPageLoadedAsync(expansions);
@@ -100,6 +101,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.GenerationParameter.IsDominionExpansionSelectedDtos.Should().HaveCount(2);
             _testee.GenerationParameter.IsDominionExpansionSelectedDtos.First().IsSelected.Should().BeTrue();
             _testee.GenerationParameter.PropabilityForColonyAndPlatinum.Should().Be(30);
+            _testee.GenerationParameter.PropabilityForShelters.Should().Be(15);
             _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount.Should().HaveCount(3);
             _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[1].Should().Be(42);
             _testee.GenerationParameter.PropabilitiesForNonSuppliesByAmount[2].Should().Be(14);
@@ -131,6 +133,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.GenerationParameter = new GenerationParameterDto(
                 new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) },
                 20,
+                10,
                 new Dictionary<int, int>());
 
             //Act
@@ -166,6 +169,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.GenerationParameter = new GenerationParameterDto(
                 new List<IsDominionExpansionSelectedDto> { new IsDominionExpansionSelectedDto(expansion) },
                 20,
+                10,
                 new Dictionary<int, int> { { 1, 20 } });
 
             //Act

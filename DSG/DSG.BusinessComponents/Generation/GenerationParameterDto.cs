@@ -13,6 +13,8 @@ namespace DSG.BusinessComponents.Generation
 
         public int PropabilityForColonyAndPlatinum { get; set; }
 
+        public int PropabilityForShelters { get; set; }
+
         public Dictionary<int, int> PropabilitiesForNonSuppliesByAmount { get; set; }
 
         public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
@@ -20,10 +22,12 @@ namespace DSG.BusinessComponents.Generation
         public GenerationParameterDto(
             List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, 
             int propabilityForPlatinumAndColony,
+            int propabilityForShelters,
             Dictionary<int, int> propabilitiesForNonSuppliesByAmount)
         {
             IsDominionExpansionSelectedDtos = isDominionExpansionSelectedDtos;
             PropabilityForColonyAndPlatinum = propabilityForPlatinumAndColony;
+            PropabilityForShelters = propabilityForShelters;
             PropabilitiesForNonSuppliesByAmount = propabilitiesForNonSuppliesByAmount;
         }
     }

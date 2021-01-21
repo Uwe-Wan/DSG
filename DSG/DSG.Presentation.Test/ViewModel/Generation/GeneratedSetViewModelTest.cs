@@ -45,7 +45,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Relic },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Ranger });
             generatedSetDto.HasPlatinumAndColony = true;
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, propabilitiesForNonSuppliesByAmount);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, 10, propabilitiesForNonSuppliesByAmount);
 
             _setGeneratorBcMock.Setup(x => x.GenerateSet(generationParameter)).Returns(generatedSetDto);
 

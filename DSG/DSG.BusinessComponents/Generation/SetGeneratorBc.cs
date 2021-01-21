@@ -68,7 +68,7 @@ namespace DSG.BusinessComponents.Generation
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(chosenSupplyCards, chosenNonSupplyCards, generatedAdditionalCards, generatedExistingAdditionalCards);
 
             generatedSetDto.HasPlatinumAndColony = DrawPlatinumAndColonyByLot(generationParameter.PropabilityForColonyAndPlatinum);
-            generatedSetDto.HasShelters = DrawSheltersByLot();
+            generatedSetDto.HasShelters = DrawSheltersByLot(generationParameter.PropabilityForShelters);
 
             return generatedSetDto;
         }
@@ -78,10 +78,9 @@ namespace DSG.BusinessComponents.Generation
             return RandomProvider.GetRandomIntegerByUpperBoarder(100) < propability;
         }
 
-        private bool DrawSheltersByLot()
+        private bool DrawSheltersByLot(int propability)
         {
-            // 10% change for shelters
-            return RandomProvider.GetRandomIntegerByUpperBoarder(10) == 0;
+            return RandomProvider.GetRandomIntegerByUpperBoarder(100) < propability;
         }
 
         private List<GeneratedAdditionalCard> GetExistingAdditionalCards(List<Card> supplyCards, List<Card> temporarlySet)
