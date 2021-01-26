@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessEntities.CardArtifacts;
 using DSG.BusinessEntities.CardSubTypes;
 using DSG.BusinessEntities.CardTypes;
+using DSG.BusinessEntities.GenerationProfiles;
 using System.Data.Entity;
 
 namespace DSG.BusinessEntities
@@ -28,5 +29,11 @@ namespace DSG.BusinessEntities
         public virtual DbSet<AdditionalCard> AdditionalCard { get; set; }
 
         public virtual DbSet<CardArtifactToCard> CardArtifactToCard { get; set; }
+
+        public virtual DbSet<PropabilityForNonSupplyCards> PropabilityForNonSupplyCards { get; set; }
+
+        public virtual DbSet<GenerationProfile> GenerationProfiles { get; set; }
+
+        public virtual DbSet<SelectedExpansionToGenerationProfile> SelectedExpansionsToGenerationProfiles { get; set; }
     }
 }

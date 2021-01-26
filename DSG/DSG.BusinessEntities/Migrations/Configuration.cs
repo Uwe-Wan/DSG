@@ -3,7 +3,6 @@
     using DSG.BusinessEntities.CardSubTypes;
     using DSG.BusinessEntities.CardTypes;
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 

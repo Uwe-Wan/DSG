@@ -85,6 +85,9 @@
     <Compile Include="CardTypes\CardTypeToCard.cs" />
     <Compile Include="Cost.cs" />
     <Compile Include="DominionExpansion.cs" />
+    <Compile Include="GenerationProfiles\GenerationProfile.cs" />
+    <Compile Include="GenerationProfiles\PropabilityForNonSupplyCards.cs" />
+    <Compile Include="GenerationProfiles\SelectedExpansionToGenerationProfile.cs" />
     <Compile Include="GetEnums\GetEnum.cs" />
     <Compile Include="CardTypes\IsCardTypeSelectedDto.cs" />
     <Compile Include="IsDominionExpansionSelectedDto.cs" />
@@ -116,6 +119,10 @@
     <Compile Include="Migrations\202010092025186_CreateDSGDatabase6.designer.cs">
       <DependentUpon>202010092025186_CreateDSGDatabase6.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101261635503_CreateDSGDatabase7.cs" />
+    <Compile Include="Migrations\202101261635503_CreateDSGDatabase7.designer.cs">
+      <DependentUpon>202101261635503_CreateDSGDatabase7.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDataDefines.cs" />
@@ -141,6 +148,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202010092025186_CreateDSGDatabase6.resx">
       <DependentUpon>202010092025186_CreateDSGDatabase6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101261635503_CreateDSGDatabase7.resx">
+      <DependentUpon>202101261635503_CreateDSGDatabase7.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />
