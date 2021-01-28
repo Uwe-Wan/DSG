@@ -87,6 +87,7 @@
     <Compile Include="CardArtifacts\CardArtifactBcTest.cs" />
     <Compile Include="Cards\CardBcTest.cs" />
     <Compile Include="Expansions\DominionExpansionBcTest.cs" />
+    <Compile Include="GenerationProfiles\GenerationProfileBcTest.cs" />
     <Compile Include="Generation\SetGeneratorBcTest.cs" />
     <Compile Include="Probabilities\GetIntByProbabilityBcTest.cs" />
     <Compile Include="Probabilities\ShuffleListBcTest.cs" />
