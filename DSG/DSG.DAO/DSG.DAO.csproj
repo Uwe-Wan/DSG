@@ -73,6 +73,8 @@
     <Compile Include="Cards\ICardDao.cs" />
     <Compile Include="Expansions\DominionExpansionDao.cs" />
     <Compile Include="Expansions\IDominionExpansionDao.cs" />
+    <Compile Include="GenerationProfiles\GenerationProfileDao.cs" />
+    <Compile Include="GenerationProfiles\IGenerationProfileDao.cs" />
     <Compile Include="LookupDao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
