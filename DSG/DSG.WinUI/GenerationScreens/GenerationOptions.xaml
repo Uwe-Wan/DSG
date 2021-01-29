@@ -18,7 +18,8 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="0.2*"/>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
 
@@ -66,7 +67,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="5"
-            ItemsSource="{Binding GenerationParameter.IsDominionExpansionSelectedDtos}"              
+            ItemsSource="{Binding IsDominionExpansionSelectedDtos}"              
             Style="{StaticResource dataGridDefaultStyle}"
             Width="Auto">
             <DataGrid.Resources>
@@ -131,19 +132,19 @@
                         </StackPanel>
                         <StackPanel>
                             <Label Content="1" Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[1]}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding SelectedProfile.PropabilityForNonSupplyCards.PropabilityForOne}"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="2" Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[2]}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding SelectedProfile.PropabilityForNonSupplyCards.PropabilityForTwo}"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="3"  Style="{StaticResource nonSupplyLabel}"/>
-                                <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[3]}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree}"/>
                         </StackPanel>
                         <StackPanel>
                             <Label Content="4"  Style="{StaticResource nonSupplyLabel}"/>
-                                    <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding GenerationParameter.PropabilitiesForNonSuppliesByAmount[4]}"/>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Text="{Binding SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour}"/>
                         </StackPanel>
                     </WrapPanel>
                 </ContextMenu>
@@ -160,7 +161,7 @@
             Grid.Column="5"
             Grid.Row="3"
             Style="{StaticResource propabilitiesBox}"
-            Text="{Binding GenerationParameter.PropabilityForShelters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding SelectedProfile.PropabilityForShelters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <Label
             Grid.Row="4"
@@ -172,7 +173,7 @@
             Grid.Column="5"
             Grid.Row="4"
             Style="{StaticResource propabilitiesBox}"
-            Text="{Binding GenerationParameter.PropabilityForColonyAndPlatinum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            Text="{Binding SelectedProfile.PropabilityForPlatinumAndColony, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <!-- This control has to be on bottom to be overlaying all the other controls. -->
         <Image gif:AnimationBehavior.SourceUri="/Images/Loading.gif" 
