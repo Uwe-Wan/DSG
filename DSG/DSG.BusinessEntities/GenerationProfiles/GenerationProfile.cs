@@ -26,5 +26,12 @@ namespace DSG.BusinessEntities.GenerationProfiles
         public PropabilityForNonSupplyCards PropabilityForNonSupplyCards { get; set; }
 
         public List<int> SelectedExpansionIds { get; set; }
+
+        public GenerationProfile(int propabilitiesForShelters, int propabilityForColonyAndPlatinum, PropabilityForNonSupplyCards propabilityForNonSupplyCards)
+        {
+            PropabilityForShelters = propabilitiesForShelters;
+            PropabilityForPlatinumAndColony = propabilityForColonyAndPlatinum;
+            PropabilityForNonSupplyCards = propabilityForNonSupplyCards;
+        }
     }
 }
