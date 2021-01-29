@@ -1,34 +1,29 @@
 ﻿using DSG.BusinessEntities;
+using DSG.BusinessEntities.GenerationProfiles;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace DSG.BusinessComponents.Generation
 {
     public class GenerationParameterDto
     {
-        public List<DominionExpansion> Expansions => IsDominionExpansionSelectedDtos
-                .Where(dto => dto.IsSelected == true)
-                .Select(dto => dto.DominionExpansion)
-                .ToList();
+        public List<DominionExpansion> Expansions { get; set; }
 
         public int PropabilityForColonyAndPlatinum { get; set; }
 
         public int PropabilityForShelters { get; set; }
 
-        public Dictionary<int, int> PropabilitiesForNonSuppliesByAmount { get; set; }
-
-        public List<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
+        public PropabilityForNonSupplyCards PropabilitiesForNonSuppliesByAmount { get; set; }
 
         public GenerationParameterDto(
-            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, 
-            int propabilityForPlatinumAndColony,
-            int propabilityForShelters,
-            Dictionary<int, int> propabilitiesForNonSuppliesByAmount)
+            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, 
+            GenerationProfile generationProfile)
         {
-            IsDominionExpansionSelectedDtos = isDominionExpansionSelectedDtos;
-            PropabilityForColonyAndPlatinum = propabilityForPlatinumAndColony;
-            PropabilityForShelters = propabilityForShelters;
-            PropabilitiesForNonSuppliesByAmount = propabilitiesForNonSuppliesByAmount;
+            Expansions = isDominionExpansionSelectedDtos.Where(x => x.IsSelected).Select(x => x.DominionExpansion).ToList();
+            PropabilityForColonyAndPlatinum = generationProfile.PropabilityForPlatinumAndColony;
+            PropabilityForShelters = generationProfile.PropabilityForShelters;
+            PropabilitiesForNonSuppliesByAmount = generationProfile.PropabilityForNonSupplyCards;
         }
     }
 }

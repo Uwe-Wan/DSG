@@ -19,7 +19,6 @@ namespace DSG.Presentation.ViewModel.Generation
     {
         private IUiService _uiService;
         private IGenerationProfileBc _generationProfileBc;
-        private GenerationParameterDto _generationParameter;
 
         public IUiService UiService
         {
@@ -39,16 +38,6 @@ namespace DSG.Presentation.ViewModel.Generation
                 return _generationProfileBc;
             }
             set { _generationProfileBc = value; }
-        }
-
-        public GenerationParameterDto GenerationParameter
-        {
-            get { return _generationParameter; }
-            set
-            {
-                _generationParameter = value;
-                OnPropertyChanged(nameof(GenerationParameter));
-            }
         }
 
         public ObservableCollection<GenerationProfile> GenerationProfiles { get; set; }
@@ -131,7 +120,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
         internal void GenerateSet()
         {
-            List<Card> availableCards = GenerationParameter.IsDominionExpansionSelectedDtos
+            List<Card> availableCards = IsDominionExpansionSelectedDtos
                 .Where(dto => dto.IsSelected)
                 .SelectMany(dto => dto.DominionExpansion.ContainedCards)
                 .ToList();
@@ -151,7 +140,8 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private void NavigateTo(NavigationDestination destination)
         {
-            NaviService.NavigateToAsync(destination, GenerationParameter);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(IsDominionExpansionSelectedDtos, SelectedProfile);
+            NaviService.NavigateToAsync(destination, generationParameter);
         }
 
         #endregion Methods
