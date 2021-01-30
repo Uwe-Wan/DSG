@@ -22,7 +22,6 @@ namespace DSG.Presentation.ViewModel.Generation
         private IUiService _uiService;
         private IGenerationProfileBc _generationProfileBc;
         private GenerationProfile _selectedProfile;
-        private ObservableCollection<IsDominionExpansionSelectedDto> _isDominionExpansionSelectedDtos;
 
         public IUiService UiService
         {
@@ -59,18 +58,7 @@ namespace DSG.Presentation.ViewModel.Generation
             }
         }
 
-        public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos
-        {
-            get
-            {
-                return _isDominionExpansionSelectedDtos;
-            }
-            set
-            {
-                _isDominionExpansionSelectedDtos = value;
-                OnPropertyChanged(nameof(IsDominionExpansionSelectedDtos));
-            }
-        }
+        public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
 
         public GenerationOptionsViewModel()
         {
@@ -136,7 +124,10 @@ namespace DSG.Presentation.ViewModel.Generation
                 SelectedProfile = new GenerationProfile(
                     10,
                     20,
-                    SetupInitialPropabilitiesForNonSupplies());
+                    SetupInitialPropabilitiesForNonSupplies())
+                {
+                    Name = "Insert Name"
+                };
             }
         }
 
@@ -190,6 +181,7 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             GenerationProfile profile = sender as GenerationProfile;
             SelectedProfile = profile;
+            SelectedProfile.Name = "Insert Name";
         }
 
         private void NavigateTo(NavigationDestination destination)

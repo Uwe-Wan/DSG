@@ -35,6 +35,18 @@
                 </Setter.Value>
             </Setter>
             <Setter Property="Button.Height" Value="32"/>
+            <Setter Property="Button.FontSize" Value="18"/>
+        </Style>
+        
+        <Style TargetType="Button" x:Key="profileButton">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="Olive"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Button.Height" Value="32"/>
+            <Setter Property="Button.Width" Value="100"/>
+            <Setter Property="Button.FontSize" Value="18"/>
         </Style>
         
         <Style TargetType="Button" x:Key="menuButton">
@@ -87,6 +99,13 @@
             <Setter Property="TextBox.Background" Value="Wheat"/>
         </Style>
 
+        <Style TargetType="TextBox" x:Key="profileNameBox" >
+            <Setter Property="TextBox.FontSize" Value="18"/>
+            <Setter Property="TextBox.HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="TextBox.VerticalContentAlignment" Value="Bottom"/>
+            <Setter Property="TextBox.Background" Value="Beige"/>
+        </Style>
+
         <Style TargetType="TextBlock" x:Key="dataGridTitleDefaultStyle" >
             <Setter Property="TextBlock.FontSize" Value="20"/>
             <Setter Property="TextBlock.FontWeight" Value="DemiBold"/>
@@ -122,6 +141,13 @@
             <Setter Property="Label.FontSize" Value="20"/>
             <Setter Property="Label.HorizontalContentAlignment" Value="Center"/>
             <Setter Property="Label.Background" Value="Wheat"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="profileLabel">
+            <Setter Property="Label.FontSize" Value="18"/>
+            <Setter Property="Label.HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="Label.Background" Value="Wheat"/>
+            <Setter Property="Label.Width" Value="250"/>
         </Style>
 
         <Style TargetType="Label" x:Key="generationOptionsLabel">
