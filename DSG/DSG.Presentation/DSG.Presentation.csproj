@@ -58,6 +58,7 @@
     <Compile Include="Services\INaviService.cs" />
     <Compile Include="Services\UiService.cs" />
     <Compile Include="ViewEntity\CardAndArtifactViewEntity.cs" />
+    <Compile Include="ViewEntity\GenerationProfileViewEntity.cs" />
     <Compile Include="ViewEntity\SelectedExpansionViewEntity.cs" />
     <Compile Include="ViewModel\AbstractViewModel.cs" />
     <Compile Include="ViewModel\Generation\GeneratedSetViewModel.cs" />

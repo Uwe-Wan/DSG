@@ -1,8 +1,20 @@
-﻿namespace DSG.BusinessEntities
+﻿using DSG.Common;
+
+namespace DSG.BusinessEntities
 {
-    public class IsDominionExpansionSelectedDto
+    public class IsDominionExpansionSelectedDto : Notifier
     {
-        public bool IsSelected { get; set; }
+        private bool _isSelected;
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
 
         public DominionExpansion DominionExpansion { get; set; }
 

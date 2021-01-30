@@ -16,5 +16,14 @@ namespace DSG.BusinessEntities.GenerationProfiles
         public int GenerationProfileId { get; set; }
 
         public GenerationProfile GenerationProfile { get; set; }
+
+        public SelectedExpansionToGenerationProfile(DominionExpansion expansion)
+        {
+            DominionExpansionId = expansion.Id;
+        }
+
+        public SelectedExpansionToGenerationProfile()
+        {
+        }
     }
 }

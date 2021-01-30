@@ -6,6 +6,8 @@ using DSG.BusinessEntities.GenerationProfiles;
 using DSG.Common;
 using DSG.Common.Extensions;
 using DSG.Presentation.Services;
+using DSG.Presentation.ViewEntity;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -19,6 +21,8 @@ namespace DSG.Presentation.ViewModel.Generation
     {
         private IUiService _uiService;
         private IGenerationProfileBc _generationProfileBc;
+        private GenerationProfile _selectedProfile;
+        private ObservableCollection<IsDominionExpansionSelectedDto> _isDominionExpansionSelectedDtos;
 
         public IUiService UiService
         {
@@ -40,20 +44,45 @@ namespace DSG.Presentation.ViewModel.Generation
             set { _generationProfileBc = value; }
         }
 
-        public ObservableCollection<GenerationProfile> GenerationProfiles { get; set; }
+        public ObservableCollection<GenerationProfileViewEntity> GenerationProfiles { get; set; }
 
-        public GenerationProfile SelectedProfile { get; set; }
+        public GenerationProfile SelectedProfile
+        {
+            get
+            {
+                return _selectedProfile;
+            }
+            set
+            {
+                _selectedProfile = value;
+                OnPropertyChanged(nameof(SelectedProfile));
+            }
+        }
 
-        public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
+        public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos
+        {
+            get
+            {
+                return _isDominionExpansionSelectedDtos;
+            }
+            set
+            {
+                _isDominionExpansionSelectedDtos = value;
+                OnPropertyChanged(nameof(IsDominionExpansionSelectedDtos));
+            }
+        }
 
         public GenerationOptionsViewModel()
         {
             GenerateSetCommand = new RelayCommand(c => GenerateSet());
-            GenerationProfiles = new ObservableCollection<GenerationProfile>();
+            SaveProfileCommand = new RelayCommand(c => SaveProfile());
+
+            GenerationProfiles = new ObservableCollection<GenerationProfileViewEntity>();
             IsDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
         }
 
         public ICommand GenerateSetCommand { get; private set; }
+        public ICommand SaveProfileCommand { get; private set; }
 
 
         #region Methods
@@ -92,7 +121,11 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             if(GenerationProfiles.Count == 0)
             {
-                GenerationProfiles.AddRange(GenerationProfileBc.GetGenerationProfiles());
+                List<GenerationProfileViewEntity> loadedProfiles = GenerationProfileBc.GetGenerationProfiles()
+                    .Select(profile => new GenerationProfileViewEntity(profile, SelectedProfile, IsDominionExpansionSelectedDtos))
+                    .ToList();
+                loadedProfiles.ForEach(x => x.ProfileLoaded += LoadProfile);
+                GenerationProfiles.AddRange(loadedProfiles);
             }
         }
 
@@ -136,6 +169,27 @@ namespace DSG.Presentation.ViewModel.Generation
             }
 
             NavigateTo(NavigationDestination.GeneratedSet);
+        }
+
+        internal void SaveProfile()
+        {
+            GenerationProfile newProfile = SelectedProfile.Clone();
+            newProfile.SelectedExpansions = IsDominionExpansionSelectedDtos
+                .Where(x => x.IsSelected)
+                .Select(x => new SelectedExpansionToGenerationProfile(x.DominionExpansion))
+                .ToList();
+            GenerationProfileBc.InsertGenerationProfile(newProfile);
+
+            GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, SelectedProfile, IsDominionExpansionSelectedDtos);
+            newProfileViewEntity.ProfileLoaded += LoadProfile;
+
+            GenerationProfiles.Add(newProfileViewEntity);
+        }
+
+        internal void LoadProfile(object sender, EventArgs e)
+        {
+            GenerationProfile profile = sender as GenerationProfile;
+            SelectedProfile = profile;
         }
 
         private void NavigateTo(NavigationDestination destination)

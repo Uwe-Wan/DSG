@@ -27,7 +27,7 @@ namespace DSG.DAO.GenerationProfiles
         {
             return Ctx.GenerationProfiles
                 .Include(profile => profile.PropabilityForNonSupplyCards)
-                .Include(profile => profile.SelectedExpansionIds)
+                .Include(profile => profile.SelectedExpansions)
                 .ToList();
         }
     }
