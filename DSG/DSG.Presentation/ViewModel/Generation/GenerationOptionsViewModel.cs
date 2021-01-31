@@ -146,11 +146,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private PropabilityForNonSupplyCards SetupInitialPropabilitiesForNonSupplies()
         {
-            PropabilityForNonSupplyCards propabilityForNonSupplyCards = new PropabilityForNonSupplyCards();
-            propabilityForNonSupplyCards.PropabilityForOne = 50;
-            propabilityForNonSupplyCards.PropabilityForTwo = 30;
-            propabilityForNonSupplyCards.PropabilityForThree = 7;
-            propabilityForNonSupplyCards.PropabilityForFour = 0;
+            PropabilityForNonSupplyCards propabilityForNonSupplyCards = new PropabilityForNonSupplyCards(50, 30, 7, 0);
 
             return propabilityForNonSupplyCards;
         }
@@ -189,7 +185,7 @@ namespace DSG.Presentation.ViewModel.Generation
             GenerationProfiles.Add(newProfileViewEntity);
         }
 
-        private void LoadProfile(object data)
+        internal void LoadProfile(object data)
         {
             GenerationProfile profile = (GenerationProfile)data;
             SelectedProfile = profile;

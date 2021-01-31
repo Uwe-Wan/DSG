@@ -29,6 +29,7 @@ namespace DSG.BusinessEntities.GenerationProfiles
 
         public GenerationProfile()
         {
+            SelectedExpansions = new List<SelectedExpansionToGenerationProfile>();
         }
 
         public GenerationProfile(int propabilitiesForShelters, int propabilityForColonyAndPlatinum, PropabilityForNonSupplyCards propabilityForNonSupplyCards)
@@ -36,12 +37,14 @@ namespace DSG.BusinessEntities.GenerationProfiles
             PropabilityForShelters = propabilitiesForShelters;
             PropabilityForPlatinumAndColony = propabilityForColonyAndPlatinum;
             PropabilityForNonSupplyCards = propabilityForNonSupplyCards;
+            SelectedExpansions = new List<SelectedExpansionToGenerationProfile>();
         }
 
         public GenerationProfile Clone()
         {
             GenerationProfile newProfile = new GenerationProfile(PropabilityForShelters, PropabilityForPlatinumAndColony, PropabilityForNonSupplyCards);
             newProfile.Name = Name;
+            newProfile.SelectedExpansions = SelectedExpansions;
 
             return newProfile;
         }

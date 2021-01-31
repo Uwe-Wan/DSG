@@ -17,5 +17,17 @@ namespace DSG.BusinessEntities.GenerationProfiles
 
         [Required]
         public int PropabilityForFour { get; set; }
+
+        public PropabilityForNonSupplyCards()
+        {
+        }
+
+        public PropabilityForNonSupplyCards(int one, int two, int three, int four)
+        {
+            PropabilityForOne = one;
+            PropabilityForTwo = two;
+            PropabilityForThree = three;
+            PropabilityForFour = four;
+        }
     }
 }

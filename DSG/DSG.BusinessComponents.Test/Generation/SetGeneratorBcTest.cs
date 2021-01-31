@@ -94,10 +94,7 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_15AvailableSupplyCards2NonSupply_SetOf10Plus1Returned_PlatinumColonyAndSheltersDrawn()
         {
             //Arrange
-            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards();
-            propabilitiesForNonSupplies.PropabilityForOne = 55;
-            propabilitiesForNonSupplies.PropabilityForTwo = 30;
-            propabilitiesForNonSupplies.PropabilityForThree = 7;
+            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards(55, 30, 7, 0);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(55, 30, 7, 0)).Returns(1);
 
             GenerationProfile generationProfile = new GenerationProfile(10, 20, propabilitiesForNonSupplies);
@@ -167,10 +164,7 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_1NonSupplyCardBut2Chosen_DoNotThrowReturnOnlyOne()
         {
             //Arrange
-            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards();
-            propabilitiesForNonSupplies.PropabilityForOne = 55;
-            propabilitiesForNonSupplies.PropabilityForTwo = 30;
-            propabilitiesForNonSupplies.PropabilityForThree = 7;
+            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards(55, 30, 7, 0);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(55, 30, 7, 0)).Returns(2);
 
             GenerationProfile generationProfile = new GenerationProfile(10, 20, propabilitiesForNonSupplies);
@@ -228,10 +222,7 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_1AdditionalCardWithAnother_TwoAdditionalReturned_NonSupplyTypeNotRespectedForAdditionalCard()
         {
             //Arrange
-            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards();
-            propabilitiesForNonSupplies.PropabilityForOne = 55;
-            propabilitiesForNonSupplies.PropabilityForTwo = 30;
-            propabilitiesForNonSupplies.PropabilityForThree = 7;
+            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards(55, 30, 7, 0);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(1);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(55, 30, 7, 0)).Returns(0);
 
@@ -306,10 +297,7 @@ namespace DSG.BusinessComponentsTest.Generation
         public void GenerateSet_2AdditionalExistingCards_TwoAdditionalExistingReturned()
         {
             //Arrange
-            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards();
-            propabilitiesForNonSupplies.PropabilityForOne = 55;
-            propabilitiesForNonSupplies.PropabilityForTwo = 30;
-            propabilitiesForNonSupplies.PropabilityForThree = 7;
+            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards(55, 30, 7, 0);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>(), It.IsAny<int>())).Returns(1);
             _getIntByProbabilityBcMock.Setup(x => x.GetRandomIntInBetweenZeroAndInputParameterCount(55, 30, 7, 0)).Returns(0);
 

@@ -16,6 +16,13 @@ namespace DSG.Presentation.ViewEntity
 
         private IMessenger Messenger { get; set; }
 
+        /// <summary>
+        /// This is just for testing purpose.
+        /// </summary>
+        public GenerationProfileViewEntity()
+        {
+        }
+
         public GenerationProfileViewEntity(GenerationProfile generationProfile, IMessenger messenger, ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos)
         {
             GenerationProfile = generationProfile;
@@ -28,7 +35,7 @@ namespace DSG.Presentation.ViewEntity
 
         public ICommand LoadProfileCommand { get; set; }
 
-        private void LoadProfile()
+        internal void LoadProfile()
         {
             MessageDto messageDto = new MessageDto(Message.ProfileLoaded, GenerationProfile);
 
