@@ -188,7 +188,7 @@ namespace DSG.Presentation.ViewModel.Generation
         internal void LoadProfile(object data)
         {
             GenerationProfile profile = (GenerationProfile)data;
-            SelectedProfile = profile;
+            SelectedProfile = profile.Clone();
             SelectedProfile.Name = "Insert Name";
         }
 
