@@ -5,9 +5,9 @@ using DSG.BusinessEntities;
 using DSG.BusinessEntities.GenerationProfiles;
 using DSG.Common;
 using DSG.Common.Extensions;
+using DSG.Presentation.Messaging;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -22,6 +22,7 @@ namespace DSG.Presentation.ViewModel.Generation
         private IUiService _uiService;
         private IGenerationProfileBc _generationProfileBc;
         private GenerationProfile _selectedProfile;
+        private IMessenger _messenger;
 
         public IUiService UiService
         {
@@ -43,6 +44,16 @@ namespace DSG.Presentation.ViewModel.Generation
             set { _generationProfileBc = value; }
         }
 
+        public IMessenger Messenger
+        {
+            get
+            {
+                Check.RequireInjected(_messenger, nameof(Messenger), nameof(GenerationOptionsViewModel));
+                return _messenger;
+            }
+            set { _messenger = value; }
+        }
+
         public ObservableCollection<GenerationProfileViewEntity> GenerationProfiles { get; set; }
 
         public GenerationProfile SelectedProfile
@@ -60,13 +71,16 @@ namespace DSG.Presentation.ViewModel.Generation
 
         public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
 
-        public GenerationOptionsViewModel()
+        public GenerationOptionsViewModel(IMessenger messenger)
         {
             GenerateSetCommand = new RelayCommand(c => GenerateSet());
             SaveProfileCommand = new RelayCommand(c => SaveProfile());
 
             GenerationProfiles = new ObservableCollection<GenerationProfileViewEntity>();
             IsDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+
+            Messenger = messenger;
+            Messenger.Register(Message.ProfileLoaded, LoadProfile);
         }
 
         public ICommand GenerateSetCommand { get; private set; }
@@ -107,12 +121,11 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private void LoadInitialGenerationProfiles()
         {
-            if(GenerationProfiles.Count == 0)
+            if (GenerationProfiles.Count == 0)
             {
                 List<GenerationProfileViewEntity> loadedProfiles = GenerationProfileBc.GetGenerationProfiles()
-                    .Select(profile => new GenerationProfileViewEntity(profile, SelectedProfile, IsDominionExpansionSelectedDtos))
+                    .Select(profile => new GenerationProfileViewEntity(profile, Messenger, IsDominionExpansionSelectedDtos))
                     .ToList();
-                loadedProfiles.ForEach(x => x.ProfileLoaded += LoadProfile);
                 GenerationProfiles.AddRange(loadedProfiles);
             }
         }
@@ -171,15 +184,14 @@ namespace DSG.Presentation.ViewModel.Generation
                 .ToList();
             GenerationProfileBc.InsertGenerationProfile(newProfile);
 
-            GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, SelectedProfile, IsDominionExpansionSelectedDtos);
-            newProfileViewEntity.ProfileLoaded += LoadProfile;
+            GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, Messenger, IsDominionExpansionSelectedDtos);
 
             GenerationProfiles.Add(newProfileViewEntity);
         }
 
-        internal void LoadProfile(object sender, EventArgs e)
+        private void LoadProfile(object data)
         {
-            GenerationProfile profile = sender as GenerationProfile;
+            GenerationProfile profile = (GenerationProfile)data;
             SelectedProfile = profile;
             SelectedProfile.Name = "Insert Name";
         }

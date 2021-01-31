@@ -1,6 +1,7 @@
 ﻿using DSG.BusinessComponents.Generation;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
+using DSG.BusinessEntities.GenerationProfiles;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
 using DSG.Presentation.ViewModel.Generation;
@@ -8,6 +9,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,15 +39,16 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task OnPageLoaded_ExpansionsLoaded_PropertiesSet()
         {
             //Arrange
-            List<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new List<IsDominionExpansionSelectedDto>();
-            Dictionary<int, int> propabilitiesForNonSuppliesByAmount = new Dictionary<int, int>();
+            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+            GenerationProfile generationProfile = new GenerationProfile(10, 20, new PropabilityForNonSupplyCards());
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
+
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(
                 new List<Card> { TestDataDefines.Cards.BridgeTroll },
                 new List<Card> { TestDataDefines.Cards.Plan },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Relic },
                 new List<GeneratedAdditionalCard> { TestDataDefines.GeneratedAdditionalCards.Ranger });
             generatedSetDto.HasPlatinumAndColony = true;
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, 20, 10, propabilitiesForNonSuppliesByAmount);
 
             _setGeneratorBcMock.Setup(x => x.GenerateSet(generationParameter)).Returns(generatedSetDto);
 

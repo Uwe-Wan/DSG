@@ -2,6 +2,7 @@
 using DSG.BusinessComponents.StaticMethods;
 using DSG.BusinessEntities;
 using DSG.BusinessEntities.CardArtifacts;
+using DSG.BusinessEntities.GenerationProfiles;
 using DSG.Common;
 using DSG.Common.Exceptions;
 using DSG.Common.Provider;
@@ -55,7 +56,7 @@ namespace DSG.BusinessComponents.Generation
                 .ToList();
 
             List<Card> chosenSupplyCards = ChooseSupplyCards(availableCards);
-            List<Card> chosenNonSupplyCards = ChooseNonSupplyCards(availableCards);
+            List<Card> chosenNonSupplyCards = ChooseNonSupplyCards(availableCards, generationParameter.PropabilitiesForNonSupplies);
             List<Card> temporarlySet = chosenSupplyCards.Union(chosenNonSupplyCards).ToList();
 
             List<Card> availableSupplyTypeCards = availableCards
@@ -162,11 +163,15 @@ namespace DSG.BusinessComponents.Generation
             return ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(availableSupplyCards, 10);
         }
 
-        private List<Card> ChooseNonSupplyCards(List<Card> availableCards)
+        private List<Card> ChooseNonSupplyCards(List<Card> availableCards, PropabilityForNonSupplyCards propabilitiesForNonSupplies)
         {
             List<Card> availableNonSupplyCards = availableCards.GetNonSupplyCards();
 
-            int numberOfNonSupplyCards = GetIntByProbabilityBc.GetRandomIntInBetweenZeroAndInputParameterCount(50, 30, 7);
+            int numberOfNonSupplyCards = GetIntByProbabilityBc.GetRandomIntInBetweenZeroAndInputParameterCount(
+                propabilitiesForNonSupplies.PropabilityForOne, 
+                propabilitiesForNonSupplies.PropabilityForTwo,
+                propabilitiesForNonSupplies.PropabilityForThree,
+                propabilitiesForNonSupplies.PropabilityForFour);
 
             if (numberOfNonSupplyCards > availableNonSupplyCards.Count)
             {

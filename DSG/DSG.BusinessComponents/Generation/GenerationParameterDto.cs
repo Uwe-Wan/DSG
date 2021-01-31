@@ -14,7 +14,7 @@ namespace DSG.BusinessComponents.Generation
 
         public int PropabilityForShelters { get; set; }
 
-        public PropabilityForNonSupplyCards PropabilitiesForNonSuppliesByAmount { get; set; }
+        public PropabilityForNonSupplyCards PropabilitiesForNonSupplies { get; set; }
 
         public GenerationParameterDto(
             ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, 
@@ -23,7 +23,7 @@ namespace DSG.BusinessComponents.Generation
             Expansions = isDominionExpansionSelectedDtos.Where(x => x.IsSelected).Select(x => x.DominionExpansion).ToList();
             PropabilityForColonyAndPlatinum = generationProfile.PropabilityForPlatinumAndColony;
             PropabilityForShelters = generationProfile.PropabilityForShelters;
-            PropabilitiesForNonSuppliesByAmount = generationProfile.PropabilityForNonSupplyCards;
+            PropabilitiesForNonSupplies = generationProfile.PropabilityForNonSupplyCards;
         }
     }
 }
