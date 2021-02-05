@@ -8,6 +8,7 @@ using DSG.Common.Extensions;
 using DSG.Presentation.Messaging;
 using DSG.Presentation.Services;
 using DSG.Presentation.ViewEntity;
+using DSG.Validation.GenerationProfiles;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -105,9 +106,9 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             IEnumerable<DominionExpansion> expansions = expansionsData as IEnumerable<DominionExpansion>;
 
-            SetupInitialGenerationProfile();
-
             AddNewExpansionsToSelection(expansions);
+
+            SetupInitialGenerationProfile();
 
             LoadInitialGenerationProfiles();
         }

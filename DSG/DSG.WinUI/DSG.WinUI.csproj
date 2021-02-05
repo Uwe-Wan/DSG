@@ -132,6 +132,7 @@
       <DependentUpon>ManageSets.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\NaviService.cs" />
+    <Compile Include="Validation\ValidateGenerationProfile.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>
@@ -220,6 +221,10 @@
     <ProjectReference Include="..\DSG.Presentation\DSG.Presentation.csproj">
       <Project>{f6964e51-6b40-44a1-aa3d-1278d5210d47}</Project>
       <Name>DSG.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DSG.Validation\DSG.Validation.csproj">
+      <Project>{5d941151-7b36-4d62-a1e6-c2fdbf0ede5c}</Project>
+      <Name>DSG.Validation</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

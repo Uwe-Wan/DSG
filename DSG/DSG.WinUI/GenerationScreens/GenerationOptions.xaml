@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DSG.WinUI.GenerationScreens" 
       xmlns:local1="clr-namespace:DSG.WinUI.Behavior" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+      xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif" xmlns:validation="clr-namespace:DSG.WinUI.Validation"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GenerationOptions">
@@ -63,6 +63,7 @@
             </Button.ContextMenu>
         </Button>
 
+        <!-- This contains a a list of available expansions alongside checkboxes where they can be chosen for generation. -->
         <DataGrid
             Grid.Row="1"
             Grid.Column="1"
@@ -115,6 +116,7 @@
             </TextBlock>
         </Label>
 
+        <!-- This button opens a context menu containing the propabilities for non supply cards. -->
         <Button Grid.Row="2" Grid.Column="5" Height="39" Width="39" VerticalAlignment="Center" HorizontalAlignment="Left" 
                 Background="Wheat" IsEnabled="{Binding IsDataLoaded}">
             <i:Interaction.Behaviors>
@@ -182,11 +184,43 @@
                 <Button.ContextMenu>
                     <ContextMenu IsEnabled="True" Background="Wheat" Width="350">
                     <StackPanel Margin="-37, 0, 0, 0">
+                        <!-- This contains a textbox for the profile name and a save button. -->
                         <WrapPanel>
-                            <TextBox Text="{Binding SelectedProfile.Name}" Width="250" Style="{StaticResource profileNameBox}"/>
-                            <Button Style="{StaticResource profileButton}" Command="{Binding SaveProfileCommand}" Content="Save"/>
+                            <TextBox Width="250" Style="{StaticResource profileNameBox}" Validation.ErrorTemplate="{StaticResource errorTemplate}" x:Name="profilesName">
+                                <Binding  Path="SelectedProfile.Name" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <validation:ValidateGenerationProfile/>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox>
+                            <!-- The saving button. Has to be there with the complete style since it has a source attribute bound to the textbox above -->
+                            <Button Command="{Binding SaveProfileCommand}" Content="Save">
+                                <Button.Style>
+                                    <Style TargetType="Button">
+                                        <Setter Property="Background">
+                                            <Setter.Value>
+                                                <SolidColorBrush Color="Olive"/>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="Button.Height" Value="37"/>
+                                        <Setter Property="Button.Width" Value="100"/>
+                                        <Setter Property="Button.FontSize" Value="18"/>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                        <Style.Triggers>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding Path=(Validation.HasError), Source={x:Reference profilesName}}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </MultiDataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
                         </WrapPanel>
+                        <!-- This is a splitter between the saving and the loading part. -->
                         <Label Background="Wheat" Width="350" Height="10"></Label>
+                        <!-- This contains name and loading button for all generation profiles. -->
                         <ItemsControl
                             HorizontalContentAlignment="Stretch" 
                             ItemsSource="{Binding GenerationProfiles}">
@@ -194,7 +228,7 @@
                                 <DataTemplate>
                                     <WrapPanel>
                                         <Label Content="{Binding GenerationProfile.Name}" Style="{StaticResource profileLabel}"/>
-                                        <Button Style="{StaticResource profileButton}" Command="{Binding LoadProfileCommand}" Content="Load"/>
+                                        <Button Style="{StaticResource profileLoadingButton}" Command="{Binding LoadProfileCommand}" Content="Load"/>
                                     </WrapPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

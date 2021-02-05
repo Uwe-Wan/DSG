@@ -9,7 +9,7 @@ namespace DSG.BusinessEntities.GenerationProfiles
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
+        [StringLength(20)]
         [Index("UQX_GenerationProfile_Name", IsUnique = true)]
         public string Name { get; set; }
 
@@ -22,7 +22,7 @@ namespace DSG.BusinessEntities.GenerationProfiles
         [Required]
         [ForeignKey(nameof(PropabilityForNonSupplyCards))]
         public int PropabilityForNonSupplyCardsId { get; set; }
-        
+
         public PropabilityForNonSupplyCards PropabilityForNonSupplyCards { get; set; }
 
         public List<SelectedExpansionToGenerationProfile> SelectedExpansions { get; set; }

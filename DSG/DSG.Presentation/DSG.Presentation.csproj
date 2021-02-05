@@ -127,6 +127,10 @@
       <Project>{b87025a1-336d-41ac-b6e9-a1c0a20dd244}</Project>
       <Name>DSG.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DSG.Validation\DSG.Validation.csproj">
+      <Project>{5d941151-7b36-4d62-a1e6-c2fdbf0ede5c}</Project>
+      <Name>DSG.Validation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

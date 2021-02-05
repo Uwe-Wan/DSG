@@ -1,0 +1,11 @@
+﻿using System.Windows.Controls;
+
+namespace DSG.Validation
+{
+    public interface IValidationMethods
+    {
+        ValidationResult ValidateStringLength(string name, int length);
+
+        ValidationResult ValidateStringNotNullNotEmpty(string name);
+    }
+}

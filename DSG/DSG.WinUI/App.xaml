@@ -38,13 +38,13 @@
             <Setter Property="Button.FontSize" Value="18"/>
         </Style>
         
-        <Style TargetType="Button" x:Key="profileButton">
+        <Style TargetType="Button" x:Key="profileLoadingButton">
             <Setter Property="Background">
                 <Setter.Value>
                     <SolidColorBrush Color="Olive"/>
                 </Setter.Value>
             </Setter>
-            <Setter Property="Button.Height" Value="32"/>
+            <Setter Property="Button.Height" Value="37"/>
             <Setter Property="Button.Width" Value="100"/>
             <Setter Property="Button.FontSize" Value="18"/>
         </Style>
@@ -104,6 +104,7 @@
             <Setter Property="TextBox.HorizontalContentAlignment" Value="Left"/>
             <Setter Property="TextBox.VerticalContentAlignment" Value="Bottom"/>
             <Setter Property="TextBox.Background" Value="Beige"/>
+            <Setter Property="TextBox.Height" Value="37"/>
         </Style>
 
         <Style TargetType="TextBlock" x:Key="dataGridTitleDefaultStyle" >
@@ -172,5 +173,14 @@
                 <BitmapImage  UriSource="/Images/WhatAWorld.jpg" />
             </Image.Source>
         </Image>
+
+        <ControlTemplate x:Key="errorTemplate">
+            <Border BorderBrush="OrangeRed" BorderThickness="2">
+                <Grid>
+                    <AdornedElementPlaceholder/>
+                    <TextBlock Text="{Binding [0].ErrorContent}" Foreground="OrangeRed" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+                </Grid>
+            </Border>
+        </ControlTemplate>
     </Application.Resources>
 </Application>
