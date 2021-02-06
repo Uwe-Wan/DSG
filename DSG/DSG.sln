@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.WinUI.Test", "DSG.WinUI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.Validation", "DSG.Validation\DSG.Validation.csproj", "{5D941151-7B36-4D62-A1E6-C2FDBF0EDE5C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.Validation.Test", "DSG.Validation.Test\DSG.Validation.Test.csproj", "{2DEFC179-91B3-4A6D-B595-654463600E15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{5D941151-7B36-4D62-A1E6-C2FDBF0EDE5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D941151-7B36-4D62-A1E6-C2FDBF0EDE5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D941151-7B36-4D62-A1E6-C2FDBF0EDE5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DEFC179-91B3-4A6D-B595-654463600E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DEFC179-91B3-4A6D-B595-654463600E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DEFC179-91B3-4A6D-B595-654463600E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DEFC179-91B3-4A6D-B595-654463600E15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DSG.Common;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
@@ -10,7 +11,7 @@ namespace DSG.Validation
         {
             if (name.Length > length)
             {
-                return new ValidationResult(false, "Name must not be longer than 20 characters.");
+                return new ValidationResult(false, Text.NameTooLong);
             }
 
             return ValidationResult.ValidResult;
@@ -20,7 +21,7 @@ namespace DSG.Validation
         {
             if (string.IsNullOrEmpty(name))
             {
-                return new ValidationResult(false, "Name must be set.");
+                return new ValidationResult(false, Text.NameNotSet);
             }
 
             return ValidationResult.ValidResult;
