@@ -1,4 +1,6 @@
-﻿using System.Windows.Controls;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace DSG.Validation
 {
@@ -19,6 +21,16 @@ namespace DSG.Validation
             if (string.IsNullOrEmpty(name))
             {
                 return new ValidationResult(false, "Name must be set.");
+            }
+
+            return ValidationResult.ValidResult;
+        }
+
+        public ValidationResult ValidateNameNoDuplicate(string name, IEnumerable<string> existingNames, string propertyName)
+        {
+            if (existingNames.Contains(name))
+            {
+                return new ValidationResult(false, $"There exists a {propertyName} with that name.");
             }
 
             return ValidationResult.ValidResult;

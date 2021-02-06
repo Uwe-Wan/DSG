@@ -179,7 +179,13 @@ namespace DSG.Presentation.ViewModel.Generation
                 .Where(x => x.IsSelected)
                 .Select(x => new SelectedExpansionToGenerationProfile(x.DominionExpansion))
                 .ToList();
-            GenerationProfileBc.InsertGenerationProfile(newProfile);
+             string error = GenerationProfileBc.InsertGenerationProfile(newProfile);
+
+            if(error != null)
+            {
+                UiService.ShowErrorMessage(error, "Profile Invalid");
+                return;
+            }
 
             GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, Messenger, IsDominionExpansionSelectedDtos);
 

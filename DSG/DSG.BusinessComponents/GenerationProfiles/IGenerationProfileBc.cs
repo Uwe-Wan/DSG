@@ -5,7 +5,7 @@ namespace DSG.BusinessComponents.GenerationProfiles
 {
     public interface IGenerationProfileBc
     {
-        void InsertGenerationProfile(GenerationProfile generationProfile);
+        string InsertGenerationProfile(GenerationProfile generationProfile);
 
         List<GenerationProfile> GetGenerationProfiles();
     }

@@ -1,12 +1,12 @@
 ﻿using DSG.BusinessComponents.GenerationProfiles;
 using DSG.BusinessEntities.GenerationProfiles;
 using DSG.DAO.GenerationProfiles;
+using DSG.Validation.GenerationProfiles;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
-using System;
 using System.Collections.Generic;
+using System.Windows.Controls;
 
 namespace DSG.BusinessComponentsTest.GenerationProfiles
 {
@@ -15,6 +15,7 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
     {
         private GenerationProfileBc _testee;
         private Mock<IGenerationProfileDao> _generationProfileDaoMock;
+        private Mock<IGenerationProfileValidator> _generationValidatorMock;
 
         [SetUp]
         public void Setup()
@@ -23,6 +24,11 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
 
             _generationProfileDaoMock = new Mock<IGenerationProfileDao>();
             _testee.GenerationProfileDao = _generationProfileDaoMock.Object;
+
+            _generationValidatorMock = new Mock<IGenerationProfileValidator>();
+            _testee.GenerationProfileValidator = _generationValidatorMock.Object;
+            _generationValidatorMock.Setup(x => x.ValidateName(It.IsAny<string>())).Returns(new ValidationResult(true, null));
+            _generationValidatorMock.Setup(x => x.ValidateNameNoDuplicate(It.IsAny<string>())).Returns(new ValidationResult(true, null));
         }
 
         [Test]
@@ -40,16 +46,52 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
         }
 
         [Test]
-        public void InsertGenerationProfile_DependentDaoMethodInvoked()
+        public void InsertGenerationProfile_NoValidationError_DependentDaoMethodInvoked()
         {
             //Assert
             GenerationProfile profile = new GenerationProfile();
 
             //Act
-            _testee.InsertGenerationProfile(profile);
+            string result = _testee.InsertGenerationProfile(profile);
 
             //Assert
             _generationProfileDaoMock.Verify(x => x.InsertGenerationProfile(profile), Times.Once);
+
+            result.Should().BeNull();
+        }
+
+        [Test]
+        public void InsertGenerationProfile_NoValidName_ErrorReturnedDaoNotInvoked()
+        {
+            //Assert
+            GenerationProfile profile = new GenerationProfile { Name = "Test Name" };
+
+            _generationValidatorMock.Setup(x => x.ValidateName(profile.Name)).Returns(new ValidationResult(false, "Name not valid."));
+
+            //Act
+            string result = _testee.InsertGenerationProfile(profile);
+
+            //Assert
+            _generationProfileDaoMock.Verify(x => x.InsertGenerationProfile(profile), Times.Never);
+
+            result.Should().Be("Name not valid. Therefore the profile could not be saved.");
+        }
+
+        [Test]
+        public void InsertGenerationProfile_DuplicateName_ErrorReturnedDaoNotInvoked()
+        {
+            //Assert
+            GenerationProfile profile = new GenerationProfile { Name = "Test Name" };
+
+            _generationValidatorMock.Setup(x => x.ValidateNameNoDuplicate(profile.Name)).Returns(new ValidationResult(false, "Name duplicated."));
+
+            //Act
+            string result = _testee.InsertGenerationProfile(profile);
+
+            //Assert
+            _generationProfileDaoMock.Verify(x => x.InsertGenerationProfile(profile), Times.Never);
+
+            result.Should().Be("Name duplicated. Therefore the profile could not be saved.");
         }
     }
 }

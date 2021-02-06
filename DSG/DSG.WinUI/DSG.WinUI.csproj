@@ -132,6 +132,8 @@
       <DependentUpon>ManageSets.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\NaviService.cs" />
+    <Compile Include="Validation\BindingProxy.cs" />
+    <Compile Include="Validation\ComparisonValue.cs" />
     <Compile Include="Validation\ValidateGenerationProfile.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>

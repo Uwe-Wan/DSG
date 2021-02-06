@@ -6,7 +6,10 @@
       xmlns:local="clr-namespace:DSG.WinUI.GenerationScreens" 
       xmlns:local1="clr-namespace:DSG.WinUI.Behavior" 
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif" xmlns:validation="clr-namespace:DSG.WinUI.Validation"
+      xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
+      xmlns:validation="clr-namespace:DSG.WinUI.Validation" 
+      xmlns:generation="clr-namespace:DSG.Presentation.ViewModel.Generation;assembly=DSG.Presentation"
+      d:DataContext="{d:DesignInstance Type=generation:GenerationOptionsViewModel}"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GenerationOptions">
@@ -177,6 +180,7 @@
             Style="{StaticResource propabilitiesBox}"
             Text="{Binding SelectedProfile.PropabilityForPlatinumAndColony, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
+         <!-- This is the button opening the dropdown menu for loading and saving generation profiles. --> 
         <Button Grid.Row="6" Grid.Column="6" Style="{StaticResource PinkButton}" IsEnabled="{Binding IsDataLoaded}" Content="Profiles">
             <i:Interaction.Behaviors>
                 <local1:DropDownButtonToTopBehavior/>
@@ -184,14 +188,23 @@
                 <Button.ContextMenu>
                     <ContextMenu IsEnabled="True" Background="Wheat" Width="350">
                     <StackPanel Margin="-37, 0, 0, 0">
-                        <!-- This contains a textbox for the profile name and a save button. -->
+                        <!-- This contains a textbox for the profile name and a save button. It also contains validation for the name. -->
                         <WrapPanel>
                             <TextBox Width="250" Style="{StaticResource profileNameBox}" Validation.ErrorTemplate="{StaticResource errorTemplate}" x:Name="profilesName">
-                                <Binding  Path="SelectedProfile.Name" UpdateSourceTrigger="PropertyChanged">
-                                    <Binding.ValidationRules>
-                                        <validation:ValidateGenerationProfile/>
-                                    </Binding.ValidationRules>
+                                <TextBox.Resources>
+                                    <validation:BindingProxy x:Key="TargetProxy" Data="{Binding GenerationProfiles}"/>
+                                </TextBox.Resources>
+                                <TextBox.Text>
+                                    <Binding  Path="SelectedProfile.Name" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validation:ValidateGenerationProfile>
+                                                <validation:ValidateGenerationProfile.ComparisonValue>
+                                                    <validation:ComparisonValue Value="{Binding Data, Source={StaticResource TargetProxy}}"/>
+                                                </validation:ValidateGenerationProfile.ComparisonValue>
+                                            </validation:ValidateGenerationProfile>
+                                        </Binding.ValidationRules>
                                 </Binding>
+                                </TextBox.Text>
                             </TextBox>
                             <!-- The saving button. Has to be there with the complete style since it has a source attribute bound to the textbox above -->
                             <Button Command="{Binding SaveProfileCommand}" Content="Save">

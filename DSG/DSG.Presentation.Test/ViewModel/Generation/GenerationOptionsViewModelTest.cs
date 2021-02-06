@@ -224,6 +224,27 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         }
 
         [Test]
+        public void SaveProfile_ValidationFails_MessageBoxInvokedNoProfileAdded()
+        {
+            //Arrange
+            _testee.SelectedProfile = new GenerationProfile { Name = "Test" };
+
+            _generationProfileBcMock.Setup(x => x.InsertGenerationProfile(It.Is<GenerationProfile>(y => y.Name == "Test"))).Returns("Error");
+
+            //Act
+            _testee.SaveProfile();
+
+            //Assert
+            _generationProfileBcMock.Verify(
+                    x => x.InsertGenerationProfile(It.Is<GenerationProfile>(
+                        profile => profile.Name == "Test")), 
+                Times.Once);
+            _testee.GenerationProfiles.Should().HaveCount(0);
+
+            _uiServiceMock.Verify(x => x.ShowErrorMessage("Error", "Profile Invalid"));
+        }
+
+        [Test]
         public void LoadProfile_ProfileLoaded_NameReset()
         {
             //Arrange
