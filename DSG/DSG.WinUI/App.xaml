@@ -38,7 +38,7 @@
             <Setter Property="Button.FontSize" Value="18"/>
         </Style>
         
-        <Style TargetType="Button" x:Key="profileLoadingButton">
+        <Style TargetType="Button" x:Key="profileButton">
             <Setter Property="Background">
                 <Setter.Value>
                     <SolidColorBrush Color="Olive"/>

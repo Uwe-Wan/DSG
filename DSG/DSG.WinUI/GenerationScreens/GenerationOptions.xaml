@@ -186,7 +186,7 @@
                 <local1:ProfileDropDownBehavior SelectedProfileName="{Binding SelectedProfile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </i:Interaction.Behaviors>
             <Button.ContextMenu>
-                <ContextMenu IsEnabled="True" Background="Wheat" Width="350">
+                <ContextMenu IsEnabled="True" Background="Wheat" Width="450">
                     <StackPanel Margin="-37, 0, 0, 0">
                         <!-- This contains a textbox for the profile name and a save button. It also contains validation for the name. -->
                         <WrapPanel>
@@ -205,7 +205,7 @@
                                 </TextBox.Text>
                             </TextBox>
                             <!-- The saving button. Has to be there with the complete style since it has a source attribute bound to the textbox above -->
-                            <Button Command="{Binding SaveProfileCommand}" Content="Save">
+                            <Button Command="{Binding SaveProfileCommand}" Content="Save Current">
                                 <Button.Style>
                                     <Style TargetType="Button">
                                         <Setter Property="Background">
@@ -214,7 +214,7 @@
                                             </Setter.Value>
                                         </Setter>
                                         <Setter Property="Button.Height" Value="37"/>
-                                        <Setter Property="Button.Width" Value="100"/>
+                                        <Setter Property="Button.Width" Value="200"/>
                                         <Setter Property="Button.FontSize" Value="18"/>
                                         <Setter Property="IsEnabled" Value="False"/>
                                         <Style.Triggers>
@@ -239,7 +239,8 @@
                                 <DataTemplate>
                                     <WrapPanel>
                                         <Label Content="{Binding GenerationProfile.Name}" Style="{StaticResource profileLabel}"/>
-                                        <Button Style="{StaticResource profileLoadingButton}" Command="{Binding LoadProfileCommand}" Content="Load"/>
+                                        <Button Style="{StaticResource profileButton}" Command="{Binding LoadProfileCommand}" Content="Load"/>
+                                        <Button Style="{StaticResource profileButton}" Command="{Binding DeleteProfileCommand}" Content="Delete"/>
                                     </WrapPanel>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

@@ -81,6 +81,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
             Messenger = messenger;
             Messenger.Register(Message.ProfileLoaded, LoadProfile);
+            Messenger.Register(Message.ProfileDeleted, DeleteProfile);
         }
 
         public ICommand GenerateSetCommand { get; private set; }
@@ -192,6 +193,13 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             GenerationProfile profile = (GenerationProfile)data;
             SelectedProfile = profile.Clone();
+        }
+
+        internal void DeleteProfile(object data)
+        {
+            GenerationProfile generationProfile = (GenerationProfile)data;
+            GenerationProfileBc.DeleteGenerationProfile(generationProfile);
+            GenerationProfiles.Remove(GenerationProfiles.SingleOrDefault(x => x.GenerationProfile.Id == generationProfile.Id));
         }
 
         private void NavigateTo(NavigationDestination destination)

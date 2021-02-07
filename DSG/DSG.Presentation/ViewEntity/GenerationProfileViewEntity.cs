@@ -31,9 +31,11 @@ namespace DSG.Presentation.ViewEntity
             Messenger = messenger;
 
             LoadProfileCommand = new RelayCommand(c => LoadProfile());
+            DeleteProfileCommand = new RelayCommand(c => DeleteProfile());
         }
 
         public ICommand LoadProfileCommand { get; set; }
+        public ICommand DeleteProfileCommand { get; private set; }
 
         internal void LoadProfile()
         {
@@ -55,6 +57,13 @@ namespace DSG.Presentation.ViewEntity
             {
                 IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Id == selectedId).IsSelected = true;
             }
+        }
+
+        internal void DeleteProfile()
+        {
+            MessageDto messageDto = new MessageDto(Message.ProfileDeleted, GenerationProfile);
+
+            Messenger.NotifyEventTriggered(messageDto);
         }
     }
 }
