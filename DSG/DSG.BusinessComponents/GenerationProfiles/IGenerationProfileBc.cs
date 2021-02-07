@@ -8,5 +8,7 @@ namespace DSG.BusinessComponents.GenerationProfiles
         string InsertGenerationProfile(GenerationProfile generationProfile);
 
         List<GenerationProfile> GetGenerationProfiles();
+
+        void DeleteGenerationProfile(GenerationProfile generationProfile);
     }
 }

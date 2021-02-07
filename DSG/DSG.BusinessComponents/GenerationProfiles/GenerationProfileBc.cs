@@ -67,5 +67,10 @@ namespace DSG.BusinessComponents.GenerationProfiles
 
             return null;
         }
+
+        public void DeleteGenerationProfile(GenerationProfile generationProfile)
+        {
+            GenerationProfileDao.DeleteGenerationProfile(generationProfile);
+        }
     }
 }

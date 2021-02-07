@@ -93,5 +93,18 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
 
             result.Should().Be("Name duplicated. Therefore the profile could not be saved.");
         }
+
+        [Test]
+        public void DeleteGenerationProfile_DependentDaoMethodInvoked()
+        {
+            // Arrange
+            GenerationProfile generationProfile = new GenerationProfile();
+
+            // Act
+            _testee.DeleteGenerationProfile(generationProfile);
+
+            // Assert
+            _generationProfileDaoMock.Verify(x => x.DeleteGenerationProfile(generationProfile), Times.Once);
+        }
     }
 }
