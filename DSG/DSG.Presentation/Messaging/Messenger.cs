@@ -12,6 +12,7 @@ namespace DSG.Presentation.Messaging
         public Messenger()
         {
             ActionsByMessageName = new Dictionary<string, Action<object>>();
+            this.MessagingEvent += HandleEvent;
         }
 
         public void NotifyEventTriggered(MessageDto messageDto)
@@ -22,7 +23,6 @@ namespace DSG.Presentation.Messaging
         public void Register(string name, Action<object> action)
         {
             ActionsByMessageName.Add(name, action);
-            this.MessagingEvent += HandleEvent;
         }
 
         internal void HandleEvent(object sender, EventArgs e)
