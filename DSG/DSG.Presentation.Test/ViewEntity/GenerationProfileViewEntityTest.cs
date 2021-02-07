@@ -74,5 +74,19 @@ namespace DSG.Presentation.Test.ViewEntity
             _testee.IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Name == "Seaside").IsSelected.Should().BeFalse();
             _testee.IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Name == "Intrigue").IsSelected.Should().BeTrue();
         }
+
+        [Test]
+        public void DeleteProfile_MessengerInvoked()
+        {
+            // Arrange
+            GenerationProfile profile = new GenerationProfile { Name = "Profile 1" };
+            _testee = new GenerationProfileViewEntity(profile, _messengerMock.Object, new ObservableCollection<IsDominionExpansionSelectedDto>());
+
+            // Act
+            _testee.DeleteProfile();
+
+            // Assert
+            _messengerMock.Verify(x => x.NotifyEventTriggered(It.Is<MessageDto>(dto => dto.Name == Message.ProfileDeleted && dto.Data.Equals(profile))), Times.Once);
+        }
     }
 }

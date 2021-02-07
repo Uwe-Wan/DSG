@@ -256,5 +256,24 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.SelectedProfile.PropabilityForShelters.Should().Be(2);
             _testee.SelectedProfile.PropabilityForPlatinumAndColony.Should().Be(20);
         }
+
+        [Test]
+        public void DeleteProfile_TwoProfilesAvailable_OnlyOneAvailableAndBcDeletionInvoked()
+        {
+            // Arrange
+            GenerationProfile profile1 = new GenerationProfile { Id = 1, Name = "Profile 1" };
+            GenerationProfile profile2 = new GenerationProfile { Id = 2, Name = "To be deleted profile" };
+
+            _testee.GenerationProfiles.Add(new GenerationProfileViewEntity(profile1, _messengerMock.Object, new ObservableCollection<IsDominionExpansionSelectedDto>()));
+            _testee.GenerationProfiles.Add(new GenerationProfileViewEntity(profile2, _messengerMock.Object, new ObservableCollection<IsDominionExpansionSelectedDto>()));
+
+            //Act
+            _testee.DeleteProfile(profile2);
+
+            //Assert
+            _generationProfileBcMock.Verify(x => x.DeleteGenerationProfile(profile2), Times.Once);
+            _testee.GenerationProfiles.Should().HaveCount(1);
+            _testee.GenerationProfiles.Single().GenerationProfile.Name.Should().Be("Profile 1");
+        }
     }
 }
