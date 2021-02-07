@@ -48,6 +48,8 @@ namespace DSG.DAO.GenerationProfiles
             Ctx.SelectedExpansionsToGenerationProfiles.RemoveRange(selectedExpansionsOfProfile);
 
             Ctx.GenerationProfiles.Remove(generationProfile);
+
+            Ctx.SaveChanges();
         }
     }
 }
