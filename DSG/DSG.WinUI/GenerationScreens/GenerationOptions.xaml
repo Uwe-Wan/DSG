@@ -230,7 +230,7 @@
                             </Button>
                         </WrapPanel>
                         <!-- This is a splitter between the saving and the loading part. -->
-                        <Label Background="Wheat" Width="350" Height="10"></Label>
+                        <Label Background="Wheat" Width="450" Height="10"></Label>
                         <!-- This contains name and loading button for all generation profiles. -->
                         <ItemsControl
                             HorizontalContentAlignment="Stretch" 
