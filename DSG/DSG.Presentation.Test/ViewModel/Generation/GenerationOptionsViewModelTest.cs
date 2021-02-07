@@ -61,12 +61,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
             _testee.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeTrue();
 
-            _testee.SelectedProfile.PropabilityForPlatinumAndColony.Should().Be(20);
-            _testee.SelectedProfile.PropabilityForShelters.Should().Be(10);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForOne.Should().Be(50);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForTwo.Should().Be(30);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree.Should().Be(7);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour.Should().Be(0);
+            _generationProfileBcMock.Verify(x => x.SetupInitialGenerationProfile(null), Times.Once);
 
             _testee.GenerationProfiles.Should().HaveCount(2);
         }
@@ -75,9 +70,10 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task OnPageLoaded_ParameterSet_NothingDone()
         {
             //Arrange
-            PropabilityForNonSupplyCards propabilityForNonSupplyCards = new PropabilityForNonSupplyCards(42, 14, 2, 1);
-            GenerationProfile selectedProfile = new GenerationProfile(15, 30, propabilityForNonSupplyCards);
+            GenerationProfile selectedProfile = new GenerationProfile();
             _testee.SelectedProfile = selectedProfile;
+
+            _generationProfileBcMock.Setup(x => x.SetupInitialGenerationProfile(selectedProfile)).Returns(selectedProfile);
 
             DominionExpansion expansion = new DominionExpansion();
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion };
@@ -95,12 +91,8 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
             _testee.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeFalse();
 
-            _testee.SelectedProfile.PropabilityForPlatinumAndColony.Should().Be(30);
-            _testee.SelectedProfile.PropabilityForShelters.Should().Be(15);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForOne.Should().Be(42);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForTwo.Should().Be(14);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree.Should().Be(2);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour.Should().Be(1);
+            _generationProfileBcMock.Verify(x => x.SetupInitialGenerationProfile(selectedProfile), Times.Once);
+            _testee.SelectedProfile.Should().Be(selectedProfile);
 
             _testee.GenerationProfiles.Should().HaveCount(1);
         }
@@ -109,10 +101,6 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task OnPageLoaded_ParameterSetWithDifferentAmountOfExpansions_ExpansionsAddedAndSelected()
         {
             //Arrange
-            PropabilityForNonSupplyCards propabilityForNonSupplyCards = new PropabilityForNonSupplyCards(42, 14, 2, 1);
-            GenerationProfile selectedProfile = new GenerationProfile(15, 30, propabilityForNonSupplyCards);
-            _testee.SelectedProfile = selectedProfile;
-
             DominionExpansion expansion = new DominionExpansion { Id = 1 };
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion, new DominionExpansion { Id = 2 } };
             _testee.IsDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(expansion));
@@ -125,13 +113,6 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.IsDominionExpansionSelectedDtos.Should().HaveCount(2);
             _testee.IsDominionExpansionSelectedDtos[0].IsSelected.Should().BeFalse();
             _testee.IsDominionExpansionSelectedDtos[1].IsSelected.Should().BeTrue();
-
-            _testee.SelectedProfile.PropabilityForPlatinumAndColony.Should().Be(30);
-            _testee.SelectedProfile.PropabilityForShelters.Should().Be(15);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForOne.Should().Be(42);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForTwo.Should().Be(14);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree.Should().Be(2);
-            _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour.Should().Be(1);
         }
 
         [Test]
@@ -240,7 +221,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 Times.Once);
             _testee.GenerationProfiles.Should().HaveCount(0);
 
-            _uiServiceMock.Verify(x => x.ShowErrorMessage("Error", "Profile Invalid"));
+            _uiServiceMock.Verify(x => x.ShowErrorMessage("Error", "Profile Invalid!"));
         }
 
         [Test]

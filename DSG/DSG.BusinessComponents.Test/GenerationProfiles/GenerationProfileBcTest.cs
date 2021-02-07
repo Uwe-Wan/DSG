@@ -106,5 +106,37 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             // Assert
             _generationProfileDaoMock.Verify(x => x.DeleteGenerationProfile(generationProfile), Times.Once);
         }
+
+        [Test]
+        public void SetupInitialGenerationProfile_InsertNull_InitialProfileReturned()
+        {
+            // Act
+            GenerationProfile result = _testee.SetupInitialGenerationProfile(null);
+
+            // Assert
+            result.PropabilityForPlatinumAndColony.Should().Be(20);
+            result.PropabilityForShelters.Should().Be(10);
+
+            result.PropabilityForNonSupplyCards.PropabilityForOne.Should().Be(50);
+            result.PropabilityForNonSupplyCards.PropabilityForTwo.Should().Be(30);
+            result.PropabilityForNonSupplyCards.PropabilityForThree.Should().Be(7);
+            result.PropabilityForNonSupplyCards.PropabilityForFour.Should().Be(0);
+        }
+
+        [Test]
+        public void SetupInitialGenerationProfile_InsertExistingProfile_SameProfileReturned()
+        {
+            // Arrange
+            GenerationProfile generationProfile = new GenerationProfile { PropabilityForPlatinumAndColony = 10, PropabilityForShelters = 5 };
+
+            // Act
+            GenerationProfile result = _testee.SetupInitialGenerationProfile(generationProfile);
+
+            // Assert
+            result.Should().Be(generationProfile);
+
+            result.PropabilityForPlatinumAndColony.Should().Be(10);
+            result.PropabilityForShelters.Should().Be(5);
+        }
     }
 }

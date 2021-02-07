@@ -10,5 +10,7 @@ namespace DSG.BusinessComponents.GenerationProfiles
         List<GenerationProfile> GetGenerationProfiles();
 
         void DeleteGenerationProfile(GenerationProfile generationProfile);
+
+        GenerationProfile SetupInitialGenerationProfile(GenerationProfile generationProfile);
     }
 }

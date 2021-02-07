@@ -108,7 +108,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
             AddNewExpansionsToSelection(expansions);
 
-            SetupInitialGenerationProfile();
+            SelectedProfile = GenerationProfileBc.SetupInitialGenerationProfile(SelectedProfile);
 
             LoadInitialGenerationProfiles();
         }
@@ -131,42 +131,27 @@ namespace DSG.Presentation.ViewModel.Generation
             }
         }
 
-        private void SetupInitialGenerationProfile()
-        {
-            if (SelectedProfile == null)
-            {
-                SelectedProfile = new GenerationProfile(
-                    10,
-                    20,
-                    SetupInitialPropabilitiesForNonSupplies());
-            }
-        }
-
-        private PropabilityForNonSupplyCards SetupInitialPropabilitiesForNonSupplies()
-        {
-            PropabilityForNonSupplyCards propabilityForNonSupplyCards = new PropabilityForNonSupplyCards(50, 30, 7, 0);
-
-            return propabilityForNonSupplyCards;
-        }
-
         internal void GenerateSet()
+        {
+            int availableSupplyCards = GetAmountOfAvailableSupplyCards();
+
+            if (availableSupplyCards < 10)
+            {
+                string message = string.Join(" ", "There are only", availableSupplyCards, "cards available in the selected Sets. " + Text.MinimumOfTenRequired);
+                UiService.ShowErrorMessage(message, Text.NotEnoughCards);
+                return;
+            }
+
+            NavigateTo(NavigationDestination.GeneratedSet);
+        }
+
+        private int GetAmountOfAvailableSupplyCards()
         {
             List<Card> availableCards = IsDominionExpansionSelectedDtos
                 .Where(dto => dto.IsSelected)
                 .SelectMany(dto => dto.DominionExpansion.ContainedCards)
                 .ToList();
-            int availableSupplyCards = CardHelper.GetSupplyCards(availableCards).Count;
-
-            if (availableSupplyCards < 10)
-            {
-                string message = string.Join(" ", "There are only", availableSupplyCards, "cards available in the selected Sets. " +
-                    "A minimum of 10 is needed to generate a set.");
-                string caption = "Not enough Cards!";
-                UiService.ShowErrorMessage(message, caption);
-                return;
-            }
-
-            NavigateTo(NavigationDestination.GeneratedSet);
+            return CardHelper.GetSupplyCards(availableCards).Count;
         }
 
         internal void SaveProfile()
@@ -180,7 +165,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
             if (error != null)
             {
-                UiService.ShowErrorMessage(error, "Profile Invalid");
+                UiService.ShowErrorMessage(error, Text.ProfileInvalid);
                 return;
             }
 

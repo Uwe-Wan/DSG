@@ -72,5 +72,25 @@ namespace DSG.BusinessComponents.GenerationProfiles
         {
             GenerationProfileDao.DeleteGenerationProfile(generationProfile);
         }
+
+        public GenerationProfile SetupInitialGenerationProfile(GenerationProfile generationProfile)
+        {
+            if (generationProfile == null)
+            {
+                generationProfile = new GenerationProfile(
+                    10,
+                    20,
+                    SetupInitialPropabilitiesForNonSupplies());
+            }
+
+            return generationProfile;
+        }
+
+        private PropabilityForNonSupplyCards SetupInitialPropabilitiesForNonSupplies()
+        {
+            PropabilityForNonSupplyCards propabilityForNonSupplyCards = new PropabilityForNonSupplyCards(50, 30, 7, 0);
+
+            return propabilityForNonSupplyCards;
+        }
     }
 }
