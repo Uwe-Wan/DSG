@@ -30,5 +30,24 @@ namespace DSG.DAO.GenerationProfiles
                 .Include(profile => profile.SelectedExpansions)
                 .ToList();
         }
+
+        public void DeleteGenerationProfile(GenerationProfile generationProfile)
+        {
+            bool areOtherProfilesUsingPropabilitiesOfThisProfile = Ctx.GenerationProfiles
+                .Where(profile => profile.PropabilityForNonSupplyCardsId == generationProfile.PropabilityForNonSupplyCardsId)
+                .Any();
+            if (areOtherProfilesUsingPropabilitiesOfThisProfile == false)
+            {
+                PropabilityForNonSupplyCards propabilityForNonSupplyCards = Ctx.PropabilityForNonSupplyCards.Single(x => x.Id == generationProfile.PropabilityForNonSupplyCardsId);
+                Ctx.PropabilityForNonSupplyCards.Remove(propabilityForNonSupplyCards);
+            }
+
+            List<SelectedExpansionToGenerationProfile> selectedExpansionsOfProfile = Ctx.SelectedExpansionsToGenerationProfiles
+                .Where(x => x.GenerationProfileId == generationProfile.Id)
+                .ToList();
+            Ctx.SelectedExpansionsToGenerationProfiles.RemoveRange(selectedExpansionsOfProfile);
+
+            Ctx.GenerationProfiles.Remove(generationProfile);
+        }
     }
 }

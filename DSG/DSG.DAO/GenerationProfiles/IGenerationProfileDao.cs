@@ -8,5 +8,7 @@ namespace DSG.DAO.GenerationProfiles
         void InsertGenerationProfile(GenerationProfile generationProfile);
 
         List<GenerationProfile> GetGenerationProfiles();
+
+        void DeleteGenerationProfile(GenerationProfile generationProfile);
     }
 }
