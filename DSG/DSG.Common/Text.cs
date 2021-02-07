@@ -7,5 +7,7 @@
         public const string NameTooLong = "Name must not be longer than 20 characters.";
 
         public const string NameNotSet = "Name must be set.";
+
+        public const string InsertName = "Insert Name";
     }
 }

@@ -67,7 +67,6 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForTwo.Should().Be(30);
             _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree.Should().Be(7);
             _testee.SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour.Should().Be(0);
-            _testee.SelectedProfile.Name.Should().Be("Insert Name");
 
             _testee.GenerationProfiles.Should().HaveCount(2);
         }
@@ -254,7 +253,6 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.LoadProfile(profile);
 
             //Assert
-            _testee.SelectedProfile.Name.Should().Be("Insert Name");
             _testee.SelectedProfile.PropabilityForShelters.Should().Be(2);
             _testee.SelectedProfile.PropabilityForPlatinumAndColony.Should().Be(20);
         }

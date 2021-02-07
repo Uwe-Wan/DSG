@@ -116,6 +116,7 @@
     <Compile Include="Behavior\DropDownButtonContextMenuBehavior.cs" />
     <Compile Include="Behavior\DropDownButtonToRightBehavior.cs" />
     <Compile Include="Behavior\DropDownButtonToTopBehavior.cs" />
+    <Compile Include="Behavior\ProfileDropDownBehavior.cs" />
     <Compile Include="GenerationScreens\GeneratedSet.xaml.cs">
       <DependentUpon>GeneratedSet.xaml</DependentUpon>
     </Compile>

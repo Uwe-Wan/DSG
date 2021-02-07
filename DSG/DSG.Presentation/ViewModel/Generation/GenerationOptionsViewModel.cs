@@ -137,10 +137,7 @@ namespace DSG.Presentation.ViewModel.Generation
                 SelectedProfile = new GenerationProfile(
                     10,
                     20,
-                    SetupInitialPropabilitiesForNonSupplies())
-                {
-                    Name = "Insert Name"
-                };
+                    SetupInitialPropabilitiesForNonSupplies());
             }
         }
 
@@ -195,7 +192,6 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             GenerationProfile profile = (GenerationProfile)data;
             SelectedProfile = profile.Clone();
-            SelectedProfile.Name = "Insert Name";
         }
 
         private void NavigateTo(NavigationDestination destination)

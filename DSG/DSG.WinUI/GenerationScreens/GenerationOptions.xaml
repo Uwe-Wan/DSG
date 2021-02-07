@@ -183,9 +183,10 @@
         <Button Grid.Row="6" Grid.Column="6" Style="{StaticResource PinkButton}" IsEnabled="{Binding IsDataLoaded}" Content="Profiles">
             <i:Interaction.Behaviors>
                 <local1:DropDownButtonToTopBehavior/>
+                <local1:ProfileDropDownBehavior SelectedProfileName="{Binding SelectedProfile.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </i:Interaction.Behaviors>
-                <Button.ContextMenu>
-                    <ContextMenu IsEnabled="True" Background="Wheat" Width="350">
+            <Button.ContextMenu>
+                <ContextMenu IsEnabled="True" Background="Wheat" Width="350">
                     <StackPanel Margin="-37, 0, 0, 0">
                         <!-- This contains a textbox for the profile name and a save button. It also contains validation for the name. -->
                         <WrapPanel>
@@ -200,7 +201,7 @@
                                                 <validation:ComparisonValue Value="{Binding Data, Source={StaticResource TargetProxy}}"/>
                                             </validation:ValidateGenerationProfile>
                                         </Binding.ValidationRules>
-                                </Binding>
+                                    </Binding>
                                 </TextBox.Text>
                             </TextBox>
                             <!-- The saving button. Has to be there with the complete style since it has a source attribute bound to the textbox above -->
@@ -245,7 +246,7 @@
                         </ItemsControl>
                     </StackPanel>
                 </ContextMenu>
-                </Button.ContextMenu>
+            </Button.ContextMenu>
         </Button>
 
         <!-- This control has to be on bottom to be overlaying all the other controls. -->
