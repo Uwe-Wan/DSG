@@ -33,23 +33,32 @@ namespace DSG.DAO.GenerationProfiles
 
         public void DeleteGenerationProfile(GenerationProfile generationProfile)
         {
-            List<SelectedExpansionToGenerationProfile> selectedExpansionsOfProfile = Ctx.SelectedExpansionsToGenerationProfiles
-                .Where(x => x.GenerationProfileId == generationProfile.Id)
-                .ToList();
-            Ctx.SelectedExpansionsToGenerationProfiles.RemoveRange(selectedExpansionsOfProfile);
-
             Ctx.GenerationProfiles.Remove(generationProfile);
 
             Ctx.SaveChanges();
+        }
 
-            bool areOtherProfilesUsingPropabilitiesOfThisProfile = Ctx.GenerationProfiles
-                .Where(profile => profile.PropabilityForNonSupplyCardsId == generationProfile.PropabilityForNonSupplyCardsId)
+        public void DeletePropabilityForNonSupplyCardsById(int id)
+        {
+            PropabilityForNonSupplyCards propability = Ctx.PropabilityForNonSupplyCards.Single(x => x.Id == id);
+            Ctx.PropabilityForNonSupplyCards.Remove(propability);
+
+            Ctx.SaveChanges();
+        }
+
+        public bool IsPropabilitiesForNonSupplyCardsStillUsed(int propabilitiesId)
+        {
+            return Ctx.GenerationProfiles
+                .Where(profile => profile.PropabilityForNonSupplyCardsId == propabilitiesId)
                 .Any();
-            if (areOtherProfilesUsingPropabilitiesOfThisProfile == false)
-            {
-                PropabilityForNonSupplyCards propabilityForNonSupplyCards = Ctx.PropabilityForNonSupplyCards.Single(x => x.Id == generationProfile.PropabilityForNonSupplyCardsId);
-                Ctx.PropabilityForNonSupplyCards.Remove(propabilityForNonSupplyCards);
-            }
+        }
+
+        public void DeleteSelectedExpansionToGenerationProfilesByProfileId(int generationProfileId)
+        {
+            List<SelectedExpansionToGenerationProfile> selectedExpansionsOfProfile = Ctx.SelectedExpansionsToGenerationProfiles
+                .Where(x => x.GenerationProfileId == generationProfileId)
+                .ToList();
+            Ctx.SelectedExpansionsToGenerationProfiles.RemoveRange(selectedExpansionsOfProfile);
 
             Ctx.SaveChanges();
         }

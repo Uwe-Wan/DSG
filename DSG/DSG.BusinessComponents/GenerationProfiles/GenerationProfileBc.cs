@@ -65,7 +65,7 @@ namespace DSG.BusinessComponents.GenerationProfiles
 
             PropabilityForNonSupplyCards existingPropability = existingProfiles
                 .Select(x => x.PropabilityForNonSupplyCards)
-                .SingleOrDefault(x => x.Equals(newProfile.PropabilityForNonSupplyCards));
+                .FirstOrDefault(x => x.Equals(newProfile.PropabilityForNonSupplyCards));
             if (existingPropability != null)
             {
                 newProfile.PropabilityForNonSupplyCards = existingPropability;
@@ -94,7 +94,16 @@ namespace DSG.BusinessComponents.GenerationProfiles
 
         public void DeleteGenerationProfile(GenerationProfile generationProfile)
         {
+            GenerationProfileDao.DeleteSelectedExpansionToGenerationProfilesByProfileId(generationProfile.Id);
+
             GenerationProfileDao.DeleteGenerationProfile(generationProfile);
+
+            bool isPropabilitiesForNonSupplyCardsStillUsed = GenerationProfileDao.IsPropabilitiesForNonSupplyCardsStillUsed(generationProfile.PropabilityForNonSupplyCardsId);
+
+            if(isPropabilitiesForNonSupplyCardsStillUsed == false)
+            {
+                GenerationProfileDao.DeletePropabilityForNonSupplyCardsById(generationProfile.PropabilityForNonSupplyCardsId);
+            }
         }
 
         public GenerationProfile SetupInitialGenerationProfile(GenerationProfile generationProfile)

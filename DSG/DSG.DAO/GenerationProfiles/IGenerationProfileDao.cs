@@ -10,5 +10,11 @@ namespace DSG.DAO.GenerationProfiles
         List<GenerationProfile> GetGenerationProfiles();
 
         void DeleteGenerationProfile(GenerationProfile generationProfile);
+
+        void DeletePropabilityForNonSupplyCardsById(int id);
+
+        bool IsPropabilitiesForNonSupplyCardsStillUsed(int propabilitiesId);
+
+        void DeleteSelectedExpansionToGenerationProfilesByProfileId(int generationProfileId);
     }
 }

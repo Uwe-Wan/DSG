@@ -97,16 +97,43 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
         }
 
         [Test]
-        public void DeleteGenerationProfile_DependentDaoMethodInvoked()
+        public void DeleteGenerationProfile_PropabilitiesForNonSupplyRemainForOtherProfile_PropabilitiesNotDeleted()
         {
             // Arrange
-            GenerationProfile generationProfile = new GenerationProfile();
+            int propabilityId = 2;
+            int profileId = 1;
+            GenerationProfile generationProfile = new GenerationProfile { Id = profileId, PropabilityForNonSupplyCardsId = propabilityId };
+
+            _generationProfileDaoMock.Setup(x => x.IsPropabilitiesForNonSupplyCardsStillUsed(propabilityId)).Returns(true);
 
             // Act
             _testee.DeleteGenerationProfile(generationProfile);
 
             // Assert
+            _generationProfileDaoMock.Verify(x => x.DeleteSelectedExpansionToGenerationProfilesByProfileId(profileId), Times.Once);
             _generationProfileDaoMock.Verify(x => x.DeleteGenerationProfile(generationProfile), Times.Once);
+            _generationProfileDaoMock.Verify(x => x.IsPropabilitiesForNonSupplyCardsStillUsed(propabilityId), Times.Once);
+            _generationProfileDaoMock.Verify(x => x.DeletePropabilityForNonSupplyCardsById(It.IsAny<int>()), Times.Never);
+        }
+
+        [Test]
+        public void DeleteGenerationProfile_PropabilitiesForNonSupplyNotUsedAnymore_IsDeleted()
+        {
+            // Arrange
+            int propabilityId = 2;
+            int profileId = 1;
+            GenerationProfile generationProfile = new GenerationProfile { Id = profileId, PropabilityForNonSupplyCardsId = propabilityId };
+
+            _generationProfileDaoMock.Setup(x => x.IsPropabilitiesForNonSupplyCardsStillUsed(propabilityId)).Returns(false);
+
+            // Act
+            _testee.DeleteGenerationProfile(generationProfile);
+
+            // Assert
+            _generationProfileDaoMock.Verify(x => x.DeleteSelectedExpansionToGenerationProfilesByProfileId(profileId), Times.Once);
+            _generationProfileDaoMock.Verify(x => x.DeleteGenerationProfile(generationProfile), Times.Once);
+            _generationProfileDaoMock.Verify(x => x.IsPropabilitiesForNonSupplyCardsStillUsed(propabilityId), Times.Once);
+            _generationProfileDaoMock.Verify(x => x.DeletePropabilityForNonSupplyCardsById(propabilityId), Times.Once);
         }
 
         [Test]
