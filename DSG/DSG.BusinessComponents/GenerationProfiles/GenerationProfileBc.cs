@@ -1,8 +1,11 @@
-﻿using DSG.BusinessEntities.GenerationProfiles;
+﻿using DSG.BusinessEntities;
+using DSG.BusinessEntities.GenerationProfiles;
 using DSG.Common;
 using DSG.DAO.GenerationProfiles;
 using DSG.Validation.GenerationProfiles;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Controls;
 
 namespace DSG.BusinessComponents.GenerationProfiles
@@ -48,6 +51,27 @@ namespace DSG.BusinessComponents.GenerationProfiles
             GenerationProfileDao.InsertGenerationProfile(generationProfile);
 
             return null;
+        }
+
+        public GenerationProfile PrepareGenerationProfileForInsertion(
+            GenerationProfile generationProfile, ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles)
+        {
+            GenerationProfile newProfile = generationProfile.Clone();
+
+            newProfile.SelectedExpansions = isDominionExpansionSelectedDtos
+                .Where(x => x.IsSelected)
+                .Select(x => new SelectedExpansionToGenerationProfile(x.DominionExpansion))
+                .ToList();
+
+            PropabilityForNonSupplyCards existingPropability = existingProfiles
+                .Select(x => x.PropabilityForNonSupplyCards)
+                .SingleOrDefault(x => x.Equals(newProfile.PropabilityForNonSupplyCards));
+            if (existingPropability != null)
+            {
+                newProfile.PropabilityForNonSupplyCards = existingPropability;
+            }
+
+            return newProfile;
         }
 
         private string ValidateProfileName(GenerationProfile generationProfile)

@@ -1,4 +1,5 @@
 ﻿using DSG.BusinessComponents.GenerationProfiles;
+using DSG.BusinessEntities;
 using DSG.BusinessEntities.GenerationProfiles;
 using DSG.DAO.GenerationProfiles;
 using DSG.Validation.GenerationProfiles;
@@ -6,6 +7,7 @@ using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 namespace DSG.BusinessComponentsTest.GenerationProfiles
@@ -137,6 +139,84 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
 
             result.PropabilityForPlatinumAndColony.Should().Be(10);
             result.PropabilityForShelters.Should().Be(5);
+        }
+
+        [Test]
+        public void PrepareGenerationProfileForInsertion_WithExistingPropabilitiesForNonSupply_EnrichedWithExistingProp()
+        {
+            // Arrange
+            PropabilityForNonSupplyCards firstPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 1 };
+            GenerationProfile firstProfile = new GenerationProfile(25, 15, firstPropabilityForNonSupplyCards);
+            PropabilityForNonSupplyCards secondPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(35, 25, 15, 5) { Id = 2 };
+            GenerationProfile secondProfile = new GenerationProfile(15, 5, secondPropabilityForNonSupplyCards);
+            IEnumerable<GenerationProfile> existingProfiles = new List<GenerationProfile> { firstProfile, secondProfile };
+
+            PropabilityForNonSupplyCards duplicatedPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 3 };
+            GenerationProfile generationProfile = new GenerationProfile(20, 10, duplicatedPropabilityForNonSupplyCards);
+
+            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()));
+            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()) { IsSelected = false });
+
+            // Act
+            GenerationProfile result = _testee.PrepareGenerationProfileForInsertion(generationProfile, isDominionExpansionSelectedDtos, existingProfiles);
+
+            // Assert
+            result.PropabilityForNonSupplyCards.Should().Be(firstPropabilityForNonSupplyCards);
+            result.SelectedExpansions.Should().HaveCount(1);
+            result.Should().NotBe(generationProfile);
+        }
+
+        [Test]
+        public void PrepareGenerationProfileForInsertion_WithNewPropabilitiesForNonSupply_NewProp()
+        {
+            // Arrange
+            PropabilityForNonSupplyCards firstPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 1 };
+            GenerationProfile firstProfile = new GenerationProfile(25, 15, firstPropabilityForNonSupplyCards);
+            PropabilityForNonSupplyCards secondPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(35, 25, 15, 5) { Id = 2 };
+            GenerationProfile secondProfile = new GenerationProfile(15, 5, secondPropabilityForNonSupplyCards);
+            IEnumerable<GenerationProfile> existingProfiles = new List<GenerationProfile> { firstProfile, secondProfile };
+
+            PropabilityForNonSupplyCards duplicatedPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(42, 32, 22, 12) { Id = 3 };
+            GenerationProfile generationProfile = new GenerationProfile(20, 10, duplicatedPropabilityForNonSupplyCards);
+
+            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()));
+            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()) { IsSelected = false });
+
+            // Act
+            GenerationProfile result = _testee.PrepareGenerationProfileForInsertion(generationProfile, isDominionExpansionSelectedDtos, existingProfiles);
+
+            // Assert
+            result.PropabilityForNonSupplyCards.Id.Should().Be(3);
+            result.SelectedExpansions.Should().HaveCount(1);
+            result.Should().NotBe(generationProfile);
+        }
+
+        [Test]
+        public void PrepareGenerationProfileForInsertion_WithNoExistingPropabilitiesForNonSupply_EnrichedWithExistingProp()
+        {
+            // Arrange
+            PropabilityForNonSupplyCards firstPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 1 };
+            GenerationProfile firstProfile = new GenerationProfile(25, 15, firstPropabilityForNonSupplyCards);
+            PropabilityForNonSupplyCards secondPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(35, 25, 15, 5) { Id = 2 };
+            GenerationProfile secondProfile = new GenerationProfile(15, 5, secondPropabilityForNonSupplyCards);
+            IEnumerable<GenerationProfile> existingProfiles = new List<GenerationProfile> { firstProfile, secondProfile };
+
+            PropabilityForNonSupplyCards duplicatedPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 3 };
+            GenerationProfile generationProfile = new GenerationProfile(20, 10, duplicatedPropabilityForNonSupplyCards);
+
+            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()));
+            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()) { IsSelected = false });
+
+            // Act
+            GenerationProfile result = _testee.PrepareGenerationProfileForInsertion(generationProfile, isDominionExpansionSelectedDtos, existingProfiles);
+
+            // Assert
+            result.PropabilityForNonSupplyCards.Should().Be(firstPropabilityForNonSupplyCards);
+            result.SelectedExpansions.Should().HaveCount(1);
+            result.Should().NotBe(generationProfile);
         }
     }
 }

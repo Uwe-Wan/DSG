@@ -156,11 +156,9 @@ namespace DSG.Presentation.ViewModel.Generation
 
         internal void SaveProfile()
         {
-            GenerationProfile newProfile = SelectedProfile.Clone();
-            newProfile.SelectedExpansions = IsDominionExpansionSelectedDtos
-                .Where(x => x.IsSelected)
-                .Select(x => new SelectedExpansionToGenerationProfile(x.DominionExpansion))
-                .ToList();
+            GenerationProfile newProfile = GenerationProfileBc.PrepareGenerationProfileForInsertion(
+                SelectedProfile, IsDominionExpansionSelectedDtos, GenerationProfiles.Select(x => x.GenerationProfile));
+
             string error = GenerationProfileBc.InsertGenerationProfile(newProfile);
 
             if (error != null)
@@ -170,7 +168,6 @@ namespace DSG.Presentation.ViewModel.Generation
             }
 
             GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, Messenger, IsDominionExpansionSelectedDtos);
-
             GenerationProfiles.Add(newProfileViewEntity);
         }
 

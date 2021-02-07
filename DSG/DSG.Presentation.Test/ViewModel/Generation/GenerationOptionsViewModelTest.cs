@@ -177,16 +177,11 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public void SaveProfile_BcInvoked_ProfileAddedToCollection()
         {
             //Arrange
-            _testee.SelectedProfile = new GenerationProfile { Name = "Test" };
+            GenerationProfile newProfile = new GenerationProfile { Name = "Cloned Profile" };
 
-            DominionExpansion world = new DominionExpansion { Name = "World" };
-            IsDominionExpansionSelectedDto selectedExpansion = new IsDominionExpansionSelectedDto(world);
-            
-            DominionExpansion seaside = new DominionExpansion { Name = "Seaside" };
-            IsDominionExpansionSelectedDto unselectedExpansion = new IsDominionExpansionSelectedDto(seaside) { IsSelected = false };
-
-            _testee.IsDominionExpansionSelectedDtos.Add(selectedExpansion);
-            _testee.IsDominionExpansionSelectedDtos.Add(unselectedExpansion);
+            _generationProfileBcMock.Setup(x => x.PrepareGenerationProfileForInsertion(
+                _testee.SelectedProfile, _testee.IsDominionExpansionSelectedDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
+                .Returns(newProfile);
 
             _testee.GenerationProfiles.Add(new GenerationProfileViewEntity());
 
@@ -196,8 +191,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             //Assert
             _generationProfileBcMock.Verify(
                     x => x.InsertGenerationProfile(It.Is<GenerationProfile>(
-                        profile => profile.Name == "Test"
-                        && profile.SelectedExpansions.Count == 1)), 
+                        profile => profile.Name == "Cloned Profile")), 
                 Times.Once);
             _generationProfileBcMock.Verify(x => x.InsertGenerationProfile(_testee.SelectedProfile), Times.Never, "Should be a cloned entity");
             _testee.GenerationProfiles.Should().HaveCount(2);
@@ -207,9 +201,13 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public void SaveProfile_ValidationFails_MessageBoxInvokedNoProfileAdded()
         {
             //Arrange
-            _testee.SelectedProfile = new GenerationProfile { Name = "Test" };
+            _testee.SelectedProfile = new GenerationProfile();
+            GenerationProfile newProfile = new GenerationProfile { Name = "Cloned Profile" };
 
-            _generationProfileBcMock.Setup(x => x.InsertGenerationProfile(It.Is<GenerationProfile>(y => y.Name == "Test"))).Returns("Error");
+            _generationProfileBcMock.Setup(x => x.PrepareGenerationProfileForInsertion(
+                _testee.SelectedProfile, _testee.IsDominionExpansionSelectedDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
+                .Returns(newProfile);
+            _generationProfileBcMock.Setup(x => x.InsertGenerationProfile(It.Is<GenerationProfile>(y => y.Name == "Cloned Profile"))).Returns("Error");
 
             //Act
             _testee.SaveProfile();
@@ -217,7 +215,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             //Assert
             _generationProfileBcMock.Verify(
                     x => x.InsertGenerationProfile(It.Is<GenerationProfile>(
-                        profile => profile.Name == "Test")), 
+                        profile => profile.Name == "Cloned Profile")), 
                 Times.Once);
             _testee.GenerationProfiles.Should().HaveCount(0);
 
