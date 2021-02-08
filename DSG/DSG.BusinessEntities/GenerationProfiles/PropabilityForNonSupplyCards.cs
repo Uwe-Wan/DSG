@@ -59,5 +59,10 @@ namespace DSG.BusinessEntities.GenerationProfiles
 
             return hashCode;
         }
+
+        public PropabilityForNonSupplyCards Clone()
+        {
+            return new PropabilityForNonSupplyCards(PropabilityForOne, PropabilityForTwo, PropabilityForThree, PropabilityForFour);
+        }
     }
 }

@@ -42,7 +42,7 @@ namespace DSG.BusinessEntities.GenerationProfiles
 
         public GenerationProfile Clone()
         {
-            GenerationProfile newProfile = new GenerationProfile(PropabilityForShelters, PropabilityForPlatinumAndColony, PropabilityForNonSupplyCards);
+            GenerationProfile newProfile = new GenerationProfile(PropabilityForShelters, PropabilityForPlatinumAndColony, PropabilityForNonSupplyCards.Clone());
             newProfile.Name = Name;
             newProfile.SelectedExpansions = SelectedExpansions;
 

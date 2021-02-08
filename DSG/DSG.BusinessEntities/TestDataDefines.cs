@@ -1,5 +1,6 @@
 ﻿using DSG.BusinessEntities.CardArtifacts;
 using DSG.BusinessEntities.CardTypes;
+using DSG.BusinessEntities.GenerationProfiles;
 using System.Collections.Generic;
 
 namespace DSG.BusinessEntities
@@ -384,6 +385,18 @@ namespace DSG.BusinessEntities
         {
             public static GeneratedAdditionalCard Relic => new GeneratedAdditionalCard(Cards.Relic, Cards.YoungWitch);
             public static GeneratedAdditionalCard Ranger => new GeneratedAdditionalCard(Cards.Ranger, Cards.YoungWitch);
+        }
+
+        #endregion
+
+
+        #region PropabilitiesForNonSupplyCards
+
+        public static class PropabilitiesForNonSupplyCards
+        {
+            public static PropabilityForNonSupplyCards Zero = new PropabilityForNonSupplyCards(0, 0, 0, 0);
+
+            public static PropabilityForNonSupplyCards Default = new PropabilityForNonSupplyCards(50, 30, 7, 0);
         }
 
         #endregion

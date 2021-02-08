@@ -177,7 +177,8 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public void SaveProfile_BcInvoked_ProfileAddedToCollection()
         {
             //Arrange
-            GenerationProfile newProfile = new GenerationProfile { Name = "Cloned Profile" };
+            GenerationProfile newProfile = new GenerationProfile(2, 20, TestDataDefines.PropabilitiesForNonSupplyCards.Zero) { Name = "Cloned Profile" };
+            _testee.SelectedProfile = newProfile;
 
             _generationProfileBcMock.Setup(x => x.PrepareGenerationProfileForInsertion(
                 _testee.SelectedProfile, _testee.IsDominionExpansionSelectedDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
@@ -195,13 +196,16 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 Times.Once);
             _generationProfileBcMock.Verify(x => x.InsertGenerationProfile(_testee.SelectedProfile), Times.Never, "Should be a cloned entity");
             _testee.GenerationProfiles.Should().HaveCount(2);
+
+            _testee.SelectedProfile.Should().NotBe(newProfile);
         }
 
         [Test]
         public void SaveProfile_ValidationFails_MessageBoxInvokedNoProfileAdded()
         {
             //Arrange
-            _testee.SelectedProfile = new GenerationProfile();
+            GenerationProfile selectedProfileBeforeSaving = new GenerationProfile(10, 20, TestDataDefines.PropabilitiesForNonSupplyCards.Zero);
+            _testee.SelectedProfile = selectedProfileBeforeSaving;
             GenerationProfile newProfile = new GenerationProfile { Name = "Cloned Profile" };
 
             _generationProfileBcMock.Setup(x => x.PrepareGenerationProfileForInsertion(
@@ -220,13 +224,15 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.GenerationProfiles.Should().HaveCount(0);
 
             _uiServiceMock.Verify(x => x.ShowErrorMessage("Error", "Profile Invalid!"));
+
+            _testee.SelectedProfile.Should().Be(selectedProfileBeforeSaving);
         }
 
         [Test]
         public void LoadProfile_ProfileLoaded_NameReset()
         {
             //Arrange
-            object profile = new GenerationProfile { Name = "Loaded Profile", PropabilityForPlatinumAndColony = 20, PropabilityForShelters = 2 };
+            object profile = new GenerationProfile(2, 20, TestDataDefines.PropabilitiesForNonSupplyCards.Default) { Name = "Loaded Profile" };
 
             //Act
             _testee.LoadProfile(profile);

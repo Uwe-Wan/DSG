@@ -191,7 +191,6 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             // Assert
             result.PropabilityForNonSupplyCards.Should().Be(firstPropabilityForNonSupplyCards);
             result.SelectedExpansions.Should().HaveCount(1);
-            result.Should().NotBe(generationProfile);
         }
 
         [Test]
@@ -217,7 +216,6 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             // Assert
             result.PropabilityForNonSupplyCards.Id.Should().Be(3);
             result.SelectedExpansions.Should().HaveCount(1);
-            result.Should().NotBe(generationProfile);
         }
 
         [Test]
@@ -243,7 +241,6 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             // Assert
             result.PropabilityForNonSupplyCards.Should().Be(firstPropabilityForNonSupplyCards);
             result.SelectedExpansions.Should().HaveCount(1);
-            result.Should().NotBe(generationProfile);
         }
     }
 }

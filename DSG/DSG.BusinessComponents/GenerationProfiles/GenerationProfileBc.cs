@@ -56,22 +56,20 @@ namespace DSG.BusinessComponents.GenerationProfiles
         public GenerationProfile PrepareGenerationProfileForInsertion(
             GenerationProfile generationProfile, ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles)
         {
-            GenerationProfile newProfile = generationProfile.Clone();
-
-            newProfile.SelectedExpansions = isDominionExpansionSelectedDtos
+            generationProfile.SelectedExpansions = isDominionExpansionSelectedDtos
                 .Where(x => x.IsSelected)
                 .Select(x => new SelectedExpansionToGenerationProfile(x.DominionExpansion))
                 .ToList();
 
             PropabilityForNonSupplyCards existingPropability = existingProfiles
                 .Select(x => x.PropabilityForNonSupplyCards)
-                .FirstOrDefault(x => x.Equals(newProfile.PropabilityForNonSupplyCards));
+                .FirstOrDefault(x => x.Equals(generationProfile.PropabilityForNonSupplyCards));
             if (existingPropability != null)
             {
-                newProfile.PropabilityForNonSupplyCards = existingPropability;
+                generationProfile.PropabilityForNonSupplyCards = existingPropability;
             }
 
-            return newProfile;
+            return generationProfile;
         }
 
         private string ValidateProfileName(GenerationProfile generationProfile)

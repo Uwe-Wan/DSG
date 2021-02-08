@@ -169,6 +169,8 @@ namespace DSG.Presentation.ViewModel.Generation
 
             GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, Messenger, IsDominionExpansionSelectedDtos);
             GenerationProfiles.Add(newProfileViewEntity);
+
+            SelectedProfile = newProfile.Clone();
         }
 
         internal void LoadProfile(object data)
