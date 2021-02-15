@@ -93,29 +93,6 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button 
-            Grid.Row="6" 
-            Grid.Column="2" 
-            Height="32" 
-            Command="{Binding GenerateSetCommand}">
-            <Button.Style>
-                <Style TargetType="Button" BasedOn="{StaticResource PinkButton}">
-                    <Setter Property="IsEnabled" Value="{Binding IsDataLoaded}"/>
-                    <Style.Triggers>
-                        <!--<DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference sheltersProp}}" Value="True">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference platinumBox}}" Value="True">
-                            <Setter Property="IsEnabled" Value="False"/>
-                        </DataTrigger>-->
-                    </Style.Triggers>
-                </Style>                
-            </Button.Style>
-            <TextBlock>
-                Generate
-            </TextBlock>
-        </Button>
-
         <Label 
             Grid.Row="2"
             Grid.Column="4"
@@ -150,27 +127,14 @@
                         
                         <StackPanel>
                             <Label Content="1" Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox x:Name="prop1Box" Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}">
-                                <TextBox.Style >
-                                    <Style BasedOn="{StaticResource nonSupplyBox}" TargetType="TextBox">
-                                        <Style.Triggers>
-                                            <!--<DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference prop3Box}}" Value="true">
-                                                <Setter Property="BorderBrush" Value="OrangeRed"/>
-                                                <Setter Property="BorderThickness" Value="2"/>
-                                            </DataTrigger>-->
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                                <TextBox.Resources>
-                                    <validation:BindingProxy x:Key="Prop1" Data="{Binding SelectedProfile.PropabilityForNonSupplyCards}"/>
-                                </TextBox.Resources>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}">
                                 <TextBox.Text>
                                     <Binding  Path="SelectedProfile.PropabilityForNonSupplyCards.PropabilityForOne" UpdateSourceTrigger="PropertyChanged">
-                                        <!--<Binding.ValidationRules>
-                                            <validation:ValidatePropabilitiesForNonSupplyCards>
-                                                <validation:ComparisonValueForPropabilitiesForNonSupplyCards Value="{Binding Data, Source={StaticResource Prop1}}"/>
-                                            </validation:ValidatePropabilitiesForNonSupplyCards>
-                                        </Binding.ValidationRules>-->
+                                        <Binding.ValidationRules>
+                                            <validation:ValidatePropability>
+                                                <validation:ComparisonValueForPropability />
+                                            </validation:ValidatePropability>
+                                        </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
@@ -180,27 +144,14 @@
                         
                         <StackPanel>
                             <Label Content="2" Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox x:Name="prop2Box" Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}">
-                                <TextBox.Style>
-                                    <Style TargetType="TextBox" BasedOn="{StaticResource nonSupplyBox}">
-                                        <Style.Triggers>
-                                            <!--<DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference prop3Box}}" Value="true">
-                                                <Setter Property="BorderBrush" Value="OrangeRed"/>
-                                                <Setter Property="BorderThickness" Value="2"/>
-                                            </DataTrigger>-->
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
-                                <TextBox.Resources>
-                                    <validation:BindingProxy x:Key="Prop2" Data="{Binding SelectedProfile.PropabilityForNonSupplyCards}"/>
-                                </TextBox.Resources>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}">
                                 <TextBox.Text>
                                     <Binding  Path="SelectedProfile.PropabilityForNonSupplyCards.PropabilityForTwo" UpdateSourceTrigger="PropertyChanged">
-                                        <!--<Binding.ValidationRules>
-                                            <validation:ValidatePropabilitiesForSecondNonSupplyCard>
-                                                <validation:ComparisonValueForPropabilitiesForNonSupplyCards Value="{Binding Data, Source={StaticResource Prop2}}" BindingToTrigger="{Binding Data, Source={StaticResource Prop2}}"/>
-                                            </validation:ValidatePropabilitiesForSecondNonSupplyCard>
-                                        </Binding.ValidationRules>-->
+                                        <Binding.ValidationRules>
+                                            <validation:ValidatePropability>
+                                                <validation:ComparisonValueForPropability />
+                                            </validation:ValidatePropability>
+                                        </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
                             </TextBox>
@@ -210,17 +161,16 @@
                         
                         <StackPanel>
                             <Label Content="3"  Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Text="{Binding SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree}">
-                                <TextBox.Style >
-                                    <Style TargetType="TextBox" BasedOn="{StaticResource nonSupplyBox}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference prop1Box}}" Value="true">
-                                                <Setter Property="BorderBrush" Value="OrangeRed"/>
-                                                <Setter Property="BorderThickness" Value="2"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}">
+                                <TextBox.Text>
+                                    <Binding  Path="SelectedProfile.PropabilityForNonSupplyCards.PropabilityForThree" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validation:ValidatePropability>
+                                                <validation:ComparisonValueForPropability />
+                                            </validation:ValidatePropability>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
                             </TextBox>
                         </StackPanel>
 
@@ -228,21 +178,16 @@
                         
                         <StackPanel>
                             <Label Content="4"  Style="{StaticResource nonSupplyLabel}"/>
-                            <TextBox Text="{Binding SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour}">
-                                <TextBox.Style >
-                                    <Style TargetType="TextBox" BasedOn="{StaticResource nonSupplyBox}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference prop1Box}}" Value="true">
-                                                <Setter Property="BorderBrush" Value="OrangeRed"/>
-                                                <Setter Property="BorderThickness" Value="2"/>
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference prop2Box}}" Value="true">
-                                                <Setter Property="BorderBrush" Value="OrangeRed"/>
-                                                <Setter Property="BorderThickness" Value="2"/>
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBox.Style>
+                            <TextBox Style="{StaticResource nonSupplyBox}" Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}">
+                                <TextBox.Text>
+                                    <Binding  Path="SelectedProfile.PropabilityForNonSupplyCards.PropabilityForFour" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <validation:ValidatePropability>
+                                                <validation:ComparisonValueForPropability />
+                                            </validation:ValidatePropability>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
                             </TextBox>
                         </StackPanel>
                     </WrapPanel>
@@ -259,15 +204,9 @@
         <TextBox x:Name="sheltersProp" 
             Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}"
             Grid.Column="5"
-            Grid.Row="3">
-            <TextBox.Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource propabilitiesBox}">
-                </Style>
-            </TextBox.Style>
-                <TextBox.Resources>
-                    <validation:BindingProxy x:Key="Prop2" Data="{Binding SelectedProfile.PropabilityForNonSupplyCards}"/>
-                </TextBox.Resources>
-                <TextBox.Text>
+            Grid.Row="3"
+            Style="{StaticResource propabilitiesBox}">
+            <TextBox.Text>
                     <Binding  Path="SelectedProfile.PropabilityForShelters" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
                             <validation:ValidatePropability>
@@ -287,14 +226,8 @@
         <TextBox x:Name="platinumBox" 
             Validation.ErrorTemplate="{StaticResource nonSupplyPropsErrorTemplate}"
             Grid.Column="5"
-            Grid.Row="4">
-            <TextBox.Style>
-                <Style TargetType="TextBox" BasedOn="{StaticResource propabilitiesBox}">
-                </Style>
-            </TextBox.Style>
-            <TextBox.Resources>
-                <validation:BindingProxy x:Key="Prop2" Data="{Binding SelectedProfile.PropabilityForNonSupplyCards}"/>
-            </TextBox.Resources>
+            Grid.Row="4"
+            Style="{StaticResource propabilitiesBox}">
             <TextBox.Text>
                 <Binding  Path="SelectedProfile.PropabilityForPlatinumAndColony" UpdateSourceTrigger="PropertyChanged">
                     <Binding.ValidationRules>
@@ -305,6 +238,29 @@
                 </Binding>
             </TextBox.Text>
         </TextBox>
+
+        <Button 
+            Grid.Row="6" 
+            Grid.Column="2" 
+            Height="32" 
+            Command="{Binding GenerateSetCommand}">
+            <Button.Style>
+                <Style TargetType="Button" BasedOn="{StaticResource PinkButton}">
+                    <Setter Property="IsEnabled" Value="{Binding IsDataLoaded}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference sheltersProp}}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Path=(Validation.HasError), Source={x:Reference platinumBox}}" Value="True">
+                            <Setter Property="IsEnabled" Value="False"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+            <TextBlock>
+                Generate
+            </TextBlock>
+        </Button>
 
         <!-- This is the button opening the dropdown menu for loading and saving generation profiles. -->
         <Button Grid.Row="6" Grid.Column="6" Style="{StaticResource PinkButton}" IsEnabled="{Binding IsDataLoaded}" Content="Profiles">
@@ -380,7 +336,7 @@
             </Button.ContextMenu>
         </Button>
 
-        <!-- This control has to be on bottom to be overlaying all the other controls. -->
+                    <!-- This control has to be on bottom to be overlaying all the other controls. -->
         <Image gif:AnimationBehavior.SourceUri="/Images/Loading.gif" 
                HorizontalAlignment="Center"  
                Grid.ColumnSpan="13" 
