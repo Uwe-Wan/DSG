@@ -109,5 +109,126 @@ namespace DSG.Validation.Test
             result.IsValid.Should().BeFalse();
             result.ErrorContent.ToString().Should().Be("There exists a GenerationProfile with that name.");
         }
+
+        [Test]
+        public void ValidateConvertibleToInteger_ConvertibleToInteger_ValidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateConvertibleToInteger("10");
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidateConvertibleToInteger_Null_InvalidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateConvertibleToInteger((string)null);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.ErrorContent.ToString().Should().Be("Value is no integer.");
+        }
+
+        [Test]
+        public void ValidateConvertibleToInteger_IsLetter_InvalidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateConvertibleToInteger("a");
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.ErrorContent.ToString().Should().Be("Value is no integer.");
+        }
+
+        [Test]
+        public void ValidateIntegerValueNotBigger_HalfOfBoarder_ValidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateIntegerValueNotBigger(50, 100);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidateIntegerValueNotBigger_EqualsBoarder_ValidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateIntegerValueNotBigger(100, 100);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidateIntegerValueNotBigger_ToBig_InvalidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateIntegerValueNotBigger(101, 100);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.ErrorContent.ToString().Should().Be("Value must not be bigger than 100");
+        }
+
+        [Test]
+        public void ValidateIntegerValueNotSmaller_HalfOfBoarder_ValidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateIntegerValueNotSmaller(-50, -100);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidateIntegerValueNotSmaller_EqualsBoarder_ValidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateIntegerValueNotSmaller(-100, -100);
+
+            // Assert
+            result.IsValid.Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidateIntegerValueNotSmaller_ToSmall_InvalidResult()
+        {
+            // Arrange
+            _testee = new ValidationMethods();
+
+            // Act
+            ValidationResult result = _testee.ValidateIntegerValueNotSmaller(-101, -100);
+
+            // Assert
+            result.IsValid.Should().BeFalse();
+            result.ErrorContent.ToString().Should().Be("Value must not be smaller than -100");
+        }
     }
 }

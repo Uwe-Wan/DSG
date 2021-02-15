@@ -10,5 +10,11 @@ namespace DSG.Validation
         ValidationResult ValidateStringNotNullNotEmpty(string name);
 
         ValidationResult ValidateNameNoDuplicate(string name, IEnumerable<string> existingNames, string propertyName);
+
+        ValidationResult ValidateConvertibleToInteger(string toValidate);
+
+        ValidationResult ValidateIntegerValueNotBigger(int toValidate, int upperBoarder);
+
+        ValidationResult ValidateIntegerValueNotSmaller(int toValidate, int lowerBoarder);
     }
 }

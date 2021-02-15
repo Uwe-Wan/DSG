@@ -15,5 +15,11 @@
         public const string ProfileInvalid = "Profile Invalid!";
 
         public const string MinimumOfTenRequired = "A minimum of 10 is needed to generate a set.";
+
+        public const string NotConvertibleToInt = "Value is no integer.";
+
+        public const string IntToBig = "Value must not be bigger than ";
+
+        public const string IntToSmall = "Value must not be smaller than ";
     }
 }

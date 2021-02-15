@@ -11,7 +11,7 @@ namespace DSG.WinUI.Validation
     [ContentProperty(nameof(ComparisonValue))]
     public class ValidateGenerationProfile : ValidationRule
     {
-        public ComparisonValue ComparisonValue { get; set; }
+        public ComparisonValueForGenerationProfileViewEntity ComparisonValue { get; set; }
 
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
@@ -22,7 +22,7 @@ namespace DSG.WinUI.Validation
 
             ValidationResult nameValidation = validator.ValidateName(profileName);
 
-            if(nameValidation.IsValid == false)
+            if (nameValidation.IsValid == false)
             {
                 return nameValidation;
             }

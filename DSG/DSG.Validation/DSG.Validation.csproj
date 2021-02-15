@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="GenerationProfiles\GenerationProfileValidator.cs" />
     <Compile Include="GenerationProfiles\IGenerationProfileValidator.cs" />
+    <Compile Include="Propabilities\IPropabilityValidator.cs" />
+    <Compile Include="Propabilities\PropabilityValidator.cs" />
     <Compile Include="IValidationMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationMethods.cs" />
@@ -65,5 +67,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Validation.spring.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

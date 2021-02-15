@@ -182,5 +182,13 @@
                 </Grid>
             </Border>
         </ControlTemplate>
+
+        <ControlTemplate x:Key="nonSupplyPropsErrorTemplate">
+                <Border BorderBrush="OrangeRed" BorderThickness="2">
+                    <Grid>
+                        <AdornedElementPlaceholder/>
+                    </Grid>
+                </Border>
+        </ControlTemplate>
     </Application.Resources>
 </Application>

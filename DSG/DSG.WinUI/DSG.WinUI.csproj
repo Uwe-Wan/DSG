@@ -135,7 +135,10 @@
     <Compile Include="Services\NaviService.cs" />
     <Compile Include="Validation\BindingProxy.cs" />
     <Compile Include="Validation\ComparisonValue.cs" />
+    <Compile Include="Validation\ComparisonValueForGenerationProfileViewEntity.cs" />
+    <Compile Include="Validation\ComparisonValueForPropability.cs" />
     <Compile Include="Validation\ValidateGenerationProfile.cs" />
+    <Compile Include="Validation\ValidatePropability.cs" />
     <Compile Include="WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>

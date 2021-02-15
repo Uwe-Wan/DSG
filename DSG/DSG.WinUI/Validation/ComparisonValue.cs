@@ -1,21 +1,19 @@
-﻿using DSG.Presentation.ViewEntity;
-using System.Collections.ObjectModel;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Data;
 
 namespace DSG.WinUI.Validation
 {
-    public class ComparisonValue : DependencyObject
+    public class ComparisonValue<TEntity> : DependencyObject
     {
-        public ObservableCollection<GenerationProfileViewEntity> Value
+        public TEntity Value
         {
-            get { return (ObservableCollection<GenerationProfileViewEntity>)GetValue(ValueProperty); }
+            get { return (TEntity)GetValue(ValueProperty); }
             set { SetValue(ValueProperty, value); }
         }
 
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(
             nameof(Value),
-            typeof(ObservableCollection<GenerationProfileViewEntity>),
-            typeof(ComparisonValue),
-            new PropertyMetadata(default(ObservableCollection<GenerationProfileViewEntity>)));
+            typeof(TEntity),
+            typeof(ComparisonValue<TEntity>), new PropertyMetadata(default(TEntity))); 
     }
 }

@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GenerationProfiles\GenerationProfileValidatorTest.cs" />
+    <Compile Include="Propabilities\PropabilityValidatorTest.cs" />
     <Compile Include="ValidationMethodsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
