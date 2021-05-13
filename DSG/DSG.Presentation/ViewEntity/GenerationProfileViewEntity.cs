@@ -12,7 +12,7 @@ namespace DSG.Presentation.ViewEntity
     {
         public GenerationProfile GenerationProfile { get; set; }
 
-        public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
+        public ObservableCollection<IsSelectedAndWeightedExpansionDto> IsDominionExpansionSelectedDtos { get; set; }
 
         private IMessenger Messenger { get; set; }
 
@@ -23,7 +23,7 @@ namespace DSG.Presentation.ViewEntity
         {
         }
 
-        public GenerationProfileViewEntity(GenerationProfile generationProfile, IMessenger messenger, ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos)
+        public GenerationProfileViewEntity(GenerationProfile generationProfile, IMessenger messenger, ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos)
         {
             GenerationProfile = generationProfile;
             IsDominionExpansionSelectedDtos = isDominionExpansionSelectedDtos;
@@ -48,7 +48,7 @@ namespace DSG.Presentation.ViewEntity
 
         private void CheckSelectedExpansionsOfProfile()
         {
-            foreach (IsDominionExpansionSelectedDto isDominionExpansionSelectedDto in IsDominionExpansionSelectedDtos)
+            foreach (IsSelectedAndWeightedExpansionDto isDominionExpansionSelectedDto in IsDominionExpansionSelectedDtos)
             {
                 isDominionExpansionSelectedDto.IsSelected = false;
             }

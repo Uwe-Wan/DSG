@@ -54,7 +54,7 @@ namespace DSG.BusinessComponents.GenerationProfiles
         }
 
         public GenerationProfile PrepareGenerationProfileForInsertion(
-            GenerationProfile generationProfile, ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles)
+            GenerationProfile generationProfile, ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles)
         {
             generationProfile.SelectedExpansions = isDominionExpansionSelectedDtos
                 .Where(x => x.IsSelected)

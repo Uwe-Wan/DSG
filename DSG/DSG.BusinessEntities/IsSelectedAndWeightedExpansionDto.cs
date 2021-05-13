@@ -2,9 +2,10 @@
 
 namespace DSG.BusinessEntities
 {
-    public class IsDominionExpansionSelectedDto : Notifier
+    public class IsSelectedAndWeightedExpansionDto : Notifier
     {
         private bool _isSelected;
+        private int _weight;
 
         public bool IsSelected
         {
@@ -16,12 +17,23 @@ namespace DSG.BusinessEntities
             }
         }
 
+        public int Weight
+        {
+            get { return _weight; }
+            set
+            {
+                _weight = value;
+                OnPropertyChanged(nameof(Weight));
+            }
+        }
+
         public DominionExpansion DominionExpansion { get; set; }
 
-        public IsDominionExpansionSelectedDto(DominionExpansion expansion)
+        public IsSelectedAndWeightedExpansionDto(DominionExpansion expansion)
         {
             DominionExpansion = expansion;
             IsSelected = true;
+            Weight = 1;
         }
     }
 }

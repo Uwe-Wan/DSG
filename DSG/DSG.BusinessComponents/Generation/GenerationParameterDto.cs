@@ -8,7 +8,7 @@ namespace DSG.BusinessComponents.Generation
 {
     public class GenerationParameterDto
     {
-        public List<DominionExpansion> Expansions { get; set; }
+        public Dictionary<DominionExpansion, int> WeightsByExpansions { get; set; }
 
         public int PropabilityForColonyAndPlatinum { get; set; }
 
@@ -17,10 +17,10 @@ namespace DSG.BusinessComponents.Generation
         public PropabilityForNonSupplyCards PropabilitiesForNonSupplies { get; set; }
 
         public GenerationParameterDto(
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, 
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos, 
             GenerationProfile generationProfile)
         {
-            Expansions = isDominionExpansionSelectedDtos.Where(x => x.IsSelected).Select(x => x.DominionExpansion).ToList();
+            WeightsByExpansions = isDominionExpansionSelectedDtos.Where(x => x.IsSelected).ToDictionary(dto => dto.DominionExpansion, dto => dto.Weight);
             PropabilityForColonyAndPlatinum = generationProfile.PropabilityForPlatinumAndColony;
             PropabilityForShelters = generationProfile.PropabilityForShelters;
             PropabilitiesForNonSupplies = generationProfile.PropabilityForNonSupplyCards;

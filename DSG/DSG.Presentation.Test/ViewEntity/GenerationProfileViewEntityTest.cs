@@ -32,8 +32,8 @@ namespace DSG.Presentation.Test.ViewEntity
             //Arrange
             GenerationProfile generationProfile = new GenerationProfile();
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion { Name = "Welt" }));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion { Name = "Welt" }));
 
             //Act
             _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isDominionExpansionSelectedDtos);
@@ -56,10 +56,10 @@ namespace DSG.Presentation.Test.ViewEntity
             generationProfile.SelectedExpansions.Add(new SelectedExpansionToGenerationProfile(world));
             generationProfile.SelectedExpansions.Add(new SelectedExpansionToGenerationProfile(intrigue));
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(world));
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(seaside));
-            IsDominionExpansionSelectedDto intrigueUnselected = new IsDominionExpansionSelectedDto(intrigue) { IsSelected = false };
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(world));
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(seaside));
+            IsSelectedAndWeightedExpansionDto intrigueUnselected = new IsSelectedAndWeightedExpansionDto(intrigue) { IsSelected = false };
             isDominionExpansionSelectedDtos.Add(intrigueUnselected);
 
             _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isDominionExpansionSelectedDtos);
@@ -80,7 +80,7 @@ namespace DSG.Presentation.Test.ViewEntity
         {
             // Arrange
             GenerationProfile profile = new GenerationProfile { Name = "Profile 1" };
-            _testee = new GenerationProfileViewEntity(profile, _messengerMock.Object, new ObservableCollection<IsDominionExpansionSelectedDto>());
+            _testee = new GenerationProfileViewEntity(profile, _messengerMock.Object, new ObservableCollection<IsSelectedAndWeightedExpansionDto>());
 
             // Act
             _testee.DeleteProfile();

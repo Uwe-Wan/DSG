@@ -17,12 +17,12 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="0.8*"/>
+            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="1.8*"/>
             <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.8*"/>
             <ColumnDefinition Width="1.3*"/>
         </Grid.ColumnDefinitions>
 
@@ -89,6 +89,22 @@
                     <DataGridTextColumn.Header>
                         <TextBlock Style="{StaticResource dataGridTitleDefaultStyle}" FontSize="16" Text="Expansions"/>
                     </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn 
+                    Binding="{Binding Weight}"
+                    FontSize="20" 
+                    Width="0.3*"
+                    IsReadOnly="False">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                    <DataGridTextColumn.HeaderTemplate>
+                            <DataTemplate>
+                                <Image Source="../Images/Weight.png"  />
+                            </DataTemplate>
+                        </DataGridTextColumn.HeaderTemplate>
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

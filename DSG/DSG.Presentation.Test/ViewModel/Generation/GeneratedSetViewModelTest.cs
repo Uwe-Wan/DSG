@@ -39,7 +39,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task OnPageLoaded_ExpansionsLoaded_PropertiesSet()
         {
             //Arrange
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
             GenerationProfile generationProfile = new GenerationProfile(10, 20, new PropabilityForNonSupplyCards());
             GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
 

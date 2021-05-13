@@ -69,7 +69,7 @@ namespace DSG.Presentation.ViewModel.Generation
             }
         }
 
-        public ObservableCollection<IsDominionExpansionSelectedDto> IsDominionExpansionSelectedDtos { get; set; }
+        public ObservableCollection<IsSelectedAndWeightedExpansionDto> IsDominionExpansionSelectedDtos { get; set; }
 
         public GenerationOptionsViewModel(IMessenger messenger)
         {
@@ -77,7 +77,7 @@ namespace DSG.Presentation.ViewModel.Generation
             SaveProfileCommand = new RelayCommand(c => SaveProfile());
 
             GenerationProfiles = new ObservableCollection<GenerationProfileViewEntity>();
-            IsDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
+            IsDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
 
             Messenger = messenger;
             Messenger.Register(Message.ProfileLoaded, LoadProfile);
@@ -117,7 +117,7 @@ namespace DSG.Presentation.ViewModel.Generation
         {
             List<int> availableExpansionIds = IsDominionExpansionSelectedDtos.Select(x => x.DominionExpansion.Id).ToList();
             IEnumerable<DominionExpansion> newExpansions = expansions.Where(expansion => availableExpansionIds.Contains(expansion.Id) == false);
-            IsDominionExpansionSelectedDtos.AddRange(newExpansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)));
+            IsDominionExpansionSelectedDtos.AddRange(newExpansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
         }
 
         private void LoadInitialGenerationProfiles()

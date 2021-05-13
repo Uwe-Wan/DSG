@@ -41,15 +41,15 @@ namespace DSG.BusinessComponentsTest.Generation
         }
 
         [Test]
-        public void GenerateSet_LessThan10AvailableCards_ReturnNull()
+        public void GenerateSet_LessThan10AvailableCards_ThrowException()
         {
             //Arrange
             Card oneCard = new Card { CardTypeToCards = new List<CardTypeToCard> { } };
             List<Card> cards = new List<Card> { oneCard };
 
             DominionExpansion expansion = new DominionExpansion { ContainedCards = cards };
-            ObservableCollection<IsDominionExpansionSelectedDto> expansions = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            expansions.Add(new IsDominionExpansionSelectedDto(expansion));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> expansions = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(expansion));
 
             GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, new GenerationProfile());
 
@@ -60,7 +60,63 @@ namespace DSG.BusinessComponentsTest.Generation
         }
 
         [Test]
-        public void GenerateSet_12CardButOnly6Kingdom_ReturnNull()
+        public void GenerateSet_SixCardsWithWeightTwo_ThrowException()
+        {
+            //Arrange
+            DominionExpansion expansion = new DominionExpansion();
+            List<CardTypeToCard> kingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
+            for (int i = 0; i < 6; i++)
+            {
+                expansion.ContainedCards.Add(new Card() { CardTypeToCards = kingdomTypes });
+            }
+
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> expansions = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(expansion) { Weight = 2 });
+
+            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, new GenerationProfile());
+
+            Action act = () => _testee.GenerateSet(generationParameter);
+
+            //Act
+            act.Should().Throw<NotEnoughCardsAvailableException>().WithMessage("Not enough Cards available.");
+        }
+
+        [Test]
+        public void GenerateSet_FiveCardsWithWeightTwoPlusSixInOtherSet_ShuffleListInvokedWithSixteen()
+        {
+            //Arrange
+            List<CardTypeToCard> kingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
+
+            DominionExpansion firstExpansion = new DominionExpansion();
+            for (int i = 0; i < 5; i++)
+            {
+                firstExpansion.ContainedCards.Add(new Card() { CardTypeToCards = kingdomTypes });
+            }
+            DominionExpansion secondExpansion = new DominionExpansion();
+            for (int i = 0; i < 6; i++)
+            {
+                secondExpansion.ContainedCards.Add(new Card() { CardTypeToCards = kingdomTypes });
+            }
+
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> expansions = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(firstExpansion) { Weight = 2 });
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(secondExpansion) { Weight = 1 });
+
+            PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards(55, 30, 7, 0);
+            GenerationProfile generationProfile = new GenerationProfile(10, 20, propabilitiesForNonSupplies);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, generationProfile);
+
+            _shuffleListBcMock.Setup(mock => mock.ReturnGivenNumberOfDistinctRandomElementsFromList(It.IsAny<List<Card>>(), It.IsAny<int>())).Returns(new List<Card>());
+
+            //Act
+            _testee.GenerateSet(generationParameter);
+
+            // Verify
+            _shuffleListBcMock.Verify(mock => mock.ReturnGivenNumberOfDistinctRandomElementsFromList(It.Is<List<Card>>(list => list.Count == 16), 10), Times.Once);
+        }
+
+        [Test]
+        public void GenerateSet_12CardButOnly6Kingdom_ThrowException()
         {
             //Arrange
             List<CardTypeToCard> kingdomTypes = new List<CardTypeToCard>() { new CardTypeToCard { CardType = new CardType { IsSupplyType = true } } };
@@ -78,9 +134,9 @@ namespace DSG.BusinessComponentsTest.Generation
                 secondExpansion.ContainedCards.Add(new Card() { CardTypeToCards = nonKingdomTypes });
             }
 
-            ObservableCollection<IsDominionExpansionSelectedDto> expansions = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            expansions.Add(new IsDominionExpansionSelectedDto(firstExpansion));
-            expansions.Add(new IsDominionExpansionSelectedDto(secondExpansion));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> expansions = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(firstExpansion));
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(secondExpansion));
 
             GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, new GenerationProfile());
 
@@ -133,8 +189,8 @@ namespace DSG.BusinessComponentsTest.Generation
             };
             expansions[2].ContainedCards.AddRange(nonSupplyCards);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
 
@@ -200,8 +256,8 @@ namespace DSG.BusinessComponentsTest.Generation
             };
             expansions[2].ContainedCards.AddRange(nonSupplyCards);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
 
@@ -264,8 +320,8 @@ namespace DSG.BusinessComponentsTest.Generation
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Plan);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
             List<Card> validCardsForFirstAdditional = allSupplyCards.Skip(12).ToList();
@@ -331,8 +387,8 @@ namespace DSG.BusinessComponentsTest.Generation
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Ranger);
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Relic);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsDominionExpansionSelectedDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
 

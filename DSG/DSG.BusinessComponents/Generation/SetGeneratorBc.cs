@@ -50,10 +50,12 @@ namespace DSG.BusinessComponents.Generation
 
         public GeneratedSetDto GenerateSet(GenerationParameterDto generationParameter)
         {
-            List<Card> availableCards = generationParameter
-                .Expansions
-                .SelectMany(expansion => expansion.ContainedCards)
-                .ToList();
+            List<Card> availableCards =
+                generationParameter
+                .WeightsByExpansions
+                .SelectMany(dict => Enumerable.Repeat(dict.Key.ContainedCards, dict.Value)
+                    .SelectMany(card => card))
+                .ToList();                
 
             List<Card> chosenSupplyCards = ChooseSupplyCards(availableCards);
             List<Card> chosenNonSupplyCards = ChooseNonSupplyCards(availableCards, generationParameter.PropabilitiesForNonSupplies);
@@ -155,7 +157,7 @@ namespace DSG.BusinessComponents.Generation
         {
             List<Card> availableSupplyCards = availableCards.GetSupplyCards();
 
-            if (availableSupplyCards.Count < 10)
+            if (availableSupplyCards.Distinct().Count() < 10)
             {
                 throw new NotEnoughCardsAvailableException("Not enough Cards available.");
             }

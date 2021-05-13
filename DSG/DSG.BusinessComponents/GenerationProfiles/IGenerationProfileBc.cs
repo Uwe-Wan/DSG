@@ -10,7 +10,7 @@ namespace DSG.BusinessComponents.GenerationProfiles
         string InsertGenerationProfile(GenerationProfile generationProfile);
 
         GenerationProfile PrepareGenerationProfileForInsertion(
-            GenerationProfile generationProfile, ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles);
+            GenerationProfile generationProfile, ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles);
 
         List<GenerationProfile> GetGenerationProfiles();
 

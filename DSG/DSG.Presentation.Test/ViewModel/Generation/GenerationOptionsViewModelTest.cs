@@ -78,7 +78,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             DominionExpansion expansion = new DominionExpansion();
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion };
 
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(expansion));
+            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
             _testee.IsDominionExpansionSelectedDtos.First().IsSelected = false;
 
             _testee.GenerationProfiles.Add(new GenerationProfileViewEntity());
@@ -103,7 +103,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             //Arrange
             DominionExpansion expansion = new DominionExpansion { Id = 1 };
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion, new DominionExpansion { Id = 2 } };
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(expansion));
+            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
             _testee.IsDominionExpansionSelectedDtos.First().IsSelected = false;
 
             //Act
@@ -129,7 +129,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 }
             };
 
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(expansion));
+            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
 
             _testee.SelectedProfile = new GenerationProfile(20, 10, new PropabilityForNonSupplyCards());
 
@@ -155,7 +155,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                     new Card { CardTypeToCards = new List<CardTypeToCard> { supplyType } });
             }
 
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(expansion));
+            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
 
             _testee.SelectedProfile = new GenerationProfile(10, 20, new PropabilityForNonSupplyCards(20, 10, 0, 0));
 
@@ -249,8 +249,8 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             GenerationProfile profile1 = new GenerationProfile { Id = 1, Name = "Profile 1" };
             GenerationProfile profile2 = new GenerationProfile { Id = 2, Name = "To be deleted profile" };
 
-            _testee.GenerationProfiles.Add(new GenerationProfileViewEntity(profile1, _messengerMock.Object, new ObservableCollection<IsDominionExpansionSelectedDto>()));
-            _testee.GenerationProfiles.Add(new GenerationProfileViewEntity(profile2, _messengerMock.Object, new ObservableCollection<IsDominionExpansionSelectedDto>()));
+            _testee.GenerationProfiles.Add(new GenerationProfileViewEntity(profile1, _messengerMock.Object, new ObservableCollection<IsSelectedAndWeightedExpansionDto>()));
+            _testee.GenerationProfiles.Add(new GenerationProfileViewEntity(profile2, _messengerMock.Object, new ObservableCollection<IsSelectedAndWeightedExpansionDto>()));
 
             //Act
             _testee.DeleteProfile(profile2);

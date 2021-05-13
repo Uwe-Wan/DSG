@@ -181,9 +181,9 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             PropabilityForNonSupplyCards duplicatedPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 3 };
             GenerationProfile generationProfile = new GenerationProfile(20, 10, duplicatedPropabilityForNonSupplyCards);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()));
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()) { IsSelected = false });
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion()));
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion()) { IsSelected = false });
 
             // Act
             GenerationProfile result = _testee.PrepareGenerationProfileForInsertion(generationProfile, isDominionExpansionSelectedDtos, existingProfiles);
@@ -206,9 +206,9 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             PropabilityForNonSupplyCards duplicatedPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(42, 32, 22, 12) { Id = 3 };
             GenerationProfile generationProfile = new GenerationProfile(20, 10, duplicatedPropabilityForNonSupplyCards);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()));
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()) { IsSelected = false });
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion()));
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion()) { IsSelected = false });
 
             // Act
             GenerationProfile result = _testee.PrepareGenerationProfileForInsertion(generationProfile, isDominionExpansionSelectedDtos, existingProfiles);
@@ -231,9 +231,9 @@ namespace DSG.BusinessComponentsTest.GenerationProfiles
             PropabilityForNonSupplyCards duplicatedPropabilityForNonSupplyCards = new PropabilityForNonSupplyCards(40, 30, 20, 10) { Id = 3 };
             GenerationProfile generationProfile = new GenerationProfile(20, 10, duplicatedPropabilityForNonSupplyCards);
 
-            ObservableCollection<IsDominionExpansionSelectedDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsDominionExpansionSelectedDto>();
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()));
-            isDominionExpansionSelectedDtos.Add(new IsDominionExpansionSelectedDto(new DominionExpansion()) { IsSelected = false });
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion()));
+            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion()) { IsSelected = false });
 
             // Act
             GenerationProfile result = _testee.PrepareGenerationProfileForInsertion(generationProfile, isDominionExpansionSelectedDtos, existingProfiles);
