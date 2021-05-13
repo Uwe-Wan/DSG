@@ -145,7 +145,7 @@ namespace DSG.BusinessComponents.Generation
                 .Where(x => additionalCard.MinCost.HasValue == false || x.Cost.Money >= additionalCard.MinCost.Value)
                 .Where(x => additionalCard.MaxCost.HasValue == false || x.Cost.Money <= additionalCard.MaxCost.Value)
                 .ToList();
-            List<Card> generatedAdditionalCards = ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(cardsWithAllowedCost, artifact.AmountOfAdditionalCards.Value);
+            List<Card> generatedAdditionalCards = ShuffleListBc.ReturnGivenNumberOfDistinctRandomElementsFromList(cardsWithAllowedCost, artifact.AmountOfAdditionalCards.Value);
             additionalCardsForSet.AddRange(generatedAdditionalCards.Select(card => new GeneratedAdditionalCard(card, parent)));
             //the way this is currently written, it is also ensured that an existing card is not used as additional card for two cards
             cardsToChooseFrom.RemoveAll(poolCard => generatedAdditionalCards.Contains(poolCard));
@@ -160,7 +160,7 @@ namespace DSG.BusinessComponents.Generation
                 throw new NotEnoughCardsAvailableException("Not enough Cards available.");
             }
 
-            return ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(availableSupplyCards, 10);
+            return ShuffleListBc.ReturnGivenNumberOfDistinctRandomElementsFromList(availableSupplyCards, 10);
         }
 
         private List<Card> ChooseNonSupplyCards(List<Card> availableCards, PropabilityForNonSupplyCards propabilitiesForNonSupplies)
@@ -178,7 +178,7 @@ namespace DSG.BusinessComponents.Generation
                 return availableNonSupplyCards;
             }
 
-            return ShuffleListBc.ReturnGivenNumberOfRandomElementsFromList(availableNonSupplyCards, numberOfNonSupplyCards);
+            return ShuffleListBc.ReturnGivenNumberOfDistinctRandomElementsFromList(availableNonSupplyCards, numberOfNonSupplyCards);
         }
     }
 }

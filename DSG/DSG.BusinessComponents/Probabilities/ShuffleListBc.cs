@@ -1,6 +1,7 @@
 ﻿using DSG.Common;
 using DSG.Common.Provider;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DSG.BusinessComponents.Probabilities
 {
@@ -21,7 +22,7 @@ namespace DSG.BusinessComponents.Probabilities
             }
         }
 
-        public List<TEntity> ReturnGivenNumberOfRandomElementsFromList(List<TEntity> listToReturnFrom, int numberOfElements)
+        public List<TEntity> ReturnGivenNumberOfDistinctRandomElementsFromList(List<TEntity> listToReturnFrom, int numberOfElements)
         {
             List<TEntity> chosenEntries = new List<TEntity>();
 
@@ -32,7 +33,7 @@ namespace DSG.BusinessComponents.Probabilities
                 TEntity selectedElement = listToReturnFrom[randomListEntryToReturn];
                 chosenEntries.Add(selectedElement);
 
-                listToReturnFrom.RemoveAt(randomListEntryToReturn);
+                listToReturnFrom = listToReturnFrom.Where(entity => entity.Equals(selectedElement) == false).ToList();
             }
 
             return chosenEntries;
