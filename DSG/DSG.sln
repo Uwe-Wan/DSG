@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.Validation", "DSG.Valid
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.Validation.Test", "DSG.Validation.Test\DSG.Validation.Test.csproj", "{2DEFC179-91B3-4A6D-B595-654463600E15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DSG.BusinessEntities.Test", "DSG.BusinessEntities.Test\DSG.BusinessEntities.Test.csproj", "{FE61AAB3-4447-4651-8354-7F38D1804467}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{2DEFC179-91B3-4A6D-B595-654463600E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DEFC179-91B3-4A6D-B595-654463600E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DEFC179-91B3-4A6D-B595-654463600E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE61AAB3-4447-4651-8354-7F38D1804467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE61AAB3-4447-4651-8354-7F38D1804467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE61AAB3-4447-4651-8354-7F38D1804467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE61AAB3-4447-4651-8354-7F38D1804467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

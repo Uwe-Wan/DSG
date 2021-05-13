@@ -70,10 +70,10 @@ namespace DSG.BusinessEntities
 
         public static class DominionExpansions
         {
-            public static DominionExpansion Adventure => new DominionExpansion { Name = "Adventure" };
-            public static DominionExpansion Cornucopia => new DominionExpansion { Name = "Cornucopia" };
-            public static DominionExpansion Empires => new DominionExpansion { Name = "Empires" };
-            public static DominionExpansion Alchemy => new DominionExpansion { Name = "Alchemy" };
+            public static DominionExpansion Adventure => new DominionExpansion { Id = 1, Name = "Adventure" };
+            public static DominionExpansion Cornucopia => new DominionExpansion { Id = 2, Name = "Cornucopia" };
+            public static DominionExpansion Empires => new DominionExpansion { Id = 3, Name = "Empires" };
+            public static DominionExpansion Alchemy => new DominionExpansion { Id = 4, Name = "Alchemy" };
         }
 
         #endregion
@@ -243,6 +243,7 @@ namespace DSG.BusinessEntities
             {
                 Name = "Bridge Troll",
                 DominionExpansion = DominionExpansions.Adventure,
+                DominionExpansionId = DominionExpansions.Adventure.Id,
                 CardArtifactsToCard = CardArtifactToCards.MinusOneCoinArtifact,
                 CardTypeToCards = CardTypeToCards.ActionType,
                 Cost = Costs.Five
