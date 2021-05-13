@@ -155,10 +155,10 @@ namespace DSG.Presentation.Test.ViewModel.Management
 
             //Assert
             _testee.SelectedCardArtifacts.First().IsSelected.Should().BeFalse();
-            _testee.SelectedCardTypes.First().IsSelected.Should().BeFalse();
+            _testee.SelectedCardTypes.First().IsSelected.Should().BeTrue();
             _testee.SelectedCardSubTypes.First().IsSelected.Should().BeFalse();
 
-            _testee.NewCard.Cost.Should().BeEquivalentTo(new Cost());
+            _testee.NewCard.Cost.Money.Should().Be(3);
             _testee.NewCard.DominionExpansion.Should().BeEquivalentTo(selectedExpansion);
             _testee.NewCard.DominionExpansionId.Should().Be(selectedExpansion.Id);
             _testee.NewCard.Name.Should().BeNull();

@@ -197,7 +197,6 @@ namespace DSG.Presentation.ViewModel.Management
         {
             InitializeNewCard();
             SelectedCardArtifacts.ForEach(artifact => artifact.IsSelected = false);
-            SelectedCardTypes.ForEach(type => type.IsSelected = false);
             SelectedCardSubTypes.ForEach(type => type.IsSelected = false);
         }
 
@@ -244,8 +243,10 @@ namespace DSG.Presentation.ViewModel.Management
 
         private void InitializeNewCard()
         {
-            NewCard = new Card();
-            NewCard.Cost = new Cost();
+            NewCard = new Card
+            {
+                Cost = NewCard?.Cost == null ? new Cost() : NewCard.Cost.Clone()
+            };
             NewCard.CostId = NewCard.Cost.Id;
             NewCard.DominionExpansion = SelectedExpansionViewEntity.DominionExpansion;
             NewCard.DominionExpansionId = SelectedExpansionViewEntity.DominionExpansion.Id;

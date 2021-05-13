@@ -59,5 +59,21 @@ namespace DSG.BusinessEntities.Test
             // Assert
             result.Should().BeFalse();
         }
+
+        [Test]
+        public void Clone_ExistingEntity_SameValuesButDifferentReference()
+        {
+            // Arrange
+            Cost initialCost = new Cost(3, 2, false);
+
+            // Act
+            Cost clonedCost = initialCost.Clone();
+
+            // Assert
+            object.ReferenceEquals(initialCost, clonedCost).Should().BeFalse();
+            clonedCost.Money.Value.Should().Be(initialCost.Money.Value);
+            clonedCost.Dept.Value.Should().Be(initialCost.Dept.Value);
+            clonedCost.Potion.Should().Be(initialCost.Potion);
+        }
     }
 }

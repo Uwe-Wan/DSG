@@ -26,7 +26,7 @@ namespace DSG.BusinessEntities
         {
         }
 
-        public Cost(int money = 0, int dept = 0, bool potion = false)
+        public Cost(int? money = 0, int? dept = 0, bool potion = false)
         {
             Money = money;
             Dept = dept;
@@ -62,6 +62,11 @@ namespace DSG.BusinessEntities
             }
 
             return hashCode;
+        }
+
+        public Cost Clone()
+        {
+            return new Cost(Money, Dept, Potion);
         }
     }
 }
