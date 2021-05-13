@@ -13,6 +13,7 @@ namespace DSG.BusinessEntities
             set
             {
                 _isSelected = value;
+                UpdateWeightBySelection(value);
                 OnPropertyChanged(nameof(IsSelected));
             }
         }
@@ -29,11 +30,16 @@ namespace DSG.BusinessEntities
 
         public DominionExpansion DominionExpansion { get; set; }
 
-        public IsSelectedAndWeightedExpansionDto(DominionExpansion expansion)
+        public IsSelectedAndWeightedExpansionDto(DominionExpansion expansion, int weight = 1)
         {
             DominionExpansion = expansion;
             IsSelected = true;
-            Weight = 1;
+            Weight = weight;
+        }
+
+        internal void UpdateWeightBySelection(bool isSelected)
+        {
+            Weight = isSelected ? 1 : 0;
         }
     }
 }

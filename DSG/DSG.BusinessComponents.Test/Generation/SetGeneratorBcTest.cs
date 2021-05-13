@@ -71,7 +71,7 @@ namespace DSG.BusinessComponentsTest.Generation
             }
 
             ObservableCollection<IsSelectedAndWeightedExpansionDto> expansions = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            expansions.Add(new IsSelectedAndWeightedExpansionDto(expansion) { Weight = 2 });
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(expansion, 2));
 
             GenerationParameterDto generationParameter = new GenerationParameterDto(expansions, new GenerationProfile());
 
@@ -99,8 +99,8 @@ namespace DSG.BusinessComponentsTest.Generation
             }
 
             ObservableCollection<IsSelectedAndWeightedExpansionDto> expansions = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            expansions.Add(new IsSelectedAndWeightedExpansionDto(firstExpansion) { Weight = 2 });
-            expansions.Add(new IsSelectedAndWeightedExpansionDto(secondExpansion) { Weight = 1 });
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(firstExpansion, 2));
+            expansions.Add(new IsSelectedAndWeightedExpansionDto(secondExpansion));
 
             PropabilityForNonSupplyCards propabilitiesForNonSupplies = new PropabilityForNonSupplyCards(55, 30, 7, 0);
             GenerationProfile generationProfile = new GenerationProfile(10, 20, propabilitiesForNonSupplies);

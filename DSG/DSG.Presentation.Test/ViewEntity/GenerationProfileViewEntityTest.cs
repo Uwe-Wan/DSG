@@ -5,12 +5,8 @@ using DSG.Presentation.ViewEntity;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DSG.Presentation.Test.ViewEntity
 {
@@ -59,7 +55,7 @@ namespace DSG.Presentation.Test.ViewEntity
             ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
             isSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(world));
             isSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(seaside));
-            IsSelectedAndWeightedExpansionDto intrigueUnselected = new IsSelectedAndWeightedExpansionDto(intrigue) { IsSelected = false, Weight = 0 };
+            IsSelectedAndWeightedExpansionDto intrigueUnselected = new IsSelectedAndWeightedExpansionDto(intrigue, 0) { IsSelected = false };
             isSelectedAndWeightedExpansionDtos.Add(intrigueUnselected);
 
             _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isSelectedAndWeightedExpansionDtos);
