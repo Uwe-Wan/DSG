@@ -69,7 +69,7 @@ namespace DSG.Presentation.ViewModel.Generation
             }
         }
 
-        public ObservableCollection<IsSelectedAndWeightedExpansionDto> IsDominionExpansionSelectedDtos { get; set; }
+        public ObservableCollection<IsSelectedAndWeightedExpansionDto> IsSelectedAndWeightedExpansionDtos { get; set; }
 
         public GenerationOptionsViewModel(IMessenger messenger)
         {
@@ -77,7 +77,7 @@ namespace DSG.Presentation.ViewModel.Generation
             SaveProfileCommand = new RelayCommand(c => SaveProfile());
 
             GenerationProfiles = new ObservableCollection<GenerationProfileViewEntity>();
-            IsDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            IsSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
 
             Messenger = messenger;
             Messenger.Register(Message.ProfileLoaded, LoadProfile);
@@ -115,9 +115,9 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private void AddNewExpansionsToSelection(IEnumerable<DominionExpansion> expansions)
         {
-            List<int> availableExpansionIds = IsDominionExpansionSelectedDtos.Select(x => x.DominionExpansion.Id).ToList();
+            List<int> availableExpansionIds = IsSelectedAndWeightedExpansionDtos.Select(x => x.DominionExpansion.Id).ToList();
             IEnumerable<DominionExpansion> newExpansions = expansions.Where(expansion => availableExpansionIds.Contains(expansion.Id) == false);
-            IsDominionExpansionSelectedDtos.AddRange(newExpansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
+            IsSelectedAndWeightedExpansionDtos.AddRange(newExpansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
         }
 
         private void LoadInitialGenerationProfiles()
@@ -125,7 +125,7 @@ namespace DSG.Presentation.ViewModel.Generation
             if (GenerationProfiles.Count == 0)
             {
                 List<GenerationProfileViewEntity> loadedProfiles = GenerationProfileBc.GetGenerationProfiles()
-                    .Select(profile => new GenerationProfileViewEntity(profile, Messenger, IsDominionExpansionSelectedDtos))
+                    .Select(profile => new GenerationProfileViewEntity(profile, Messenger, IsSelectedAndWeightedExpansionDtos))
                     .ToList();
                 GenerationProfiles.AddRange(loadedProfiles);
             }
@@ -147,7 +147,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private int GetAmountOfAvailableSupplyCards()
         {
-            List<Card> availableCards = IsDominionExpansionSelectedDtos
+            List<Card> availableCards = IsSelectedAndWeightedExpansionDtos
                 .Where(dto => dto.IsSelected)
                 .SelectMany(dto => dto.DominionExpansion.ContainedCards)
                 .ToList();
@@ -157,7 +157,7 @@ namespace DSG.Presentation.ViewModel.Generation
         internal void SaveProfile()
         {
             GenerationProfile newProfile = GenerationProfileBc.PrepareGenerationProfileForInsertion(
-                SelectedProfile, IsDominionExpansionSelectedDtos, GenerationProfiles.Select(x => x.GenerationProfile));
+                SelectedProfile, IsSelectedAndWeightedExpansionDtos, GenerationProfiles.Select(x => x.GenerationProfile));
 
             string error = GenerationProfileBc.InsertGenerationProfile(newProfile);
 
@@ -167,7 +167,7 @@ namespace DSG.Presentation.ViewModel.Generation
                 return;
             }
 
-            GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, Messenger, IsDominionExpansionSelectedDtos);
+            GenerationProfileViewEntity newProfileViewEntity = new GenerationProfileViewEntity(newProfile, Messenger, IsSelectedAndWeightedExpansionDtos);
             GenerationProfiles.Add(newProfileViewEntity);
 
             SelectedProfile = newProfile.Clone();
@@ -188,7 +188,7 @@ namespace DSG.Presentation.ViewModel.Generation
 
         private void NavigateTo(NavigationDestination destination)
         {
-            GenerationParameterDto generationParameter = new GenerationParameterDto(IsDominionExpansionSelectedDtos, SelectedProfile);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(IsSelectedAndWeightedExpansionDtos, SelectedProfile);
             NaviService.NavigateToAsync(destination, generationParameter);
         }
 

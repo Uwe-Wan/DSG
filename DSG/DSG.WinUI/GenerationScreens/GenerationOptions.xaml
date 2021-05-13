@@ -70,7 +70,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Grid.RowSpan="5"
-            ItemsSource="{Binding IsDominionExpansionSelectedDtos}"              
+            ItemsSource="{Binding IsSelectedAndWeightedExpansionDtos}"              
             Style="{StaticResource dataGridDefaultStyle}"
             Width="Auto">
             <DataGrid.Resources>

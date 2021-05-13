@@ -32,15 +32,15 @@ namespace DSG.Presentation.Test.ViewEntity
             //Arrange
             GenerationProfile generationProfile = new GenerationProfile();
 
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion { Name = "Welt" }));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(new DominionExpansion { Name = "Welt" }));
 
             //Act
-            _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isDominionExpansionSelectedDtos);
+            _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isSelectedAndWeightedExpansionDtos);
 
             //Assert
             _testee.GenerationProfile.Should().Be(generationProfile);
-            _testee.IsDominionExpansionSelectedDtos.Should().Equal(isDominionExpansionSelectedDtos);
+            _testee.IsSelectedAndWeightedExpansionDto.Should().Equal(isSelectedAndWeightedExpansionDtos);
         }
 
         [Test]
@@ -53,16 +53,16 @@ namespace DSG.Presentation.Test.ViewEntity
             DominionExpansion seaside = new DominionExpansion { Id = 2, Name = "Seaside" };
             DominionExpansion intrigue = new DominionExpansion { Id = 3, Name = "Intrigue" };
 
-            generationProfile.SelectedExpansions.Add(new SelectedExpansionToGenerationProfile(world));
+            generationProfile.SelectedExpansions.Add(new SelectedExpansionToGenerationProfile(world, 2));
             generationProfile.SelectedExpansions.Add(new SelectedExpansionToGenerationProfile(intrigue));
 
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(world));
-            isDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(seaside));
-            IsSelectedAndWeightedExpansionDto intrigueUnselected = new IsSelectedAndWeightedExpansionDto(intrigue) { IsSelected = false };
-            isDominionExpansionSelectedDtos.Add(intrigueUnselected);
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(world));
+            isSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(seaside));
+            IsSelectedAndWeightedExpansionDto intrigueUnselected = new IsSelectedAndWeightedExpansionDto(intrigue) { IsSelected = false, Weight = 0 };
+            isSelectedAndWeightedExpansionDtos.Add(intrigueUnselected);
 
-            _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isDominionExpansionSelectedDtos);
+            _testee = new GenerationProfileViewEntity(generationProfile, _messengerMock.Object, isSelectedAndWeightedExpansionDtos);
 
             //Act
             _testee.LoadProfile();
@@ -70,9 +70,13 @@ namespace DSG.Presentation.Test.ViewEntity
             //Assert
             _messengerMock.Verify(x => x.NotifyEventTriggered(It.Is<MessageDto>(m => m.Name == Message.ProfileLoaded)), Times.Once);
 
-            _testee.IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Name == "World").IsSelected.Should().BeTrue();
-            _testee.IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Name == "Seaside").IsSelected.Should().BeFalse();
-            _testee.IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Name == "Intrigue").IsSelected.Should().BeTrue();
+            _testee.IsSelectedAndWeightedExpansionDto.Single(x => x.DominionExpansion.Name == "World").IsSelected.Should().BeTrue();
+            _testee.IsSelectedAndWeightedExpansionDto.Single(x => x.DominionExpansion.Name == "Seaside").IsSelected.Should().BeFalse();
+            _testee.IsSelectedAndWeightedExpansionDto.Single(x => x.DominionExpansion.Name == "Intrigue").IsSelected.Should().BeTrue();
+
+            _testee.IsSelectedAndWeightedExpansionDto.Single(x => x.DominionExpansion.Name == "World").Weight.Should().Be(2);
+            _testee.IsSelectedAndWeightedExpansionDto.Single(x => x.DominionExpansion.Name == "Seaside").Weight.Should().Be(1);
+            _testee.IsSelectedAndWeightedExpansionDto.Single(x => x.DominionExpansion.Name == "Intrigue").Weight.Should().Be(1);
         }
 
         [Test]

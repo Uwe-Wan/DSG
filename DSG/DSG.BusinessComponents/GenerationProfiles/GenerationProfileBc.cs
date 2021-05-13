@@ -54,11 +54,11 @@ namespace DSG.BusinessComponents.GenerationProfiles
         }
 
         public GenerationProfile PrepareGenerationProfileForInsertion(
-            GenerationProfile generationProfile, ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos, IEnumerable<GenerationProfile> existingProfiles)
+            GenerationProfile generationProfile, ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos, IEnumerable<GenerationProfile> existingProfiles)
         {
-            generationProfile.SelectedExpansions = isDominionExpansionSelectedDtos
-                .Where(x => x.IsSelected)
-                .Select(x => new SelectedExpansionToGenerationProfile(x.DominionExpansion))
+            generationProfile.SelectedExpansions = isSelectedAndWeightedExpansionDtos
+                .Where(dto => dto.IsSelected)
+                .Select(dto => new SelectedExpansionToGenerationProfile(dto.DominionExpansion, dto.Weight))
                 .ToList();
 
             PropabilityForNonSupplyCards existingPropability = existingProfiles

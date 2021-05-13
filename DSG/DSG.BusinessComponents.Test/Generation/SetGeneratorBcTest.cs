@@ -189,12 +189,12 @@ namespace DSG.BusinessComponentsTest.Generation
             };
             expansions[2].ContainedCards.AddRange(nonSupplyCards);
 
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isSelectedAndWeightedExpansionDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isSelectedAndWeightedExpansionDtos, generationProfile);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);
@@ -256,12 +256,12 @@ namespace DSG.BusinessComponentsTest.Generation
             };
             expansions[2].ContainedCards.AddRange(nonSupplyCards);
 
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isSelectedAndWeightedExpansionDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(nonSupplyCards, 1)).Returns(nonSupplyCards.Take(1).ToList());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isSelectedAndWeightedExpansionDtos, generationProfile);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);
@@ -320,8 +320,8 @@ namespace DSG.BusinessComponentsTest.Generation
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
             expansions[2].ContainedCards.Add(TestDataDefines.Cards.Plan);
 
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDto = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isSelectedAndWeightedExpansionDto.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(allSupplyCards, 10)).Returns(allSupplyCards.Take(10).ToList());
             List<Card> validCardsForFirstAdditional = allSupplyCards.Skip(12).ToList();
@@ -332,7 +332,7 @@ namespace DSG.BusinessComponentsTest.Generation
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(It.Is<List<Card>>(list => list.Count == 1), 0)).Returns(new List<Card>());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isSelectedAndWeightedExpansionDto, generationProfile);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);
@@ -387,8 +387,8 @@ namespace DSG.BusinessComponentsTest.Generation
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Ranger);
             expansions[1].ContainedCards.Add(TestDataDefines.Cards.Relic);
 
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
-            isDominionExpansionSelectedDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            isSelectedAndWeightedExpansionDtos.AddRange(expansions.Select(expansion => new IsSelectedAndWeightedExpansionDto(expansion)));
 
             List<Card> allSupplyCards = expansions.SelectMany(x => x.ContainedCards).ToList();
 
@@ -407,7 +407,7 @@ namespace DSG.BusinessComponentsTest.Generation
 
             _shuffleListBcMock.Setup(x => x.ReturnGivenNumberOfDistinctRandomElementsFromList(new List<Card>(), 0)).Returns(new List<Card>());
 
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isSelectedAndWeightedExpansionDtos, generationProfile);
 
             //Act
             GeneratedSetDto result = _testee.GenerateSet(generationParameter);

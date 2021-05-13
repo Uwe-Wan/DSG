@@ -12,7 +12,7 @@ namespace DSG.Presentation.ViewEntity
     {
         public GenerationProfile GenerationProfile { get; set; }
 
-        public ObservableCollection<IsSelectedAndWeightedExpansionDto> IsDominionExpansionSelectedDtos { get; set; }
+        public ObservableCollection<IsSelectedAndWeightedExpansionDto> IsSelectedAndWeightedExpansionDto { get; set; }
 
         private IMessenger Messenger { get; set; }
 
@@ -23,10 +23,10 @@ namespace DSG.Presentation.ViewEntity
         {
         }
 
-        public GenerationProfileViewEntity(GenerationProfile generationProfile, IMessenger messenger, ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos)
+        public GenerationProfileViewEntity(GenerationProfile generationProfile, IMessenger messenger, ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDto)
         {
             GenerationProfile = generationProfile;
-            IsDominionExpansionSelectedDtos = isDominionExpansionSelectedDtos;
+            IsSelectedAndWeightedExpansionDto = isSelectedAndWeightedExpansionDto;
 
             Messenger = messenger;
 
@@ -48,14 +48,18 @@ namespace DSG.Presentation.ViewEntity
 
         private void CheckSelectedExpansionsOfProfile()
         {
-            foreach (IsSelectedAndWeightedExpansionDto isDominionExpansionSelectedDto in IsDominionExpansionSelectedDtos)
+            foreach (IsSelectedAndWeightedExpansionDto isSelectedAndWeightedExpansionDto in IsSelectedAndWeightedExpansionDto)
             {
-                isDominionExpansionSelectedDto.IsSelected = false;
+                isSelectedAndWeightedExpansionDto.IsSelected = false;
+                isSelectedAndWeightedExpansionDto.Weight = 1;
             }
 
-            foreach (int selectedId in GenerationProfile.SelectedExpansions.Select(x => x.DominionExpansionId))
+            foreach (SelectedExpansionToGenerationProfile selectedExpansion in GenerationProfile.SelectedExpansions)
             {
-                IsDominionExpansionSelectedDtos.Single(x => x.DominionExpansion.Id == selectedId).IsSelected = true;
+                IsSelectedAndWeightedExpansionDto isSelectedAndWeightedExpansionDto = IsSelectedAndWeightedExpansionDto
+                    .Single(x => x.DominionExpansion.Id == selectedExpansion.DominionExpansionId);
+                isSelectedAndWeightedExpansionDto.IsSelected = true;
+                isSelectedAndWeightedExpansionDto.Weight = selectedExpansion.Weight;
             }
         }
 

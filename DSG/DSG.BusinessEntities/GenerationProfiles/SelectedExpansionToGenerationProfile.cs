@@ -17,9 +17,13 @@ namespace DSG.BusinessEntities.GenerationProfiles
 
         public GenerationProfile GenerationProfile { get; set; }
 
-        public SelectedExpansionToGenerationProfile(DominionExpansion expansion)
+        [Required]
+        public int Weight { get; set; }
+
+        public SelectedExpansionToGenerationProfile(DominionExpansion expansion, int weight = 1)
         {
             DominionExpansionId = expansion.Id;
+            Weight = weight;
         }
 
         public SelectedExpansionToGenerationProfile()

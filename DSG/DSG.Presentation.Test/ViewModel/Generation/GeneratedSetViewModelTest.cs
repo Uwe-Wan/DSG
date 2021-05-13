@@ -39,9 +39,9 @@ namespace DSG.Presentation.Test.ViewModel.Generation
         public async Task OnPageLoaded_ExpansionsLoaded_PropertiesSet()
         {
             //Arrange
-            ObservableCollection<IsSelectedAndWeightedExpansionDto> isDominionExpansionSelectedDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
+            ObservableCollection<IsSelectedAndWeightedExpansionDto> isSelectedAndWeightedExpansionDtos = new ObservableCollection<IsSelectedAndWeightedExpansionDto>();
             GenerationProfile generationProfile = new GenerationProfile(10, 20, new PropabilityForNonSupplyCards());
-            GenerationParameterDto generationParameter = new GenerationParameterDto(isDominionExpansionSelectedDtos, generationProfile);
+            GenerationParameterDto generationParameter = new GenerationParameterDto(isSelectedAndWeightedExpansionDtos, generationProfile);
 
             GeneratedSetDto generatedSetDto = new GeneratedSetDto(
                 new List<Card> { TestDataDefines.Cards.BridgeTroll },

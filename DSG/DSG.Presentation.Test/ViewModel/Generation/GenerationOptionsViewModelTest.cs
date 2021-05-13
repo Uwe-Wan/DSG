@@ -57,9 +57,9 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             await _testee.OnPageLoadedAsync(expansions);
 
             //Assert
-            _testee.IsDominionExpansionSelectedDtos.Should().HaveCount(1);
-            _testee.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
-            _testee.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeTrue();
+            _testee.IsSelectedAndWeightedExpansionDtos.Should().HaveCount(1);
+            _testee.IsSelectedAndWeightedExpansionDtos.Single().DominionExpansion.Should().Be(expansion);
+            _testee.IsSelectedAndWeightedExpansionDtos.Single().IsSelected.Should().BeTrue();
 
             _generationProfileBcMock.Verify(x => x.SetupInitialGenerationProfile(null), Times.Once);
 
@@ -78,8 +78,8 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             DominionExpansion expansion = new DominionExpansion();
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion };
 
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
-            _testee.IsDominionExpansionSelectedDtos.First().IsSelected = false;
+            _testee.IsSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
+            _testee.IsSelectedAndWeightedExpansionDtos.First().IsSelected = false;
 
             _testee.GenerationProfiles.Add(new GenerationProfileViewEntity());
 
@@ -87,9 +87,9 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             await _testee.OnPageLoadedAsync(expansions);
 
             //Assert
-            _testee.IsDominionExpansionSelectedDtos.Should().HaveCount(1);
-            _testee.IsDominionExpansionSelectedDtos.Single().DominionExpansion.Should().Be(expansion);
-            _testee.IsDominionExpansionSelectedDtos.Single().IsSelected.Should().BeFalse();
+            _testee.IsSelectedAndWeightedExpansionDtos.Should().HaveCount(1);
+            _testee.IsSelectedAndWeightedExpansionDtos.Single().DominionExpansion.Should().Be(expansion);
+            _testee.IsSelectedAndWeightedExpansionDtos.Single().IsSelected.Should().BeFalse();
 
             _generationProfileBcMock.Verify(x => x.SetupInitialGenerationProfile(selectedProfile), Times.Once);
             _testee.SelectedProfile.Should().Be(selectedProfile);
@@ -103,16 +103,16 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             //Arrange
             DominionExpansion expansion = new DominionExpansion { Id = 1 };
             List<DominionExpansion> expansions = new List<DominionExpansion> { expansion, new DominionExpansion { Id = 2 } };
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
-            _testee.IsDominionExpansionSelectedDtos.First().IsSelected = false;
+            _testee.IsSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
+            _testee.IsSelectedAndWeightedExpansionDtos.First().IsSelected = false;
 
             //Act
             await _testee.OnPageLoadedAsync(expansions);
 
             //Assert
-            _testee.IsDominionExpansionSelectedDtos.Should().HaveCount(2);
-            _testee.IsDominionExpansionSelectedDtos[0].IsSelected.Should().BeFalse();
-            _testee.IsDominionExpansionSelectedDtos[1].IsSelected.Should().BeTrue();
+            _testee.IsSelectedAndWeightedExpansionDtos.Should().HaveCount(2);
+            _testee.IsSelectedAndWeightedExpansionDtos[0].IsSelected.Should().BeFalse();
+            _testee.IsSelectedAndWeightedExpansionDtos[1].IsSelected.Should().BeTrue();
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                 }
             };
 
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
+            _testee.IsSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
 
             _testee.SelectedProfile = new GenerationProfile(20, 10, new PropabilityForNonSupplyCards());
 
@@ -155,7 +155,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                     new Card { CardTypeToCards = new List<CardTypeToCard> { supplyType } });
             }
 
-            _testee.IsDominionExpansionSelectedDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
+            _testee.IsSelectedAndWeightedExpansionDtos.Add(new IsSelectedAndWeightedExpansionDto(expansion));
 
             _testee.SelectedProfile = new GenerationProfile(10, 20, new PropabilityForNonSupplyCards(20, 10, 0, 0));
 
@@ -168,7 +168,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
                     NavigationDestination.GeneratedSet,
                     It.Is<GenerationParameterDto>(parameter => 
                         parameter.PropabilityForColonyAndPlatinum == 20 && 
-                        parameter.Expansions.First().Equals(expansion) &&
+                        parameter.WeightsByExpansions.First().Key.Equals(expansion) &&
                         parameter.PropabilitiesForNonSupplies.PropabilityForOne == 20)),
                 Times.Once);
         }
@@ -181,7 +181,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             _testee.SelectedProfile = newProfile;
 
             _generationProfileBcMock.Setup(x => x.PrepareGenerationProfileForInsertion(
-                _testee.SelectedProfile, _testee.IsDominionExpansionSelectedDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
+                _testee.SelectedProfile, _testee.IsSelectedAndWeightedExpansionDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
                 .Returns(newProfile);
 
             _testee.GenerationProfiles.Add(new GenerationProfileViewEntity());
@@ -209,7 +209,7 @@ namespace DSG.Presentation.Test.ViewModel.Generation
             GenerationProfile newProfile = new GenerationProfile { Name = "Cloned Profile" };
 
             _generationProfileBcMock.Setup(x => x.PrepareGenerationProfileForInsertion(
-                _testee.SelectedProfile, _testee.IsDominionExpansionSelectedDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
+                _testee.SelectedProfile, _testee.IsSelectedAndWeightedExpansionDtos, It.IsAny<IEnumerable<GenerationProfile>>()))
                 .Returns(newProfile);
             _generationProfileBcMock.Setup(x => x.InsertGenerationProfile(It.Is<GenerationProfile>(y => y.Name == "Cloned Profile"))).Returns("Error");
 

@@ -132,6 +132,10 @@
     <Compile Include="Migrations\202101312016037_CreateDSGDatabase9.designer.cs">
       <DependentUpon>202101312016037_CreateDSGDatabase9.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105131742147_CreateDSGDatabase10.cs" />
+    <Compile Include="Migrations\202105131742147_CreateDSGDatabase10.designer.cs">
+      <DependentUpon>202105131742147_CreateDSGDatabase10.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDataDefines.cs" />
@@ -166,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101312016037_CreateDSGDatabase9.resx">
       <DependentUpon>202101312016037_CreateDSGDatabase9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105131742147_CreateDSGDatabase10.resx">
+      <DependentUpon>202105131742147_CreateDSGDatabase10.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <EmbeddedResource Include="BusinessEntities.spring.config" />
